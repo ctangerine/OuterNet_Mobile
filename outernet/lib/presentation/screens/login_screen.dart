@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 const BackButtonCustom(),
                 const SizedBox(height: 5),
-                HeroImage(assetsLink: loginHeroImage, width: screenWidth),
+                HeroImage(assetsLink: otpHeroImage, width: screenWidth),
                 const SizedBox(height: 5),
                 SizedBox(
                   height: 50,
@@ -69,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 _buildLoginButton(authBloc, screenWidth),
                 const SizedBox(height: 10),
-                DividerCustom(text: 'Hoặc đăng nhập với', width: screenWidth),
+                const DividerCustom(text: 'Hoặc đăng nhập với'),
                 Row(
                   children: [
                     _buildLoginWithFacebookButton(),
