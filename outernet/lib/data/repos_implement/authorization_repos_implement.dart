@@ -22,7 +22,22 @@ class AuthorizationRepositoryImplement implements AuthorizationRepository {
   
   @override
   Future<Either<Failure,UserEntity>> register(String email, String password, String name) async {
-    return Left(AuthorizationFailure('Invalid credentials'));
+    try {
+      final user = await remoteDataSource.register(email, password, name);
+      return Right(user.toEntity());
+    } catch (e) {
+      return Left(AuthorizationFailure('Invalid credentials $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure,String>> getOtp() async {
+    try {
+      final otp = await remoteDataSource.getOtp();
+      return Right(otp);
+    } catch (e) {
+      return Left(AuthorizationFailure('Invalid credentials $e'));
+    }
   }
 
   @override

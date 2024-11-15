@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 abstract class AuthorizationRepository {
   Future<Either<Failure,UserEntity>> login(String email, String password, bool rememberMe);
   Future<Either<Failure,UserEntity>> register(String email, String password, String name);
+  Future<Either<Failure,String>> getOtp();
   Future<Either<Failure,UserEntity>> forgotPassword(String email);
   Future<Either<Failure,UserEntity>> logout();
 }
