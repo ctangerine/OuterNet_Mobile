@@ -29,7 +29,11 @@ class LogoutFailed extends AuthState {
   LogoutFailed(this.failure);
 }
 
-class RegisterSuccess extends AuthState {}
+class RegisterSuccess extends AuthState {
+  final String otp;
+
+  RegisterSuccess(this.otp);
+}
 
 class RegisterFailed extends AuthState {
   final Failure failure;
