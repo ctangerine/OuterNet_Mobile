@@ -1,7 +1,7 @@
 import 'package:outernet/data/data_sources/database_datasources.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:outernet/data/repos_implement/user_repos_implement.dart';
+import 'package:outernet/data/repository_implement/user_repo_impl.dart';
 import 'package:outernet/domain/usecases/user_usecase.dart';
 import 'package:outernet/presentation/blocs/UserBloc/user_bloc.dart';
 

@@ -2,7 +2,7 @@
 
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
-import 'package:outernet/presentation/screens/infomation_magager_screen.dart';
+import 'package:outernet/presentation/screens/personal_screen/infomation_magager_screen.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});

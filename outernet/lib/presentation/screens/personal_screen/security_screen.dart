@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:outernet/presentation/themes.dart';
-import 'package:outernet/presentation/widgets/back_button.dart';
+import 'package:outernet/presentation/helper_widgets/back_button.dart';
 
 class SecurityScreen extends StatelessWidget {
   const SecurityScreen({super.key});

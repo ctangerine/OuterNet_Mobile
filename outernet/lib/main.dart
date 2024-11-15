@@ -5,7 +5,7 @@ import 'package:outernet/presentation/module_provider/authorization_module_provi
 import 'package:outernet/presentation/module_provider/user_module_provider.dart';
 import 'package:outernet/presentation/screens/current_coding_page.dart';
 import 'package:outernet/presentation/themes.dart';
-import 'package:outernet/presentation/widgets/back_button.dart';
+import 'package:outernet/presentation/helper_widgets/back_button.dart';
 import 'package:provider/provider.dart';
 
 void main() {

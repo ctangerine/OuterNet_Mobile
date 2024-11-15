@@ -1,11 +1,11 @@
 // A page list current coding page
 import 'package:flutter/material.dart';
-import 'package:outernet/presentation/screens/homepage_screen.dart';
-import 'package:outernet/presentation/screens/login_screen.dart';
-import 'package:outernet/presentation/screens/personal_account_screen.dart';
-import 'package:outernet/presentation/screens/personal_information_screen.dart';
-import 'package:outernet/presentation/screens/register_screen.dart';
-import 'package:outernet/presentation/screens/security_screen.dart';
+import 'package:outernet/presentation/screens/home_screen/homepage_screen.dart';
+import 'package:outernet/presentation/screens/account_screen/login_screen.dart';
+import 'package:outernet/presentation/screens/personal_screen/personal_account_screen.dart';
+import 'package:outernet/presentation/screens/personal_screen/personal_information_screen.dart';
+import 'package:outernet/presentation/screens/account_screen/register_screen.dart';
+import 'package:outernet/presentation/screens/personal_screen/security_screen.dart';
 
 class CurrentCodingPage extends StatelessWidget {
   const CurrentCodingPage({super.key});

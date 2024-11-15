@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
 import 'package:outernet/presentation/themes.dart';
-import 'package:outernet/presentation/widgets/back_button.dart';
+import 'package:outernet/presentation/helper_widgets/back_button.dart';
 
 class PersonalInformationScreen extends StatelessWidget {
   const PersonalInformationScreen({super.key});

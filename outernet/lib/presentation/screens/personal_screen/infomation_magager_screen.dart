@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:outernet/presentation/screens/notifications_screen.dart';
-import 'package:outernet/presentation/screens/security_screen.dart';
-import 'package:outernet/presentation/widgets/button_custom.dart';
+import 'package:outernet/presentation/screens/personal_screen/notifications_screen.dart';
+import 'package:outernet/presentation/screens/personal_screen/security_screen.dart';
+import 'package:outernet/presentation/helper_widgets/button_custom.dart';
 
 class InformationManagerScreen extends StatelessWidget {
   const InformationManagerScreen({super.key});

@@ -3,7 +3,7 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:outernet/data/data_sources/database_datasources.dart';
-import 'package:outernet/data/repos_implement/authorization_repos_implement.dart';
+import 'package:outernet/data/repository_implement/authorization_repo_impl.dart';
 import 'package:outernet/domain/usecases/authorization_usecase.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_bloc.dart';
 

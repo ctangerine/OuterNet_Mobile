@@ -7,13 +7,13 @@ import 'package:outernet/presentation/blocs/AuthBloc/auth_state.dart';
 import 'package:outernet/presentation/blocs/bloc_package.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
 import 'package:outernet/presentation/screens/device_specifications.dart';
-import 'package:outernet/presentation/widgets/back_button.dart';
-import 'package:outernet/presentation/widgets/button_custom.dart';
-import 'package:outernet/presentation/widgets/checkbox_custom.dart';
-import 'package:outernet/presentation/widgets/divider_custom.dart';
-import 'package:outernet/presentation/widgets/hero_image.dart';
-import 'package:outernet/presentation/widgets/icon_custom.dart';
-import 'package:outernet/presentation/widgets/text_input_custom.dart';
+import 'package:outernet/presentation/helper_widgets/back_button.dart';
+import 'package:outernet/presentation/helper_widgets/button_custom.dart';
+import 'package:outernet/presentation/helper_widgets/checkbox_custom.dart';
+import 'package:outernet/presentation/helper_widgets/divider_custom.dart';
+import 'package:outernet/presentation/helper_widgets/hero_image.dart';
+import 'package:outernet/presentation/helper_widgets/icon_custom.dart';
+import 'package:outernet/presentation/helper_widgets/text_input_custom.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();

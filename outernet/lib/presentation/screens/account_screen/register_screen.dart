@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:outernet/presentation/UI%20component%20resused/flare_icon.dart';
+import 'package:outernet/presentation/ui_component_resused/flare_icon.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_bloc.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_events.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_state.dart';
@@ -10,12 +10,12 @@ import 'package:outernet/presentation/blocs/UserBloc/user_events.dart';
 import 'package:outernet/presentation/blocs/UserBloc/user_state.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
 import 'package:outernet/presentation/screens/device_specifications.dart';
-import 'package:outernet/presentation/widgets/button_custom.dart';
-import 'package:outernet/presentation/widgets/checkbox_custom.dart';
-import 'package:outernet/presentation/widgets/divider_custom.dart';
-import 'package:outernet/presentation/widgets/hero_image.dart';
-import 'package:outernet/presentation/widgets/icon_custom.dart';
-import 'package:outernet/presentation/widgets/text_input_custom.dart';
+import 'package:outernet/presentation/helper_widgets/button_custom.dart';
+import 'package:outernet/presentation/helper_widgets/checkbox_custom.dart';
+import 'package:outernet/presentation/helper_widgets/divider_custom.dart';
+import 'package:outernet/presentation/helper_widgets/hero_image.dart';
+import 'package:outernet/presentation/helper_widgets/icon_custom.dart';
+import 'package:outernet/presentation/helper_widgets/text_input_custom.dart';
 
 /// REGISTER SCREEN -> OTP AUTHENTICATION -> NICKNAME REGISTER SUBPAGE
 

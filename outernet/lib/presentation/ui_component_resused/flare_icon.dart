@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
-import 'package:outernet/presentation/widgets/icon_custom.dart';
+import 'package:outernet/presentation/helper_widgets/icon_custom.dart';
 
 Widget buildFlareIcon() {
   return const Row(
