@@ -66,18 +66,22 @@ class FilledButtonCustom extends StatelessWidget {
 class TextButtonCustom extends StatelessWidget {
   final String text;
   final Function() onPressed;
+  final double paddingLeft;
+  final double paddingRight;
 
   const TextButtonCustom({
     super.key, 
     required this.text,
     required this.onPressed,
+    this.paddingLeft = 16.0,
+    this.paddingRight = 0.0
   });
 
   @override
   Widget build (BuildContext context) {
     return TextButton(
       // button style padding right = 0
-      style: ButtonStyle(padding: WidgetStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.only(left: 16.0, right: 0.0))),
+      style: ButtonStyle(padding: WidgetStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.only(left: paddingLeft, right: paddingRight))),
       onPressed: onPressed,
       child: Text(text),
     );

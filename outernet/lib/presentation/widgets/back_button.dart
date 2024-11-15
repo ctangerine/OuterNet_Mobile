@@ -14,8 +14,8 @@ class BackButtonCustom extends StatelessWidget {
         alignment: Alignment.center, 
         child: SvgPicture.asset(
           paperPlaneIcon,
-          width: 30,  
-          height: 30, 
+          width: 25,  
+          height: 25, 
         ),
       ),
       onPressed: () {
