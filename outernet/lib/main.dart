@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outernet/data/data_sources/database_datasources.dart';
 import 'package:outernet/presentation/module_provider/authorization_module_provider.dart';
-import 'package:outernet/presentation/screens/login_screen.dart';
+import 'package:outernet/presentation/module_provider/user_module_provider.dart';
+import 'package:outernet/presentation/screens/current_coding_page.dart';
+import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/widgets/back_button.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
           create: (_) => PostgreSQLDatasource(),
         ),
         ...authProviders(),
+        ...userProviders()
         //BlocProvider(create: (context) => AuthorizationBloc(authorizationUsecase),)
       ],
       child: MaterialApp(
@@ -31,12 +34,7 @@ class MyApp extends StatelessWidget {
         debugShowMaterialGrid: false,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: ThemeData(
-          // Đặt theme màu trắng
-          scaffoldBackgroundColor: Colors.white,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
+        theme: lightTheme,
         home: const MyHomePage(),
       ),
     );
@@ -48,10 +46,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  const Scaffold(
       // Thiết lập màu nền trắng cho màn hình chính
       backgroundColor: Colors.white,
-      body: LoginScreen(),
+      body: CurrentCodingPage(),
     );
   }
 }

@@ -20,3 +20,6 @@ List<SingleChildWidget> authProviders() {
     ),
   ];
 }
+
+// final sl = GetIt.instance;
+
