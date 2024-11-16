@@ -1,3 +1,6 @@
+import 'package:outernet/env/log_service.dart';
+
+final logger = LogService().logger;
 
 class OpeningTime {
   final String? dayOfWeek;
@@ -48,7 +51,10 @@ class AddNewSiteRequestModel {
     this.typeId,
     this.phoneNumbers,
     this.openingTimes,
-  });
+  }) {
+    logger.i('AddNewSiteRequestModel: using for create new site in server database');
+    logger.i(toJson());
+  }
 
   factory AddNewSiteRequestModel.fromJson(Map<String, dynamic> json) {
     var phoneNumbersFromJson = json['phoneNumbers'];
@@ -151,6 +157,38 @@ class UpdateSiteRequestModel {
       'newPhoneNumbers': newPhoneNumbers,
       'newOpeningTimes': newOpeningTimes?.map((e) => e.toJson()).toList(),
       'newServices': newServices,
+    };
+  }
+}
+
+
+class GetSiteRequestModel {
+  final double? lat;
+  final double? lng;
+  final double? degRadius;
+
+  GetSiteRequestModel({
+    this.lat,
+    this.lng,
+    this.degRadius,
+  }) {
+    logger.i('GetSiteRequestModel: using for get location by using site lat and long');
+    logger.i(toJson());
+  }
+
+  factory GetSiteRequestModel.fromJson(Map<String, dynamic> json) {
+    return GetSiteRequestModel(
+      lat: json['lat'],
+      lng: json['lng'],
+      degRadius: json['degRadius'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'lat': lat,
+      'lng': lng,
+      'degRadius': degRadius,
     };
   }
 }

@@ -1,6 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:outernet/env/log_service.dart';
 
 part 'site_response_model.g.dart';
+
+final logger = LogService().logger;
 
 @JsonSerializable(explicitToJson: true)
 class SiteResponseModel {
@@ -34,7 +37,10 @@ class SiteResponseModel {
     this.phoneNumbers,
     this.groupedServices,
     this.openingTimes,
-  });
+  }) {
+    logger.i('SiteResponseModel: using for get a detailed site information, responses when get publicity or get owner site');
+    logger.i(toJson());
+  }
 
   factory SiteResponseModel.fromJson(Map<String, dynamic> json) => _$SiteResponseModelFromJson(json);
   Map<String, dynamic> toJson() => _$SiteResponseModelToJson(this);
