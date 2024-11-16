@@ -1,13 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:outernet/env/log_service.dart';
 
 part 'site_review_response_model.g.dart';
+
+final logger  = LogService().logger;
 
 @JsonSerializable(explicitToJson: true)
 class SiteReviewResponseModel {
   final List<SiteReview>? data;
   final Pagination? pagination;
 
-  SiteReviewResponseModel({this.data, this.pagination});
+  SiteReviewResponseModel({this.data, this.pagination}) {
+    logger.i('SiteReviewResponseModel: using for get all detailed reviews of a site');
+    logger.i(toJson());
+  }
 
   factory SiteReviewResponseModel.fromJson(Map<String, dynamic> json) =>
       _$SiteReviewResponseModelFromJson(json);
