@@ -34,6 +34,12 @@ dependencies:
   flutter_svg: ^2.0.0
   flutter_otp_text_field: ^1.1.0+2
   flashy_tab_bar2: ^0.0.10
+  iconsax: ^0.0.8
+  drift: ^2.21.0
+  drift_flutter: ^0.1.0
+  logger: ^2.4.0
+  shared_preferences: ^2.3.3
+  dio: ^4.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -42,6 +48,8 @@ dependencies:
   flutter_bloc: ^8.1.6
   dartz: ^0.10.1
   provider: ^6.1.2
+  json_annotation: ^4.9.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +61,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  build_runner: ^2.4.13
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -74,6 +84,7 @@ flutter:
     - assets/custom_icons/facebook.svg
     - assets/custom_icons/google.svg 
     - assets/custom_icons/flare.svg
+    - lib/env/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -1,33 +1,41 @@
-import 'package:outernet/data/models/user/user_response_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'auth_response_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class AuthResponseModel {
-  final UserResponseModel user;
   final String accessToken;
   final String refreshToken;
+  final BasicInfo basicInfo;
 
   AuthResponseModel({
-    required this.user,
     required this.accessToken,
     required this.refreshToken,
+    required this.basicInfo,
   });
 
-  factory AuthResponseModel.fromJson(Map<String, dynamic> json) {
-    return AuthResponseModel(
-      user: UserResponseModel.fromJson(json['user']),
-      accessToken: json['accessToken'],
-      refreshToken: json['refreshToken'],
-    );
-  }
-  
-  AuthResponseModel copyWith({
-    UserResponseModel? user,
-    String? accessToken,
-    String? refreshToken,
-  }) {
-    return AuthResponseModel(
-      user: user ?? this.user,
-      accessToken: accessToken ?? this.accessToken,
-      refreshToken: refreshToken ?? this.refreshToken,
-    );
-  }
+  factory AuthResponseModel.fromJson(Map<String, dynamic> json) => _$AuthResponseModelFromJson(json);
+
+  Map<dynamic, dynamic> toJson() => _$AuthResponseModelToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BasicInfo {
+  final int id;
+  final String? fullName;
+  final String? email;
+  final String? username;
+  final String? avatar;
+
+  BasicInfo({
+    required this.id,
+    this.fullName,
+    this.email,
+    this.username,
+    this.avatar,
+  });
+
+  factory BasicInfo.fromJson(Map<String, dynamic> json) => _$BasicInfoFromJson(json);
+
+  Map<dynamic, dynamic> toJson() => _$BasicInfoToJson(this);
 }

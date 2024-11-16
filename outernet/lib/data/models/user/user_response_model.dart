@@ -1,9 +1,13 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:outernet/domain/entities/user_entity.dart';
 
+part 'user_response_model.g.dart';
+
+@JsonSerializable()
 class UserResponseModel {
-  final String id;
-  final String name;
-  final String email;
+  final int id;
+  final String? username;
+  final String? email;
   final String? fullname;
   final String? phone;
   final String? address;
@@ -12,8 +16,8 @@ class UserResponseModel {
 
   UserResponseModel ({
     required this.id,
-    required this.name,
-    required this.email,
+    this.username,
+    this.email,
     this.fullname,
     this.phone,
     this.address,
@@ -21,20 +25,17 @@ class UserResponseModel {
     this.birthday
   });
 
-  factory UserResponseModel.fromJson(Map<String, dynamic> json) {
-    return UserResponseModel(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      fullname: json['fullname'],
-      phone: json['phone'],
-      address: json['address'],
-      avatar: json['avatar'],
-      birthday: json['birthday'],
-    );
-  }
+  factory UserResponseModel.fromJson(Map<String, dynamic> json) => _$UserResponseModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserResponseModelToJson(this);
 
   UserEntity toEntity() {
-    return UserEntity(userId: id, name: name, email: email, phoneNumer: phone, profileImage: avatar);
+    return UserEntity(
+      userId: id, 
+      name: username ?? '', 
+      email: email ?? '', 
+      phoneNumer: phone ?? '', 
+      profileImage: avatar ?? '',
+    );
   }
 }
