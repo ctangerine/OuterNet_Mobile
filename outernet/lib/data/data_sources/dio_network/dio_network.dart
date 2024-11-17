@@ -1,4 +1,4 @@
-import 'package:outernet/data/data_sources/secure_storage.dart';
+import 'package:outernet/data/data_sources/local_datasouces/secure_storage.dart';
 import 'package:outernet/env/config.dart';
 import 'package:outernet/env/log_service.dart';
 import 'package:dio/dio.dart';
@@ -168,7 +168,8 @@ class LoggerInterceptor extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     if (error) {
-      logger.e("Error: ${err.message}");
+
+      logger.e("Error: ${err.message} \n Response code: ${err.response?.statusCode} \n Response data: ${err.response?.data}");
     }
     handler.next(err);
   }
