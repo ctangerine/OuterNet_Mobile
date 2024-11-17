@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:outernet/data/data_sources/database_datasources.dart';
+import 'package:outernet/data/data_sources/remote_datasources/user_api_implement.dart';
 import 'package:outernet/domain/entities/failure.dart';
 import 'package:outernet/domain/entities/user_entity.dart';
 import 'package:outernet/domain/repositories/user_repository.dart';
 
 class UserRepositoryImplement implements UserRepository {
-  final PostgreSQLDatasource remoteDataSource;
+  final UserApiImplement remoteDataSource;
 
   UserRepositoryImplement(this.remoteDataSource);
 
@@ -13,7 +13,7 @@ class UserRepositoryImplement implements UserRepository {
   Future<Either<Failure,UserEntity>> addUserName(String name) async {
     try {
       final user = await remoteDataSource.addUserName(name);
-      return Right(user.toEntity());
+      return Right(user);
     } catch (e) {
       return Left(Failure('Invalid credentials $e'));
     }    
