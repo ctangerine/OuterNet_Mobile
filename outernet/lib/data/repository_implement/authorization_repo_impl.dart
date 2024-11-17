@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:outernet/data/data_sources/local_datasouces/secure_storage.dart';
 import 'package:outernet/data/data_sources/remote_datasources/auth_api_implement.dart';
+import 'package:outernet/data/models/auth/auth_response_model.dart';
 import 'package:outernet/domain/entities/failure.dart';
 import 'package:outernet/domain/entities/user_entity.dart';
 import 'package:outernet/domain/repositories/authorization_repository.dart';
@@ -13,8 +15,24 @@ class AuthorizationRepositoryImplement implements AuthorizationRepository {
   @override
   Future<Either<Failure, UserEntity>> login(String email, String password, bool rememberMe) async {
     try {
-      final user = await _api.login(email, password);
-      return Right(user.toEntity());
+      final response = await _api.login(email, password);
+      final String accessToken = response.accessToken;
+      final String refreshToken = response.refreshToken;
+      final BasicInfo basicInfo = response.basicInfo;
+
+      // Save token to local storage
+      SecureStorage.instance.write('token', accessToken);
+      SecureStorage.instance.write('refreshToken', refreshToken);
+
+      UserEntity user = UserEntity(
+        userId: basicInfo.id,
+        email: basicInfo.email,
+        fullname: basicInfo.fullName,
+        avatar: basicInfo.avatar,
+      );
+
+      return Right(user);
+
     } catch (e) {
       return Left(AuthorizationFailure('Invalid credentials $e'));
     }

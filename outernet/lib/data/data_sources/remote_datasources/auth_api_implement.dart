@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:outernet/data/constant/endpoints.dart';
 import 'package:outernet/data/models/auth/auth_request_model.dart';
+import 'package:outernet/data/models/auth/auth_response_model.dart';
 import 'package:outernet/data/models/user/user_response_model.dart';
 
 class AuthApiImplement {
@@ -11,7 +12,7 @@ class AuthApiImplement {
   AuthApiImplement(this.dio);
 
   // Fake api call and returning fake data
-  Future<UserResponseModel> login(String email, String password) async {
+  Future<AuthResponseModel> login(String email, String password) async {
     try {
       final response = await dio.post(
         ApiEndpoints.login,
@@ -21,7 +22,7 @@ class AuthApiImplement {
         },
       );
 
-      return UserResponseModel.fromJson(response.data);
+      return AuthResponseModel.fromJson(response.data);
     } on DioError catch (e) {
       throw Exception(e.response?.data['message']);
     }

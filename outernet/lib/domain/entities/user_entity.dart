@@ -1,17 +1,21 @@
 class UserEntity {
   final int userId;
-  final String? name;
+  final String? username;
   final String? email;
-  final String? token;
-  final String? phoneNumer;
-  final String? profileImage;
+  final String? fullname;
+  final String? phone;
+  final String? avatar;
+  final String? birthday;
+  final String? address;
 
   UserEntity({
     required this.userId,
-    this.name,
+    this.username,
     this.email,
-    this.token,
-    this.phoneNumer,
-    this.profileImage,
+    this.fullname,
+    this.phone,
+    this.avatar,
+    this.birthday,
+    this.address,
   });
 }

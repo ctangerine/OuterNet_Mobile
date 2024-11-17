@@ -8,6 +8,6 @@ class UserApiImplement {
   UserApiImplement(this.dio);
 
   Future<UserEntity> addUserName(String name) async {
-    return UserEntity(name: name, userId: 1);
+    return UserEntity(fullname: name, userId: 1);
   }
 }

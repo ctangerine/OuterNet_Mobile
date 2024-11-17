@@ -31,11 +31,14 @@ class UserResponseModel {
 
   UserEntity toEntity() {
     return UserEntity(
-      userId: id, 
-      name: username ?? '', 
-      email: email ?? '', 
-      phoneNumer: phone ?? '', 
-      profileImage: avatar ?? '',
+      userId: id,
+      username: username,
+      email: email,
+      fullname: fullname,
+      phone: phone,
+      address: address,
+      avatar: avatar,
+      birthday: birthday
     );
   }
 }
