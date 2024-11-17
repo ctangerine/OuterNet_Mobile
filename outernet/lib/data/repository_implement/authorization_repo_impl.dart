@@ -1,28 +1,19 @@
 import 'package:dartz/dartz.dart';
-import 'package:outernet/data/data_sources/database_datasources.dart';
+import 'package:outernet/data/data_sources/remote_datasources/auth_api_implement.dart';
 import 'package:outernet/domain/entities/failure.dart';
 import 'package:outernet/domain/entities/user_entity.dart';
 import 'package:outernet/domain/repositories/authorization_repository.dart';
+import 'package:outernet/data/models/auth/auth_request_model.dart';
 
 class AuthorizationRepositoryImplement implements AuthorizationRepository {
-  final PostgreSQLDatasource remoteDataSource;
+  final AuthApiImplement _api;
 
-  AuthorizationRepositoryImplement(this.remoteDataSource);
+  AuthorizationRepositoryImplement(this._api);
 
   @override
-  Future<Either<Failure,UserEntity>> login(String email, String password, bool rememberMe) async {
+  Future<Either<Failure, UserEntity>> login(String email, String password, bool rememberMe) async {
     try {
-      final user = await remoteDataSource.login(email, password);
-      return Right(user.toEntity());
-    } catch (e) {
-      return Left(AuthorizationFailure('Invalid credentials $e'));
-    }    
-  }
-  
-  @override
-  Future<Either<Failure,UserEntity>> register(String email, String password, String name) async {
-    try {
-      final user = await remoteDataSource.register(email, password, name);
+      final user = await _api.login(email, password);
       return Right(user.toEntity());
     } catch (e) {
       return Left(AuthorizationFailure('Invalid credentials $e'));
@@ -30,22 +21,67 @@ class AuthorizationRepositoryImplement implements AuthorizationRepository {
   }
 
   @override
-  Future<Either<Failure,String>> getOtp() async {
+  Future<Either<Failure, UserEntity>> register(String email, String password, String name) async {
     try {
-      final otp = await remoteDataSource.getOtp();
+      final user = await _api.register(email, password, name);
+      return Right(user.toEntity());
+    } catch (e) {
+      return Left(AuthorizationFailure('Invalid credentials $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> getOtp() async {
+    try {
+      final otp = await _api.getOtp();
       return Right(otp);
     } catch (e) {
-      return Left(AuthorizationFailure('Invalid credentials $e'));
+      return Left(AuthorizationFailure('Failed to get OTP $e'));
     }
   }
 
   @override
-  Future<Either<Failure,UserEntity>> forgotPassword(String email) async {
-    return Left(AuthorizationFailure('Invalid credentials'));
+  Future<Either<Failure, String>> verifyRegister(VerifyRegisterRequestModel request) async {
+    try {
+      final message = await _api.verifyRegister(request);
+      return Right(message);
+    } catch (e) {
+      return Left(AuthorizationFailure('Failed to verify registration $e'));
+    }
   }
 
   @override
-  Future<Either<Failure,UserEntity>> logout() async {
+  Future<Either<Failure, UserEntity>> resetPassword(ResetPasswordRequestModel request) async {
+    try {
+      final user = await _api.resetPassword(request);
+      return Right(user.toEntity());
+    } catch (e) {
+      return Left(AuthorizationFailure('Failed to reset password $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> confirmResetPassword(ResetPasswordRequestModel request) async {
+    try {
+      final user = await _api.confirmResetPassword(request);
+      return Right(user.toEntity());
+    } catch (e) {
+      return Left(AuthorizationFailure('Failed to confirm reset password $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> refreshToken() async {
+    try {
+      final newToken = await _api.refreshToken();
+      return Right(newToken);
+    } catch (e) {
+      return Left(AuthorizationFailure('Failed to refresh token $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> logout() async {
     return Left(AuthorizationFailure('Invalid credentials'));
   }
 }

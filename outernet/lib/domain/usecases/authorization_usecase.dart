@@ -20,10 +20,6 @@ class AuthorizationUsecase {
     return authorizationRepository.getOtp();
   }
 
-  Future<Either<Failure,UserEntity>> forgotPassword(String email) {
-    return authorizationRepository.forgotPassword(email);
-  }
-
   Future<Either<Failure,UserEntity>> logout() {
     return authorizationRepository.logout();
   }

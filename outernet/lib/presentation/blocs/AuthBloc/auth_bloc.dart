@@ -12,7 +12,6 @@ class AuthorizationBloc extends Bloc<AuthEvents,AuthState> {
     on<LogoutRequested>(_onLogoutRequested);
     on<RegisterRequested>(_onRegisterRequested);
     //on<CheckAuthorizationStatus>(_onCheckAuthorizationStatus);
-    on<ForgotPassword>(_onForgotPassword);
     //on<TokenExpired>(_onTokenExpired);
   }
 
@@ -68,15 +67,6 @@ class AuthorizationBloc extends Bloc<AuthEvents,AuthState> {
   //     (user) => emit(Authenticated(user: user))
   //   );
   // }
-
-  Future<void> _onForgotPassword(ForgotPassword event, Emitter<AuthState> emit) async {
-    emit(LoadingAuthState());
-    final result = await authorizationUsecase.forgotPassword(event.email);
-    result.fold(
-      (failure) => emit(AuthFailed(failure)),
-      (user) => emit(Authenticated(user: user))
-    );
-  }
 
   // Future<void> _onTokenExpired(TokenExpired event, Emitter<AuthState> emit) async {
   //   emit(LoadingAuthState());
