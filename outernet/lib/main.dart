@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:outernet/data/data_sources/database_datasources.dart';
 import 'package:outernet/env/config.dart';
-import 'package:outernet/presentation/module_provider/authorization_module_provider.dart';
+import 'package:outernet/presentation/blocs/AuthBloc/auth_bloc.dart';
+import 'package:outernet/presentation/blocs/UserBloc/user_bloc.dart';
 import 'package:outernet/presentation/module_provider/init_injections.dart';
-import 'package:outernet/presentation/module_provider/user_module_provider.dart';
 import 'package:outernet/presentation/screens/current_coding_page.dart';
 import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/helper_widgets/back_button.dart';
-import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,12 +27,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        Provider<PostgreSQLDatasource>(
-          create: (_) => PostgreSQLDatasource(),
-        ),
-        ...authProviders(),
-        ...userProviders()
-        //BlocProvider(create: (context) => AuthorizationBloc(authorizationUsecase),)
+        BlocProvider(create: (_) => sl<AuthorizationBloc>()),
+        BlocProvider(create: (_) => sl<UserBloc>()),
       ],
       child: MaterialApp(
         routes: {

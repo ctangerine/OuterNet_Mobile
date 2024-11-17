@@ -5,7 +5,6 @@ import 'package:outernet/domain/entities/user_entity.dart';
 import 'package:outernet/domain/repositories/authorization_repository.dart';
 
 class AuthorizationRepositoryImplement implements AuthorizationRepository {
-  // ignore: unused_field
   final PostgreSQLDatasource remoteDataSource;
 
   AuthorizationRepositoryImplement(this.remoteDataSource);
