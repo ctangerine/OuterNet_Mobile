@@ -28,6 +28,35 @@ class SiteByLocResponseModel {
       _$SiteByLocResponseModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SiteByLocResponseModelToJson(this);
+
+  @override
+  String toString() {
+    return 'SiteByLocResponseModel(siteId: $siteId, siteType: $siteType, name: $name, lat: $lat, lng: $lng)';
+  }
+
+  SiteByLocResponseModel copyWith({
+    int? siteId,
+    SiteType? siteType,
+    String? name,
+    double? lat,
+    double? lng,
+  }) {
+    return SiteByLocResponseModel(
+      siteId: siteId ?? this.siteId,
+      siteType: siteType ?? this.siteType,
+      name: name ?? this.name,
+      lat: lat ?? this.lat,
+      lng: lng ?? this.lng,
+    );
+  }
+
+  static final SiteByLocResponseModel defaultInstance = SiteByLocResponseModel(
+    siteId: 0,
+    siteType: SiteType.defaultInstance,
+    name: '',
+    lat: 0.0,
+    lng: 0.0,
+  );
 }
 
 @JsonSerializable()
@@ -46,4 +75,30 @@ class SiteType {
 
   factory SiteType.fromJson(Map<String, dynamic> json) => _$SiteTypeFromJson(json);
   Map<String, dynamic> toJson() => _$SiteTypeToJson(this);
+
+  @override
+  String toString() {
+    return 'SiteType(id: $id, name: $name, amenity: $amenity, attraction: $attraction)';
+  }
+
+  SiteType copyWith({
+    int? id,
+    String? name,
+    bool? amenity,
+    bool? attraction,
+  }) {
+    return SiteType(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      amenity: amenity ?? this.amenity,
+      attraction: attraction ?? this.attraction,
+    );
+  }
+
+  static final SiteType defaultInstance = SiteType(
+    id: 0,
+    name: '',
+    amenity: false,
+    attraction: false,
+  );
 }

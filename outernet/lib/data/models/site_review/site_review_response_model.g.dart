@@ -6,9 +6,9 @@ part of 'site_review_response_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SiteReviewResponseModel _$SiteReviewResponseModelFromJson(
+DetailReviewResponseModel _$DetailReviewResponseModelFromJson(
         Map<String, dynamic> json) =>
-    SiteReviewResponseModel(
+    DetailReviewResponseModel(
       id: (json['id'] as num?)?.toInt(),
       generalRating: (json['generalRating'] as num?)?.toInt(),
       comment: json['comment'] as String?,
@@ -17,8 +17,8 @@ SiteReviewResponseModel _$SiteReviewResponseModelFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$SiteReviewResponseModelToJson(
-        SiteReviewResponseModel instance) =>
+Map<String, dynamic> _$DetailReviewResponseModelToJson(
+        DetailReviewResponseModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'generalRating': instance.generalRating,
