@@ -300,7 +300,7 @@ class SiteDetailScreenContent extends StatelessWidget {
                 children: [
                   Icon(Iconsax.archive_add),
                   SizedBox(width: 10,),
-                  Text('Tiện ích đi kèm')
+                  Text('Tiện ích đi kèm', style: AppTextStyles.body1Semibold,)
                 ],
               ),
               const SizedBox(height: 10),
@@ -309,7 +309,24 @@ class SiteDetailScreenContent extends StatelessWidget {
                   spacing: 10,
                   runSpacing: 10,
                   children: amenities.first.services?.map((service) => Text(service.serviceName ?? '')).toList() ?? [],
-                )
+                ),
+              if (amenities.isEmpty)
+                const Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: [Text('Không có tiện ích đi kèm'), Text('Không có tiện ích đi kèm'), Text('Không có tiện ích đi kèm')],
+                ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => {},
+                      child: const Text('Xem tất cả'),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         )
