@@ -1,5 +1,6 @@
 // A page list current coding page
 import 'package:flutter/material.dart';
+import 'package:outernet/data/models/sites/site_review_response_model.dart';
 import 'package:outernet/presentation/screens/discover/discover_categories.dart';
 import 'package:outernet/presentation/screens/home_screen/homepage_screen.dart';
 import 'package:outernet/presentation/screens/account_screen/login_screen.dart';
@@ -8,6 +9,7 @@ import 'package:outernet/presentation/screens/personal_screen/personal_informati
 import 'package:outernet/presentation/screens/account_screen/register_screen.dart';
 import 'package:outernet/presentation/screens/personal_screen/security_screen.dart';
 import 'package:outernet/presentation/screens/site_screen/site_detail_screen.dart';
+import 'package:outernet/presentation/ui_component_resused/review_card.dart';
 
 class CurrentCodingPage extends StatelessWidget {
   const CurrentCodingPage({super.key});
@@ -91,6 +93,13 @@ class CurrentCodingPage extends StatelessWidget {
                 },
                 child: const Text('Site Detail'),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  final review = SiteReview.defaultInstance;
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewCard(review: review, isFavorite: false,)));
+                },
+                child: const Text('Review Card'),
+              )
             ],
           ),
         ),

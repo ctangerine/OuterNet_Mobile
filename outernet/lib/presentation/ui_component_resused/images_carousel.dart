@@ -22,7 +22,6 @@ class ImagesCarousel extends StatefulWidget {
 
 class ImagesCarouselState extends State<ImagesCarousel> {
   final CarouselSliderController _controller = CarouselSliderController();
-  int _currentIndex = 0;
 
   List<Widget> get imageSliders => widget.images.map((item) => _buildImage(item)).toList();
 
@@ -49,7 +48,6 @@ class ImagesCarouselState extends State<ImagesCarousel> {
               scrollDirection: Axis.horizontal,
               onPageChanged: (index, reason) {
                 setState(() {
-                  _currentIndex = index;
                 });
               },
             ),
