@@ -1,4 +1,5 @@
 {
-    "apiBaseUrl" : "https://efeec9b2-4038-4580-ad5d-ef78d598a926.mock.pstmn.io",
-    "logLevel" : "debug"
+    "apiBaseUrl" : "https://2cf4c54c-775d-405b-b6b1-52ab20367c56.mock.pstmn.io",
+    "logLevel" : "debug",
+    "siteDescription" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hend rerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque egestas elit."  
 }

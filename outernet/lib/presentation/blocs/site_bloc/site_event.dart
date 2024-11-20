@@ -1,5 +1,4 @@
 import 'package:outernet/data/models/sites/site_request_model.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
 
 abstract class SiteEvent {}
 

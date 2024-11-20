@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outernet/data/models/sites/site_response_model.dart';
+import 'package:outernet/data/models/sites/site_review_response_model.dart';
 import 'package:outernet/domain/usecases/site_usecase.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
@@ -36,6 +37,9 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
       (site) {
         if (state is LoadListSiteSuccess) {
           emit((state as LoadListSiteSuccess).copyWith(siteDetail: site, isSiteDetailChanged: true));
+        }
+        else {
+          emit(LoadListSiteSuccess(sites: [], siteDetail: site, siteReview: SiteReviewResponseModel.defaultInstance, isSiteDetailChanged: true));
         }
       }
     );

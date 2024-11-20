@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:outernet/presentation/themes.dart';
 
 class CheckboxCustom extends StatefulWidget {
   final bool value;
@@ -42,6 +43,12 @@ class _CheckboxCustomState extends State<CheckboxCustom> {
           width: 48,
           height: 48,
           child: Checkbox(
+            fillColor: WidgetStateProperty.all(AppColors.primary),
+            checkColor: AppColors.maintheme,
+            side: const BorderSide(
+              color: AppColors.primary,
+              width: 2,
+            ),
             value: isChecked,
             onChanged: (bool? value) {
               setState(() {

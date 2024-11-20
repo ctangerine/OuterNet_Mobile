@@ -5,14 +5,14 @@ class IconCustom extends StatelessWidget {
   final String svgIcon;
   final double width;
   final double height;
-  final Color color;
+  final Color? color;
 
   const IconCustom({
     super.key,
     required this.svgIcon,
     this.width = 24.0,
     this.height = 24.0,
-    this.color = Colors.black,
+    this.color,
   });
 
   @override
@@ -21,7 +21,7 @@ class IconCustom extends StatelessWidget {
       svgIcon,
       width: width,
       height: height,
-      colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+      //colorFilter: ColorFilter.mode(color?? , BlendMode.srcIn),
     );
   }
 }

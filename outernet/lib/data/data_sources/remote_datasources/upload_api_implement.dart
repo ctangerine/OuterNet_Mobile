@@ -30,6 +30,8 @@ class UploadApiImplement {
     }
     on DioError catch (e) {
       throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 }

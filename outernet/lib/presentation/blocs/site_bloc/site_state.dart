@@ -14,12 +14,12 @@ class LoadListSiteSuccess extends SiteState {
   final SiteResponseModel siteDetail;
   final SiteReviewResponseModel siteReview;
 
-  final bool? isListRecentlyChanged;
-  final bool? isSiteDetailChanged;
-  final bool? isNewlyAddedSite;
-  final bool? isSiteRecentlyUpdate;
-  final bool? isSiteRecentlyChanged;
-  final bool? isSiteReviewChanged;
+  bool? isListRecentlyChanged;
+  bool? isSiteDetailChanged;
+  bool? isNewlyAddedSite;
+  bool? isSiteRecentlyUpdate;
+  bool? isSiteRecentlyChanged;
+  bool? isSiteReviewChanged;
 
   final String? message;
 

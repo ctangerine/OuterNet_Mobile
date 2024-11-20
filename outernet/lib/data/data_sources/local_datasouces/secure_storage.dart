@@ -1,4 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:outernet/env/log_service.dart';
+
+final logger = LogService().logger;
 
 class SecureStorage {
   // Create a private constructor
@@ -13,6 +16,9 @@ class SecureStorage {
   // Write a value to the secure storage
   Future<void> write(String key, String value) async {
     await _storage.write(key: key, value: value);
+
+    final allKeys = await _storage.readAll();
+    logger.i("SecureStorage: write $key: $value\nTotal keys: ${allKeys.length}");
   }
 
   // Read a value from the secure storage

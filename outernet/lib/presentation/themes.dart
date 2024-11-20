@@ -6,7 +6,7 @@ class AppColors {
   static const Color primary = Color.fromARGB(255, 255, 171, 62);
   static const Color textOnPrimary = Color.fromARGB(255, 255, 255, 255);
   static const Color textPrimary = Color.fromARGB(255, 135, 81, 0);
-  static const Color textSecondary = Color.fromARGB(255, 73, 69, 79);
+  static const Color textSecondary = Color.fromARGB(255, 182, 180, 185);
   static const Color textOnMainTheme = Color.fromARGB(255, 0, 0, 0);
   static const Color error = Color.fromARGB(255, 220, 38, 38);
 }
@@ -63,26 +63,26 @@ class AppTextStyles {
 
   static const TextStyle title1Semibold = TextStyle(
     fontFamily: 'Roboto',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
-    height: 18.0/14.0,
+    height: 18.0/15.0,
   );
 
   static const TextStyle title1Medium = TextStyle(
     fontFamily: 'Roboto',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
-    height: 18.0/14.0,
+    height: 18.0/15.0,
   );
 
   static const TextStyle title1Regular = TextStyle(
     fontFamily: 'Roboto',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
-    height: 18.0/14.0,
+    height: 18.0/15.0,
   );
 
   static const TextStyle title2Semibold = TextStyle(
@@ -111,26 +111,26 @@ class AppTextStyles {
 
   static const TextStyle body1Semibold = TextStyle(
     fontFamily: 'Roboto',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
-    height: 16.0/14.0,
+    height: 16.0/15.0,
   );
 
   static const TextStyle body1Medium = TextStyle(
     fontFamily: 'Roboto',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
-    height: 16.0/14.0,
+    height: 16.0/15.0,
   );
 
   static const TextStyle body1Regular = TextStyle(
     fontFamily: 'Roboto',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
-    height: 16.0/14.0,
+    height: 16.0/15.0,
   );
 
   static const TextStyle body2Semibold = TextStyle(
@@ -203,7 +203,7 @@ final ThemeData lightTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     enabledBorder: OutlineInputBorder(
       borderRadius: const BorderRadius.all(Radius.circular(10)),
-      borderSide: BorderSide(color: AppColors.textSecondary.withOpacity(0.5)),
+      borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5)),
     ),
     focusedBorder: const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -219,10 +219,10 @@ final ThemeData lightTheme = ThemeData(
     ),
     hintStyle: const TextStyle(
       fontFamily: 'Roboto',
-      fontSize: 14,
+      fontSize: 15,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.5,
-      height: 16.0/14.0,
+      height: 16.0/15.0,
       color: AppColors.textPrimary
     ),
     errorStyle: AppTextStyles.body2Medium.copyWith(color: AppColors.error),
@@ -246,4 +246,8 @@ final ThemeData lightTheme = ThemeData(
     selectedItemColor: AppColors.primary,
     unselectedItemColor: AppColors.textSecondary,
   ),
+  checkboxTheme: CheckboxThemeData(
+    fillColor: WidgetStateProperty.all(AppColors.primary),
+    checkColor: WidgetStateProperty.all(AppColors.textOnPrimary),
+  )
 );

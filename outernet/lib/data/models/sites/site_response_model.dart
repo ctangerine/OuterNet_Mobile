@@ -9,6 +9,8 @@ final logger = LogService().logger;
 class SiteResponseModel {
   final int? siteId;
   final int? siteVersionId;
+  final int? likeCount;
+  final int? dislikeCount;
   final int? ownerId;
   final String? ownerUsername;
   final String? siteName;
@@ -21,10 +23,20 @@ class SiteResponseModel {
   final List<String>? phoneNumbers;
   final List<GroupedService>? groupedServices;
   final List<OpeningTime>? openingTimes;
+  final List<Media>? medias;
+  final double? averageRating;
+  final int? totalRating;
+  final int? fiveStarRating;
+  final int? fourStarRating;
+  final int? threeStarRating;
+  final int? twoStarRating;
+  final int? oneStarRating;
 
   SiteResponseModel({
     this.siteId,
     this.siteVersionId,
+    this.likeCount,
+    this.dislikeCount,
     this.ownerId,
     this.ownerUsername,
     this.siteName,
@@ -37,6 +49,14 @@ class SiteResponseModel {
     this.phoneNumbers,
     this.groupedServices,
     this.openingTimes,
+    this.medias,
+    this.averageRating,
+    this.totalRating,
+    this.fiveStarRating,
+    this.fourStarRating,
+    this.threeStarRating,
+    this.twoStarRating,
+    this.oneStarRating,
   }) {
     logger.i('SiteResponseModel: using for get a detailed site information, responses when get publicity or get owner site');
     logger.i(toJson());
@@ -47,12 +67,14 @@ class SiteResponseModel {
 
   @override
   String toString() {
-    return 'SiteResponseModel(siteId: $siteId, siteVersionId: $siteVersionId, ownerId: $ownerId, ownerUsername: $ownerUsername, siteName: $siteName, lat: $lat, lng: $lng, resolvedAddress: $resolvedAddress, website: $website, createdAt: $createdAt, siteType: $siteType, phoneNumbers: $phoneNumbers, groupedServices: $groupedServices, openingTimes: $openingTimes)';
+    return 'SiteResponseModel(siteId: $siteId, siteVersionId: $siteVersionId, likeCount: $likeCount, dislikeCount: $dislikeCount, ownerId: $ownerId, ownerUsername: $ownerUsername, siteName: $siteName, lat: $lat, lng: $lng, resolvedAddress: $resolvedAddress, website: $website, createdAt: $createdAt, siteType: $siteType, phoneNumbers: $phoneNumbers, groupedServices: $groupedServices, openingTimes: $openingTimes, medias: $medias, averageRating: $averageRating, totalRating: $totalRating, fiveStarRating: $fiveStarRating, fourStarRating: $fourStarRating, threeStarRating: $threeStarRating, twoStarRating: $twoStarRating, oneStarRating: $oneStarRating)';
   }
 
   SiteResponseModel copyWith({
     int? siteId,
     int? siteVersionId,
+    int? likeCount,
+    int? dislikeCount,
     int? ownerId,
     String? ownerUsername,
     String? siteName,
@@ -65,10 +87,20 @@ class SiteResponseModel {
     List<String>? phoneNumbers,
     List<GroupedService>? groupedServices,
     List<OpeningTime>? openingTimes,
+    List<Media>? medias,
+    double? averageRating,
+    int? totalRating,
+    int? fiveStarRating,
+    int? fourStarRating,
+    int? threeStarRating,
+    int? twoStarRating,
+    int? oneStarRating,
   }) {
     return SiteResponseModel(
       siteId: siteId ?? this.siteId,
       siteVersionId: siteVersionId ?? this.siteVersionId,
+      likeCount: likeCount ?? this.likeCount,
+      dislikeCount: dislikeCount ?? this.dislikeCount,
       ownerId: ownerId ?? this.ownerId,
       ownerUsername: ownerUsername ?? this.ownerUsername,
       siteName: siteName ?? this.siteName,
@@ -81,12 +113,22 @@ class SiteResponseModel {
       phoneNumbers: phoneNumbers ?? this.phoneNumbers,
       groupedServices: groupedServices ?? this.groupedServices,
       openingTimes: openingTimes ?? this.openingTimes,
+      medias: medias ?? this.medias,
+      averageRating: averageRating ?? this.averageRating,
+      totalRating: totalRating ?? this.totalRating,
+      fiveStarRating: fiveStarRating ?? this.fiveStarRating,
+      fourStarRating: fourStarRating ?? this.fourStarRating,
+      threeStarRating: threeStarRating ?? this.threeStarRating,
+      twoStarRating: twoStarRating ?? this.twoStarRating,
+      oneStarRating: oneStarRating ?? this.oneStarRating,
     );
   }
 
   static final SiteResponseModel defaultInstance = SiteResponseModel(
     siteId: 0,
     siteVersionId: 0,
+    likeCount: 0,
+    dislikeCount: 0,
     ownerId: 0,
     ownerUsername: '',
     siteName: '',
@@ -99,6 +141,14 @@ class SiteResponseModel {
     phoneNumbers: [],
     groupedServices: [],
     openingTimes: [],
+    medias: [],
+    averageRating: 0.0,
+    totalRating: 0,
+    fiveStarRating: 0,
+    fourStarRating: 0,
+    threeStarRating: 0,
+    twoStarRating: 0,
+    oneStarRating: 0,
   );
 }
 
@@ -147,7 +197,8 @@ class SiteType {
 }
 
 @JsonSerializable(explicitToJson: true)
-class GroupedService {
+class 
+GroupedService {
   final ServiceGroup? serviceGroup;
   final List<Service>? services;
 
@@ -284,5 +335,49 @@ class OpeningTime {
     dayOfWeek: '',
     openTime: '',
     closeTime: '',
+  );
+}
+
+@JsonSerializable()
+class Media {
+  final int? id;
+  final String? url;
+  final String? mediaType;
+  final String? createdAt;
+
+  Media({
+    this.id,
+    this.url,
+    this.mediaType,
+    this.createdAt,
+  });
+
+  factory Media.fromJson(Map<String, dynamic> json) => _$MediaFromJson(json);
+  Map<String, dynamic> toJson() => _$MediaToJson(this);
+
+  @override
+  String toString() {
+    return 'Media(id: $id, url: $url, mediaType: $mediaType, createdAt: $createdAt)';
+  }
+
+  Media copyWith({
+    int? id,
+    String? url,
+    String? mediaType,
+    String? createdAt,
+  }) {
+    return Media(
+      id: id ?? this.id,
+      url: url ?? this.url,
+      mediaType: mediaType ?? this.mediaType,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  static final Media defaultInstance = Media(
+    id: 0,
+    url: '',
+    mediaType: '',
+    createdAt: '',
   );
 }

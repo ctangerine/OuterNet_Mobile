@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:outernet/presentation/themes.dart';
 
 class OutlinedButtonCustom extends StatelessWidget {
   final String text;
@@ -58,7 +59,7 @@ class FilledButtonCustom extends StatelessWidget {
     return FilledButton(
       onPressed: onPressed,
       style: style,
-      child: Text(text),
+      child: Text(text, style: AppTextStyles.title1Semibold,),
     );
   }
 }
@@ -81,9 +82,12 @@ class TextButtonCustom extends StatelessWidget {
   Widget build (BuildContext context) {
     return TextButton(
       // button style padding right = 0
-      style: ButtonStyle(padding: WidgetStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.only(left: paddingLeft, right: paddingRight))),
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.only(left: paddingLeft, right: paddingRight)),
+
+      ),
       onPressed: onPressed,
-      child: Text(text),
+      child: Text(text, style: AppTextStyles.title1Semibold.copyWith(color: AppColors.primary),),
     );
   }
 }

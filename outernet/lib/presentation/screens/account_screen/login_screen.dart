@@ -5,15 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_events.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_state.dart';
 import 'package:outernet/presentation/blocs/bloc_package.dart';
+import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
 import 'package:outernet/presentation/screens/device_specifications.dart';
-import 'package:outernet/presentation/helper_widgets/back_button.dart';
 import 'package:outernet/presentation/helper_widgets/button_custom.dart';
 import 'package:outernet/presentation/helper_widgets/checkbox_custom.dart';
 import 'package:outernet/presentation/helper_widgets/divider_custom.dart';
 import 'package:outernet/presentation/helper_widgets/hero_image.dart';
 import 'package:outernet/presentation/helper_widgets/icon_custom.dart';
 import 'package:outernet/presentation/helper_widgets/text_input_custom.dart';
+import 'package:iconsax/iconsax.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -27,6 +28,11 @@ class LoginScreen extends StatelessWidget {
     final authBloc = BlocProvider.of<AuthorizationBloc>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        leading: _buildLeadingIcon(context),
+        automaticallyImplyLeading: false,
+        scrolledUnderElevation: 0,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -36,13 +42,13 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const BackButtonCustom(),
                 const SizedBox(height: 5),
-                HeroImage(assetsLink: otpHeroImage, width: screenWidth),
+                HeroImage(assetsLink: loginHeroImage, width: screenWidth),
                 const SizedBox(height: 5),
                 SizedBox(
                   height: 50,
                   child: TextInputCustom(
+                    leadingIcon: Iconsax.sms,
                     validator: (value) => null,
                     controller: _emailController,
                     label: 'Email',
@@ -53,6 +59,7 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 50,
                   child: TextInputCustom(
+                    leadingIcon: Iconsax.lock,
                     validator: (value) => null,
                     controller: _passwordController,
                     obsecure: true,
@@ -68,8 +75,9 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 _buildLoginButton(authBloc, screenWidth),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 const DividerCustom(text: 'Hoặc đăng nhập với'),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     _buildLoginWithFacebookButton(),
@@ -89,14 +97,21 @@ class LoginScreen extends StatelessWidget {
                     if (state is Authenticated) {
                       showDialog(
                         context: context,
-                        builder: (context) => const AlertDialog(
-                          title: Text('Đăng nhập thành công'),
-                        ),
+                        builder: (BuildContext context) {
+                          return CustomPopup(
+                            showReturn: false,
+                            title: '',
+                            content: 'Đăng nhập thành công',
+                            confirmText: 'OK',
+                            onConfirm: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                              Future.delayed(const Duration(seconds: 100), () {
+                                Navigator.of(context).pop(); // Close the login screen
+                              });// Navigate to home
+                            },
+                          );
+                        },
                       );
-                      Future.delayed(const Duration(seconds: 2), () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushNamed('/home');
-                      });
                     }
                   },
                   builder: (context, state) {
@@ -118,6 +133,15 @@ class LoginScreen extends StatelessWidget {
           ),
         )
       ),
+    );
+  }
+
+  Widget _buildLeadingIcon(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Iconsax.arrow_left_2),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
     );
   }
 
@@ -153,7 +177,7 @@ class LoginScreen extends StatelessWidget {
   Widget _buildLoginWithFacebookButton() {
     return Expanded(
         child: OutlinedButtonCustom.icon(
-      icon: const IconCustom(svgIcon: paperPlaneIcon),
+      icon: const IconCustom(svgIcon: facebookIcon),
       text: 'Facebook',
       onPressed: () => null,
     ));
@@ -162,7 +186,7 @@ class LoginScreen extends StatelessWidget {
   Widget _buildLoginWithGoogleButton() {
     return Expanded(
         child: OutlinedButtonCustom.icon(
-      icon: const IconCustom(svgIcon: paperPlaneIcon),
+      icon: const IconCustom(svgIcon: googleIcon),
       text: 'Google',
       onPressed: () => null,
     ));

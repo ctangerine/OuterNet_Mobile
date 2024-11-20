@@ -314,9 +314,9 @@ class NickNameRegisterSubPage extends StatelessWidget {
           return Column(
             children: [
               const Text('Đăng ký thành công'),
-              Text('Xin chào ${state.user.name}'),
+              Text('Xin chào ${state.user.fullname}'),
               Text('Email: ${state.user.email}'),
-              Text('Profile Image: ${state.user.profileImage}'),
+              Text('Profile Image: ${state.user.avatar}'),
             ],
           );
         } else {

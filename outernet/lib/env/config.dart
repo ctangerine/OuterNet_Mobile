@@ -5,13 +5,15 @@ import 'package:flutter/services.dart';
 class Config {
   final String apiBaseUrl;
   final String logLevel;
+  final String siteDescription;
 
-  Config({required this.apiBaseUrl,required this.logLevel});
+  Config({required this.apiBaseUrl,required this.logLevel,required this.siteDescription});
   
   factory Config.fromJson(Map<String, dynamic> json) {
     return Config( 
       apiBaseUrl: json['apiBaseUrl'], 
       logLevel: json['logLevel'], 
+      siteDescription: json['siteDescription'],
     ); 
   }
 }

@@ -117,7 +117,7 @@ class DioNetwork {
 
   static Future<String?> _refreshToken() async {
     // Implement logic to refresh JWT token
-    final newToken = "new_jwt_token"; // Replace with actual token refresh logic
+    const newToken = "new_jwt_token"; // Replace with actual token refresh logic
     await SecureStorage.instance.write('jwt_token', newToken);
     return newToken;
   }

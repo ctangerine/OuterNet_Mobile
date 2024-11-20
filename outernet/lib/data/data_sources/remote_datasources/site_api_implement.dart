@@ -5,6 +5,7 @@ import 'package:outernet/data/models/sites/site_by_loc_response_model.dart';
 import 'package:outernet/data/models/sites/site_request_model.dart';
 import 'package:outernet/data/models/sites/site_response_model.dart';
 import 'package:outernet/data/models/sites/site_review_response_model.dart';
+import 'package:outernet/env/log_service.dart';
 
 class SiteApiImplement {
   final Dio dio;
@@ -21,16 +22,21 @@ class SiteApiImplement {
       return SiteResponseModel.fromJson(response.data);
     } on DioError catch (e) {
       throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
   Future<SiteResponseModel> getPublicSite(int id) async {
     try {
       final respone = await dio.get('${ApiEndpoints.site}/$id');
+      LogService().logger.i('Get public site response id: $respone.data["siteId"]');
       return SiteResponseModel.fromJson(respone.data);
     }
     on DioError catch (e) {
       throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
@@ -44,6 +50,8 @@ class SiteApiImplement {
       return SiteResponseModel.fromJson(response.data);
     } on DioError catch (e) {
       throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
@@ -53,6 +61,8 @@ class SiteApiImplement {
       return SiteResponseModel.fromJson(response.data);
     } on DioError catch (e) {
       throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
@@ -62,6 +72,8 @@ class SiteApiImplement {
       return SiteReviewResponseModel.fromJson(response.data);
     } on DioError catch (e) {
       throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
@@ -73,6 +85,8 @@ class SiteApiImplement {
           .toList();
     } on DioError catch (e) {
       throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
@@ -82,6 +96,8 @@ class SiteApiImplement {
       return SiteTypeGroupServicesResponseModel.fromJson(response.data);
     } on DioError catch (e) {
       throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
@@ -91,6 +107,8 @@ class SiteApiImplement {
       return SiteByLocResponseModel.fromJson(response.data);
     } on DioError catch (e) {
       throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 }

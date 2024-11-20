@@ -10,6 +10,8 @@ SiteResponseModel _$SiteResponseModelFromJson(Map<String, dynamic> json) =>
     SiteResponseModel(
       siteId: (json['siteId'] as num?)?.toInt(),
       siteVersionId: (json['siteVersionId'] as num?)?.toInt(),
+      likeCount: (json['likeCount'] as num?)?.toInt(),
+      dislikeCount: (json['dislikeCount'] as num?)?.toInt(),
       ownerId: (json['ownerId'] as num?)?.toInt(),
       ownerUsername: json['ownerUsername'] as String?,
       siteName: json['siteName'] as String?,
@@ -30,12 +32,24 @@ SiteResponseModel _$SiteResponseModelFromJson(Map<String, dynamic> json) =>
       openingTimes: (json['openingTimes'] as List<dynamic>?)
           ?.map((e) => OpeningTime.fromJson(e as Map<String, dynamic>))
           .toList(),
+      medias: (json['medias'] as List<dynamic>?)
+          ?.map((e) => Media.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      averageRating: (json['averageRating'] as num?)?.toDouble(),
+      totalRating: (json['totalRating'] as num?)?.toInt(),
+      fiveStarRating: (json['fiveStarRating'] as num?)?.toInt(),
+      fourStarRating: (json['fourStarRating'] as num?)?.toInt(),
+      threeStarRating: (json['threeStarRating'] as num?)?.toInt(),
+      twoStarRating: (json['twoStarRating'] as num?)?.toInt(),
+      oneStarRating: (json['oneStarRating'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SiteResponseModelToJson(SiteResponseModel instance) =>
     <String, dynamic>{
       'siteId': instance.siteId,
       'siteVersionId': instance.siteVersionId,
+      'likeCount': instance.likeCount,
+      'dislikeCount': instance.dislikeCount,
       'ownerId': instance.ownerId,
       'ownerUsername': instance.ownerUsername,
       'siteName': instance.siteName,
@@ -49,6 +63,14 @@ Map<String, dynamic> _$SiteResponseModelToJson(SiteResponseModel instance) =>
       'groupedServices':
           instance.groupedServices?.map((e) => e.toJson()).toList(),
       'openingTimes': instance.openingTimes?.map((e) => e.toJson()).toList(),
+      'medias': instance.medias?.map((e) => e.toJson()).toList(),
+      'averageRating': instance.averageRating,
+      'totalRating': instance.totalRating,
+      'fiveStarRating': instance.fiveStarRating,
+      'fourStarRating': instance.fourStarRating,
+      'threeStarRating': instance.threeStarRating,
+      'twoStarRating': instance.twoStarRating,
+      'oneStarRating': instance.oneStarRating,
     };
 
 SiteType _$SiteTypeFromJson(Map<String, dynamic> json) => SiteType(
@@ -113,4 +135,18 @@ Map<String, dynamic> _$OpeningTimeToJson(OpeningTime instance) =>
       'dayOfWeek': instance.dayOfWeek,
       'openTime': instance.openTime,
       'closeTime': instance.closeTime,
+    };
+
+Media _$MediaFromJson(Map<String, dynamic> json) => Media(
+      id: (json['id'] as num?)?.toInt(),
+      url: json['url'] as String?,
+      mediaType: json['mediaType'] as String?,
+      createdAt: json['createdAt'] as String?,
+    );
+
+Map<String, dynamic> _$MediaToJson(Media instance) => <String, dynamic>{
+      'id': instance.id,
+      'url': instance.url,
+      'mediaType': instance.mediaType,
+      'createdAt': instance.createdAt,
     };
