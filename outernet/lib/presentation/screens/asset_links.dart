@@ -12,6 +12,7 @@ const String discoverHeroImage = r'E:\DUT Courses\Academic year 4\PBL6\OuterNet_
 const String mikazuki1 = 'assets/images/mikazuki_1.png';
 const String mikazuki2 = 'assets/images/mikazuki_2.png';
 const String mikazuki3 = 'assets/images/mikazuki_3.png';
+const String mapPlaceholder = 'assets/images/map_placeholder.png';
 
 
 //Custom icons

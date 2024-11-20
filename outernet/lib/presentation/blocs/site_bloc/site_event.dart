@@ -40,3 +40,9 @@ class GetSiteReview extends SiteEvent {
   GetSiteReview(this.siteId);
 }
 
+class GetSiteByLocation extends SiteEvent {
+  final GetSiteRequestModel request;
+
+  GetSiteByLocation(this.request);
+}
+

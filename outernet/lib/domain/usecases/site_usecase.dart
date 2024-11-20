@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:outernet/data/models/sites/site_by_loc_response_model.dart';
 import 'package:outernet/data/models/sites/site_request_model.dart';
 import 'package:outernet/data/models/sites/site_response_model.dart';
 import 'package:outernet/data/models/sites/site_review_response_model.dart';
@@ -32,5 +33,9 @@ class SiteUsecase {
 
   Future<Either<Failure,List<SiteResponseModel>>> getListSite() {
     return repository.getListSite();
+  }
+
+  Future<Either<Failure, SiteByLocResponseModel>> getSiteByLocation(GetSiteRequestModel request) {
+    return repository.getSiteByLocation(request);
   }
 }

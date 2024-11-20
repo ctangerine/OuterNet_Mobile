@@ -16,6 +16,7 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
     //on<DeleteSite>(_onDeleteSite);
     on<GetSiteVersion>(_onGetSiteVersion);
     on<GetSiteReview>(_onGetSiteReview);
+    on<GetSiteByLocation>(_onGetSiteByLocation);
   }
 
   Future<void> _onLoadListSite(LoadListSite event, Emitter<SiteState> emit) async {
@@ -101,6 +102,17 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
         if (state is LoadListSiteSuccess) {
           emit((state as LoadListSiteSuccess).copyWith(siteReview: siteReview, isSiteReviewChanged: true));
         }
+      }
+    );
+  }
+
+  Future<void> _onGetSiteByLocation(GetSiteByLocation event, Emitter<SiteState> emit) async {
+    final result = await siteUsecase.getSiteByLocation(event.request);
+    result.fold(
+      (failure) => emit(LoadListSiteFailed(failure.message)),
+      (sites) {
+        final siteByLoc = sites;
+        emit((state as LoadListSiteSuccess).copyWith(siteByLoc: siteByLoc, isSiteByLocChanged: true));
       }
     );
   }
