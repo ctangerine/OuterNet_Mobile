@@ -28,7 +28,7 @@ class UploadApiImplement {
 
       return response.data['message'];
     }
-    on DioError catch (e) {
+    on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());

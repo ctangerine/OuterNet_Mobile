@@ -152,7 +152,7 @@ class ReviewCard extends StatelessWidget {
           ),
         );
       },
-      child: Container(
+      child: SizedBox(
         width: 100,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(5),

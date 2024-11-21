@@ -35,7 +35,7 @@ class SiteUsecase {
     return repository.getListSite();
   }
 
-  Future<Either<Failure, SiteByLocResponseModel>> getSiteByLocation(GetSiteRequestModel request) {
+  Future<Either<Failure, List<SiteByLocResponseModel>>> getSiteByLocation(GetSiteRequestModel request) {
     return repository.getSiteByLocation(request);
   }
 }

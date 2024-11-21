@@ -17,5 +17,5 @@ abstract class SiteRepository {
 
   Future<Either<Failure, SiteTypeGroupServicesResponseModel>> getSiteTypeGroupServices();
 
-  Future<Either<Failure, SiteByLocResponseModel>> getSiteByLocation(GetSiteRequestModel request);
+  Future<Either<Failure, List<SiteByLocResponseModel>>> getSiteByLocation(GetSiteRequestModel request);
 }

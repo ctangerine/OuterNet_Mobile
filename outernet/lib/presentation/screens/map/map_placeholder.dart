@@ -3,6 +3,8 @@ import 'package:outernet/env/log_service.dart';
 import 'package:outernet/presentation/screens/map/base_map_interface.dart';
 
 class MapPlaceholder extends StatelessWidget implements BaseMapInterface {
+  const MapPlaceholder({super.key});
+
 
   @override
   void onMapCreated() {

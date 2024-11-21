@@ -39,7 +39,7 @@ class DioNetwork {
         appAPI.options.headers = headers;
         return handler.next(options);
       },
-      onError: (DioError error, handler) async {
+      onError: (DioException error, handler) async {
         if (error.response?.statusCode == 401) {
           final newToken = await _refreshToken();
           if (newToken != null) {
@@ -90,7 +90,7 @@ class DioNetwork {
           return handler.next(response);
         }
       },
-      onError: (DioError error, handler) {
+      onError: (DioException error, handler) {
         return handler.next(error);
       },
     );
@@ -166,7 +166,7 @@ class LoggerInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     if (error) {
 
       logger.e("Error: ${err.message} \n Response code: ${err.response?.statusCode} \n Response data: ${err.response?.data}");

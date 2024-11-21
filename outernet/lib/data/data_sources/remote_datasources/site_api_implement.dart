@@ -20,7 +20,7 @@ class SiteApiImplement {
       );
 
       return SiteResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -33,7 +33,7 @@ class SiteApiImplement {
       LogService().logger.i('Get public site response id: $respone.data["siteId"]');
       return SiteResponseModel.fromJson(respone.data);
     }
-    on DioError catch (e) {
+    on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -48,7 +48,7 @@ class SiteApiImplement {
       );
 
       return SiteResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -59,7 +59,7 @@ class SiteApiImplement {
     try {
       final response = await dio.get('${ApiEndpoints.site}/?version=$version');
       return SiteResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -70,7 +70,7 @@ class SiteApiImplement {
     try {
       final response = await dio.get('${ApiEndpoints.site}/$siteId/reviews');
       return SiteReviewResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -83,7 +83,7 @@ class SiteApiImplement {
       return (response.data as List)
           .map((e) => SiteResponseModel.fromJson(e))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -94,18 +94,20 @@ class SiteApiImplement {
     try {
       final response = await dio.get('${ApiEndpoints.siteType }/services');
       return SiteTypeGroupServicesResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
     }
   }
 
-  Future<SiteByLocResponseModel> getSiteByLoc(GetSiteRequestModel request) async {
+  Future<List<SiteByLocResponseModel>> getSiteByLoc(GetSiteRequestModel request) async {
     try {
       final response = await dio.get('${ApiEndpoints.site}/@?lat=${request.lat}&lng=${request.lng}&degRadius=${request.degRadius}');
-      return SiteByLocResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+      return (response.data as List)
+          .map((e) => SiteByLocResponseModel.fromJson(e))
+          .toList();
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());

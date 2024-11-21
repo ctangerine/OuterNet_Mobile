@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:outernet/data/models/sites/site_response_model.dart';
 import 'package:outernet/env/log_service.dart';
 
 part 'site_by_loc_response_model.g.dart';
@@ -12,6 +13,7 @@ class SiteByLocResponseModel {
   final String? name;
   final double? lat;
   final double? lng;
+  final List<Media>? medias;
 
   SiteByLocResponseModel({
     this.siteId,
@@ -19,6 +21,7 @@ class SiteByLocResponseModel {
     this.name,
     this.lat,
     this.lng,
+    this.medias
   }) {
     logger.i('SiteByLocReponseModel using for get location from site lat and long');
     logger.i(toJson());
@@ -40,6 +43,7 @@ class SiteByLocResponseModel {
     String? name,
     double? lat,
     double? lng,
+    List<Media>? medias,
   }) {
     return SiteByLocResponseModel(
       siteId: siteId ?? this.siteId,
@@ -47,6 +51,7 @@ class SiteByLocResponseModel {
       name: name ?? this.name,
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
+      medias: medias ?? this.medias,
     );
   }
 

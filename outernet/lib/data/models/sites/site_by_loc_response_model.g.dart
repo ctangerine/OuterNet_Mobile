@@ -16,6 +16,9 @@ SiteByLocResponseModel _$SiteByLocResponseModelFromJson(
       name: json['name'] as String?,
       lat: (json['lat'] as num?)?.toDouble(),
       lng: (json['lng'] as num?)?.toDouble(),
+      medias: (json['medias'] as List<dynamic>?)
+          ?.map((e) => Media.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$SiteByLocResponseModelToJson(
@@ -26,6 +29,7 @@ Map<String, dynamic> _$SiteByLocResponseModelToJson(
       'name': instance.name,
       'lat': instance.lat,
       'lng': instance.lng,
+      'medias': instance.medias?.map((e) => e.toJson()).toList(),
     };
 
 SiteType _$SiteTypeFromJson(Map<String, dynamic> json) => SiteType(

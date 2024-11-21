@@ -8,7 +8,7 @@ import 'package:outernet/presentation/screens/personal_screen/personal_account_s
 import 'package:outernet/presentation/screens/personal_screen/personal_information_screen.dart';
 import 'package:outernet/presentation/screens/account_screen/register_screen.dart';
 import 'package:outernet/presentation/screens/personal_screen/security_screen.dart';
-import 'package:outernet/presentation/screens/site_screen/site_detail_screen.dart';
+import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_screen.dart';
 import 'package:outernet/presentation/ui_component_resused/review_card.dart';
 
 class CurrentCodingPage extends StatelessWidget {

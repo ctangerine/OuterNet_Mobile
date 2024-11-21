@@ -23,7 +23,7 @@ class AuthApiImplement {
       );
 
       return AuthResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -44,7 +44,7 @@ class AuthApiImplement {
       return UserResponseModel.fromJson({
         'id': 1,
       });
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -59,7 +59,7 @@ class AuthApiImplement {
       );
 
       return response.data['message'];
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -74,7 +74,7 @@ class AuthApiImplement {
       );
 
       return UserResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -89,7 +89,7 @@ class AuthApiImplement {
       );
 
       return UserResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -103,7 +103,7 @@ class AuthApiImplement {
       );
 
       return response.data['token'];
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());

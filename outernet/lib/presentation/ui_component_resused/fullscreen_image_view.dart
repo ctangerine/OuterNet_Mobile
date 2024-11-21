@@ -5,7 +5,7 @@ import 'package:outernet/presentation/screens/asset_links.dart';
 class FullscreenImageViewer extends StatelessWidget {
   final String imageUrl;
 
-  const FullscreenImageViewer({Key? key, required this.imageUrl}) : super(key: key);
+  const FullscreenImageViewer({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {

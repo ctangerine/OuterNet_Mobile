@@ -37,7 +37,7 @@ class SiteReviewApiImplement {
       );
 
       return response.data['message'];
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -48,7 +48,7 @@ class SiteReviewApiImplement {
     try {
       final response = await dio.get('${ApiEndpoints.siteReview}/$reviewId');
       return DetailReviewResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -84,7 +84,7 @@ class SiteReviewApiImplement {
       );
 
       return response.data['message'];
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());
@@ -95,7 +95,7 @@ class SiteReviewApiImplement {
     try {
       final response = await dio.delete('${ApiEndpoints.siteReview}/$reviewId');
       return response.data['message'];
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
       throw Exception(e.toString());

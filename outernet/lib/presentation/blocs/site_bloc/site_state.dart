@@ -14,7 +14,7 @@ class LoadListSiteSuccess extends SiteState {
   final List<SiteResponseModel> sites;
   final SiteResponseModel siteDetail;
   final SiteReviewResponseModel siteReview;
-  final SiteByLocResponseModel siteByLoc;
+  final List<SiteByLocResponseModel> siteByLoc;
 
   bool? isListRecentlyChanged;
   bool? isSiteDetailChanged;
@@ -45,7 +45,7 @@ class LoadListSiteSuccess extends SiteState {
     required List<SiteResponseModel> sites,
     SiteResponseModel? siteDetail,
     SiteReviewResponseModel? siteReview,
-    SiteByLocResponseModel? siteByLoc,
+    List<SiteByLocResponseModel>? siteByLoc,
     bool? isListRecentlyChanged,
     bool? isSiteDetailChanged,
     bool? isNewlyAddedSite,
@@ -59,7 +59,7 @@ class LoadListSiteSuccess extends SiteState {
       sites: sites,
       siteDetail: siteDetail ?? SiteResponseModel.defaultInstance,
       siteReview: siteReview ?? SiteReviewResponseModel.defaultInstance,
-      siteByLoc: siteByLoc ?? SiteByLocResponseModel.defaultInstance,
+      siteByLoc: siteByLoc ?? [SiteByLocResponseModel.defaultInstance],
       isListRecentlyChanged: isListRecentlyChanged,
       isSiteDetailChanged: isSiteDetailChanged,
       isNewlyAddedSite: isNewlyAddedSite,
@@ -76,7 +76,7 @@ class LoadListSiteSuccess extends SiteState {
     List<SiteResponseModel>? sites,
     SiteResponseModel? siteDetail,
     SiteReviewResponseModel? siteReview,
-    SiteByLocResponseModel? siteByLoc,
+    List<SiteByLocResponseModel>? siteByLoc,
     bool? isListRecentlyChanged,
     bool? isSiteDetailChanged,
     bool? isNewlyAddedSite,

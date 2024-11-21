@@ -84,7 +84,7 @@ class SiteRepositoryImplement implements SiteRepository {
   }
 
   @override
-  Future<Either<Failure, SiteByLocResponseModel>> getSiteByLocation(GetSiteRequestModel request) async {
+  Future<Either<Failure, List<SiteByLocResponseModel>>> getSiteByLocation(GetSiteRequestModel request) async {
     try {
       final response = await _api.getSiteByLoc(request);
       return Right(response);
