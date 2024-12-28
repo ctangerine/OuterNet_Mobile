@@ -2,12 +2,15 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:outernet/data/constant/endpoints.dart';
+import 'package:outernet/data/data_sources/local_datasouces/drift_database.dart';
+import 'package:outernet/data/data_sources/local_datasouces/drift_database_provider.dart';
 import 'package:outernet/data/models/auth/auth_request_model.dart';
 import 'package:outernet/data/models/auth/auth_response_model.dart';
 import 'package:outernet/data/models/user/user_response_model.dart';
 
 class AuthApiImplement {
   final Dio dio;
+  final AppDatabase _db = dbProvider.database;
 
   AuthApiImplement(this.dio);
 
@@ -30,7 +33,7 @@ class AuthApiImplement {
     }
   }
 
-  Future<UserResponseModel> register(String email, String password, String name) async {
+  Future<GetUserDetailResponseModel> register(String email, String password, String name) async {
     try {
       final response = await dio.post(
         ApiEndpoints.register,
@@ -41,7 +44,7 @@ class AuthApiImplement {
         },
       );
 
-      return UserResponseModel.fromJson({
+      return GetUserDetailResponseModel.fromJson({
         'id': 1,
       });
     } on DioException catch (e) {
@@ -66,14 +69,14 @@ class AuthApiImplement {
     }
   }
 
-  Future<UserResponseModel> resetPassword(ResetPasswordRequestModel request) async {
+  Future<GetUserDetailResponseModel> resetPassword(ResetPasswordRequestModel request) async {
     try {
       final response = await dio.post(
         ApiEndpoints.resetPassword,
         data: request.toJson(),
       );
 
-      return UserResponseModel.fromJson(response.data);
+      return GetUserDetailResponseModel.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
@@ -81,14 +84,14 @@ class AuthApiImplement {
     }
   }
 
-  Future<UserResponseModel> confirmResetPassword(ResetPasswordRequestModel request) async {
+  Future<GetUserDetailResponseModel> confirmResetPassword(ResetPasswordRequestModel request) async {
     try {
       final response = await dio.post(
         ApiEndpoints.resetPassword,
         data: request.toJson(),
       );
 
-      return UserResponseModel.fromJson(response.data);
+      return GetUserDetailResponseModel.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {
