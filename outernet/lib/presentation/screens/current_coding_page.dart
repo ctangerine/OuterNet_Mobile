@@ -1,13 +1,15 @@
 // A page list current coding page
 import 'package:flutter/material.dart';
-import 'package:outernet/data/models/sites/site_review_response_model.dart';
+import 'package:outernet/domain/entities/review_entity.dart';
 import 'package:outernet/presentation/screens/discover/discover_categories.dart';
-import 'package:outernet/presentation/screens/home_screen/homepage_screen.dart';
+import 'package:outernet/presentation/screens/home_screen/page_selector.dart';
 import 'package:outernet/presentation/screens/account_screen/login_screen.dart';
+import 'package:outernet/presentation/screens/home_screen/home_screen.dart';
 import 'package:outernet/presentation/screens/personal_screen/personal_account_screen.dart';
 import 'package:outernet/presentation/screens/personal_screen/personal_information_screen.dart';
 import 'package:outernet/presentation/screens/account_screen/register_screen.dart';
 import 'package:outernet/presentation/screens/personal_screen/security_screen.dart';
+import 'package:outernet/presentation/screens/site_screen/site_adding/add_new_site_screen.dart';
 import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_screen.dart';
 import 'package:outernet/presentation/ui_component_resused/review_card.dart';
 
@@ -53,7 +55,7 @@ class CurrentCodingPage extends StatelessWidget {
                   // Navigate to the current coding page
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomePageScreen()),
+                    MaterialPageRoute(builder: (context) => const PageSelector()),
                   );
                 },
                 child: const Text('Home page'),
@@ -95,10 +97,22 @@ class CurrentCodingPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  final review = SiteReview.defaultInstance;
+                  final review = ReviewEntity.defaultInstance;
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewCard(review: review, isFavorite: false,)));
                 },
                 child: const Text('Review Card'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
+                child: const Text('Home_screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewSiteScreen()));
+                },
+                child: const Text('add site'),
               )
             ],
           ),
