@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_events.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_state.dart';
+import 'package:outernet/presentation/blocs/UserBloc/user_bloc.dart';
+import 'package:outernet/presentation/blocs/UserBloc/user_events.dart';
 import 'package:outernet/presentation/blocs/bloc_package.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
@@ -121,6 +123,8 @@ class LoginScreen extends StatelessWidget {
                       return Text(state.failure.message,
                           style: const TextStyle(color: Colors.red, fontSize: 16));
                     } else if (state is Authenticated) {
+                      final userBloc = BlocProvider.of<UserBloc>(context);
+                      userBloc.add(GetUserDetailEvent());
                       return const Text('Đăng nhập thành công',
                           style: TextStyle(color: Colors.green, fontSize: 16));
                     } else {
