@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:outernet/data/models/sites/site_by_loc_response_model.dart';
+import 'package:outernet/data/models/sites/common_site_model.dart';
 import 'package:outernet/data/models/sites/site_request_model.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
-import 'package:outernet/data/models/sites/site_review_response_model.dart';
 import 'package:outernet/domain/entities/failure.dart';
+import 'package:outernet/domain/entities/review_entity.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/domain/repositories/site_repository.dart';
 
 class SiteUsecase {
@@ -11,31 +11,35 @@ class SiteUsecase {
 
   SiteUsecase(this.repository);
 
-  Future<Either<Failure,SiteResponseModel>> addNewSite(AddNewSiteRequestModel request) {
+  Future<Either<Failure,String>> addNewSite(AddNewSiteRequestModel request) {
     return repository.addNewSite(request);
   }
 
-  Future<Either<Failure,SiteResponseModel>> getPublicSite(int id) {
+  Future<Either<Failure,SiteEntity>> getPublicSite(int id) {
     return repository.getPublicSite(id);
   }
 
-  Future<Either<Failure,SiteResponseModel>> updateSiteInfor(UpdateSiteRequestModel request) {
-    return repository.updateSiteInfor(request);
+  Future<Either<Failure,SiteEntity>> updateSiteInfo(UpdateSiteRequestModel request) {
+    return repository.updateSiteInfo(request);
   }
 
-  Future<Either<Failure,SiteResponseModel>> getSiteByVersion(int version) {
+  Future<Either<Failure,SiteEntity>> getSiteByVersion(int version) {
     return repository.getSiteByVersion(version);
   }
 
-  Future<Either<Failure,SiteReviewResponseModel>> getSiteReview(int siteId) {
+  Future<Either<Failure,List<ReviewEntity>>> getSiteReview(int siteId) {
     return repository.getSiteReview(siteId);
   }
 
-  Future<Either<Failure,List<SiteResponseModel>>> getListSite() {
-    return repository.getListSite();
+  Future<Either<Failure, List<SiteEntity>>> getSiteByLocation(GetSitesByAreaRequestModel request) {
+    return repository.getSiteByLocation(request);
   }
 
-  Future<Either<Failure, List<SiteByLocResponseModel>>> getSiteByLocation(GetSiteRequestModel request) {
-    return repository.getSiteByLocation(request);
+  Future<Either<Failure,List<GroupedService>>> getAllGroupedService(int id) {
+    return repository.getAllGroupedService(id);
+  }
+
+  Future<Either<Failure, List<SiteType>>> getAllSiteType() {
+    return repository.getAllSiteType();
   }
 }

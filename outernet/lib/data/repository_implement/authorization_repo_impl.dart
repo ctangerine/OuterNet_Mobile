@@ -18,18 +18,14 @@ class AuthorizationRepositoryImplement implements AuthorizationRepository {
       final response = await _api.login(email, password);
       final String accessToken = response.accessToken;
       final String refreshToken = response.refreshToken;
-      final BasicInfo basicInfo = response.basicInfo;
+      final BasicInfo basicInfo = response.userInfo;
 
       // Save token to local storage
-      SecureStorage.instance.write('token', accessToken);
-      SecureStorage.instance.write('refreshToken', refreshToken);
+      await SecureStorage.instance.write('token', accessToken);
+      await SecureStorage.instance.write('refreshToken', refreshToken);
+      await SecureStorage.instance.writeBool('isLoggedIn', true);
 
-      UserEntity user = UserEntity(
-        userId: basicInfo.id,
-        email: basicInfo.email,
-        fullname: basicInfo.fullName,
-        avatar: basicInfo.avatar,
-      );
+      UserEntity user = basicInfo.toEntity();
 
       return Right(user);
 
