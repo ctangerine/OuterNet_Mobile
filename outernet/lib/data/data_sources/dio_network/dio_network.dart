@@ -40,7 +40,7 @@ class DioNetwork {
         return handler.next(options);
       },
       onError: (DioException error, handler) async {
-        if (error.response?.statusCode == 401) {
+        if (error.response?.statusCode == 401 || error.response?.statusCode == 403) {
           final newToken = await _refreshToken();
           if (newToken != null) {
             final options = error.requestOptions;
@@ -108,7 +108,7 @@ class DioNetwork {
   }
 
   static Future<Map<String, dynamic>> _getHeaders() async {
-    final token = await SecureStorage.instance.read('jwt_token');
+    final token = await SecureStorage.instance.read('token');
     return {
       "Authorization": token != null ? "Bearer $token" : null,
       "Content-Type": "application/json",
@@ -116,10 +116,9 @@ class DioNetwork {
   }
 
   static Future<String?> _refreshToken() async {
-    // Implement logic to refresh JWT token
-    const newToken = "new_jwt_token"; // Replace with actual token refresh logic
-    await SecureStorage.instance.write('jwt_token', newToken);
-    return newToken;
+    // final refreshToken = await SecureStorage.instance.read('refresh_token');
+    // return newToken;
+    return null;
   }
 }
 
@@ -145,12 +144,6 @@ class LoggerInterceptor extends Interceptor {
     if (request) {
       logger.i("Request: ${options.method} ${options.path}");
     }
-    if (requestHeader) {
-      logger.i("Request Headers: ${options.headers}");
-    }
-    if (requestBody) {
-      logger.i("Request Body: ${options.data}");
-    }
     handler.next(options);
   }
 
@@ -160,7 +153,6 @@ class LoggerInterceptor extends Interceptor {
       logger.i("Response Headers: ${response.headers}");
     }
     if (responseBody) {
-      logger.i("Response Body: ${response.data}");
     }
     handler.next(response);
   }
