@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
-import 'package:outernet/data/models/sites/site_review_response_model.dart';
+import 'package:outernet/domain/entities/review_entity.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
 import 'package:outernet/presentation/ui_component_resused/review_card.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
@@ -9,8 +9,8 @@ import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
 
 class ReviewPart extends StatelessWidget {
-  final SiteResponseModel siteDetail;
-  final SiteReviewResponseModel siteReview;
+  final SiteEntity siteDetail;
+  final List<ReviewEntity> siteReview;
 
   const ReviewPart({super.key, required this.siteDetail, required this.siteReview});
 
@@ -55,7 +55,7 @@ class ReviewPart extends StatelessWidget {
     );
   }
 
-  Widget _reviewBox(BuildContext context, SiteResponseModel siteDetail, SiteReviewResponseModel siteReview) {
+  Widget _reviewBox(BuildContext context, SiteEntity siteDetail, List<ReviewEntity> siteReview) {
     return FutureBuilder<Map<String, dynamic>>(
       future: _fetchSiteComment(context), 
       builder: (context, snapshot) {
@@ -73,7 +73,7 @@ class ReviewPart extends StatelessWidget {
             ),
           );
         } else if (snapshot.hasData) {
-          final siteReview = snapshot.data!['siteReview'] as SiteReviewResponseModel?;
+          final siteReview = snapshot.data!['siteReview'] as List<ReviewEntity>?;
           return _buildSiteReview(siteDetail, siteReview!);
         } else {
           return const SizedBox.shrink();
@@ -82,8 +82,8 @@ class ReviewPart extends StatelessWidget {
     );
   }
 
-  Widget _buildSiteReview(SiteResponseModel siteDetail, SiteReviewResponseModel siteReview) {
-    if (siteReview.data == null || siteReview.data!.isEmpty) {
+  Widget _buildSiteReview(SiteEntity siteDetail, List<ReviewEntity> siteReview) {
+    if (siteReview.isEmpty) {
       return const Center(
         child: Text('Ở đây hơi trống trải, quay lại sau bạn nhé!'),
       );
@@ -96,12 +96,12 @@ class ReviewPart extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             return ReviewCard(
-              review: siteReview.data![index],
+              review: siteReview[index],
               isFavorite: true,
             );
           }, 
           separatorBuilder: (context, index) => const SizedBox(height: 20, child: Divider()), 
-          itemCount: siteReview.data!.length
+          itemCount: siteReview.length
         ),
         const SizedBox(height: 20),
         Row(

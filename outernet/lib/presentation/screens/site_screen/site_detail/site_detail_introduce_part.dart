@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
-import 'package:outernet/data/models/sites/site_review_response_model.dart';
+import 'package:outernet/data/models/sites/common_site_model.dart';
+import 'package:outernet/domain/entities/review_entity.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/env/config.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
 import 'package:outernet/presentation/themes.dart';
@@ -10,8 +11,8 @@ import 'package:outernet/presentation/ui_component_resused/props_rating_slide.da
 import 'package:readmore/readmore.dart';
 
 class IntroducePart extends StatelessWidget {
-  final SiteResponseModel siteDetail;
-  final SiteReviewResponseModel siteReview;
+  final SiteEntity siteDetail;
+  final List<ReviewEntity> siteReview;
 
   const IntroducePart({super.key, required this.siteDetail, required this.siteReview});
 
@@ -35,7 +36,7 @@ class IntroducePart extends StatelessWidget {
     );
   }
 
-  Row _buildRatingBar(SiteResponseModel siteDetail, SiteReviewResponseModel siteReview) {
+  Row _buildRatingBar(SiteEntity siteDetail, List<ReviewEntity> siteReview) {
     return Row(
       children: [
         RatingBar(
@@ -53,12 +54,12 @@ class IntroducePart extends StatelessWidget {
           color: const Color.fromARGB(255, 37, 37, 37),
         ),
         const SizedBox(width: 10,),
-        Text('${siteReview.data?.length?? 0} đánh giá', style: AppTextStyles.body1Regular.copyWith(fontSize: 16),),
+        Text('${siteReview.length} đánh giá', style: AppTextStyles.body1Regular.copyWith(fontSize: 16),),
       ],
     );
   }
 
-  Widget _buildLocation(SiteResponseModel siteDetail) {
+  Widget _buildLocation(SiteEntity siteDetail) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,7 +76,7 @@ class IntroducePart extends StatelessWidget {
     );
   }
 
-  Widget _buildDescription(SiteResponseModel siteDetail, SiteReviewResponseModel siteReview) {
+  Widget _buildDescription(SiteEntity siteDetail, List<ReviewEntity> siteReview) {
     return Container(
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.only(top: 10),
@@ -86,7 +87,7 @@ class IntroducePart extends StatelessWidget {
     );
   }
 
-  Widget _descriptionBox(SiteResponseModel siteDetail, SiteReviewResponseModel siteReview) {
+  Widget _descriptionBox(SiteEntity siteDetail, List<ReviewEntity> siteReview) {
     final ratings = [
       5, 4, 3, 2, 1
     ];
@@ -161,7 +162,7 @@ class IntroducePart extends StatelessWidget {
     );
   }
 
-  Row _descriptionRatingPart(SiteResponseModel siteDetail, SiteReviewResponseModel siteReview, List<int> ratings) {
+  Row _descriptionRatingPart(SiteEntity siteDetail, List<ReviewEntity> siteReview, List<int> ratings) {
     return Row(
       children: [
         Container(
@@ -178,7 +179,7 @@ class IntroducePart extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Text('${siteReview.data?.length?? 0} đánh giá', style: AppTextStyles.body1Regular,),
+              Text('${siteReview.length} đánh giá', style: AppTextStyles.body1Regular,),
             ],
           ),
         ),
@@ -204,7 +205,7 @@ class IntroducePart extends StatelessWidget {
     );
   }
 
-  Widget _buildMap(SiteResponseModel siteDetail) {
+  Widget _buildMap(SiteEntity siteDetail) {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,7 +230,7 @@ class IntroducePart extends StatelessWidget {
     );
   }
 
-  Widget _buildWebsite(SiteResponseModel siteDetail) {
+  Widget _buildWebsite(SiteEntity siteDetail) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -255,7 +256,7 @@ class IntroducePart extends StatelessWidget {
     );
   }
 
-  Widget _buildContact(SiteResponseModel siteDetail) {
+  Widget _buildContact(SiteEntity siteDetail) {
     final listPhoneNumber = siteDetail.phoneNumbers ?? [];
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

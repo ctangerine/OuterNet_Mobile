@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
-import 'package:outernet/data/models/sites/site_review_response_model.dart';
+import 'package:outernet/domain/entities/review_entity.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/env/log_service.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
@@ -102,8 +102,8 @@ class SiteDetailScreenContent extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasData) {
-            final siteDetail = snapshot.data!['siteDetail'] as SiteResponseModel;
-            final siteReview = snapshot.data!['siteReview'] as SiteReviewResponseModel?;
+            final siteDetail = snapshot.data!['siteDetail'] as SiteEntity;
+            final siteReview = snapshot.data!['siteReview'] as List<ReviewEntity>?;
             return _buildSiteDetail(context, siteDetail, siteReview);
           } else {
             return const SizedBox.shrink();
@@ -113,7 +113,7 @@ class SiteDetailScreenContent extends StatelessWidget {
     );
   }
 
-  Widget _buildSiteDetail(BuildContext context, SiteResponseModel siteDetail, SiteReviewResponseModel? siteReview) {
+  Widget _buildSiteDetail(BuildContext context, SiteEntity siteDetail, List<ReviewEntity>? siteReview) {
     final imageList = [mikazuki1, mikazuki2, mikazuki3];
     return SafeArea(
       child: SingleChildScrollView(

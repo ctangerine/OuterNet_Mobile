@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
+import 'package:outernet/data/models/sites/common_site_model.dart';
 import 'package:outernet/presentation/ui_component_resused/amenity_card.dart';
 
 class SiteAmenitiesDetailScreen extends StatelessWidget {

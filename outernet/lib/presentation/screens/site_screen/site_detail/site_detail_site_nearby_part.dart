@@ -2,10 +2,9 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:outernet/data/models/sites/site_by_loc_response_model.dart';
 import 'package:outernet/data/models/sites/site_request_model.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
-import 'package:outernet/data/models/sites/site_review_response_model.dart';
+import 'package:outernet/domain/entities/review_entity.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
 import 'package:outernet/presentation/ui_component_resused/site_card.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
@@ -14,8 +13,8 @@ import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
 import 'package:outernet/presentation/themes.dart';
 
 class SiteNearbyPart extends StatefulWidget {
-  final SiteResponseModel siteDetail;
-  final SiteReviewResponseModel siteReview;
+  final SiteEntity siteDetail;
+  final List<ReviewEntity> siteReview;
 
   const SiteNearbyPart({super.key, required this.siteDetail, required this.siteReview});
 
@@ -62,7 +61,7 @@ class _SiteNearbyPartState extends State<SiteNearbyPart> {
     });
   }
 
-  Future<Map<String, dynamic>> _fetchSiteNearby(BuildContext context, GetSiteRequestModel request) async {
+  Future<Map<String, dynamic>> _fetchSiteNearby(BuildContext context, GetSitesByAreaRequestModel request) async {
     final siteBloc = context.read<SiteBloc>();
     if (siteBloc.state is LoadListSiteSuccess && (siteBloc.state as LoadListSiteSuccess).isSiteByLocChanged == true) {
       (siteBloc.state as LoadListSiteSuccess).isSiteByLocChanged = false;
@@ -95,7 +94,7 @@ class _SiteNearbyPartState extends State<SiteNearbyPart> {
     );
   }
 
-  Widget _buildSiteNearbyBox(BuildContext context, SiteResponseModel siteDetail) {
+  Widget _buildSiteNearbyBox(BuildContext context, SiteEntity siteDetail) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,9 +144,9 @@ class _SiteNearbyPartState extends State<SiteNearbyPart> {
     );
   }
 
-  Widget _buildNearbySites(BuildContext context, SiteResponseModel siteDetail) {
+  Widget _buildNearbySites(BuildContext context, SiteEntity siteDetail) {
     return FutureBuilder<Map<String, dynamic>>(
-      future: _fetchSiteNearby(context, GetSiteRequestModel(
+      future: _fetchSiteNearby(context, GetSitesByAreaRequestModel(
         lat: siteDetail.lat,
         lng: siteDetail.lng,
         degRadius: {
@@ -172,7 +171,7 @@ class _SiteNearbyPartState extends State<SiteNearbyPart> {
             ),
           );
         } else if (snapshot.hasData) {
-          final siteNearBy = snapshot.data!['siteNearBy'] as List<SiteByLocResponseModel>?;
+          final siteNearBy = snapshot.data!['siteNearBy'] as List<SiteEntity>?;
           if (siteNearBy == null || siteNearBy.isEmpty) {
             return const Center(
               child: Text('Không có địa điểm nào gần đây.'),
@@ -186,7 +185,7 @@ class _SiteNearbyPartState extends State<SiteNearbyPart> {
     );
   }
 
-  Widget _buildSiteNearbyList(List<SiteByLocResponseModel> siteNearBy) {
+  Widget _buildSiteNearbyList(List<SiteEntity> siteNearBy) {
     return CarouselSlider.builder(
       options: CarouselOptions(
         height: 230,
@@ -208,7 +207,7 @@ class _SiteNearbyPartState extends State<SiteNearbyPart> {
   }
 
   Widget _placeholderNearbyList() {
-    final List<SiteByLocResponseModel> mockSites = List.generate(5, (index) => SiteByLocResponseModel.defaultInstance);
+    final List<SiteEntity> mockSites = List.generate(5, (index) => SiteEntity.defaultInstance);
     return CarouselSlider.builder(
       options: CarouselOptions(
         height: 230,
