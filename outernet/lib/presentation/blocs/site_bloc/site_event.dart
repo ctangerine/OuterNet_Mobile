@@ -41,8 +41,16 @@ class GetSiteReview extends SiteEvent {
 }
 
 class GetSiteByLocation extends SiteEvent {
-  final GetSiteRequestModel request;
+  final GetSitesByAreaRequestModel request;
 
   GetSiteByLocation(this.request);
 }
+
+class GetAllGroupedService extends SiteEvent {
+  int id;
+
+  GetAllGroupedService(this.id);
+}
+
+class GetAllSiteType extends SiteEvent {}
 

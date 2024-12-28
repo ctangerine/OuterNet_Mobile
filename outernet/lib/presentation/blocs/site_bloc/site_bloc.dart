@@ -1,6 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
-import 'package:outernet/data/models/sites/site_review_response_model.dart';
 import 'package:outernet/domain/usecases/site_usecase.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
@@ -17,18 +15,12 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
     on<GetSiteVersion>(_onGetSiteVersion);
     on<GetSiteReview>(_onGetSiteReview);
     on<GetSiteByLocation>(_onGetSiteByLocation);
+    on<GetAllGroupedService>(_onGetAllGroupServices);
+    on<GetAllSiteType>(_onGetAllSiteType);
   }
 
   Future<void> _onLoadListSite(LoadListSite event, Emitter<SiteState> emit) async {
     emit(SiteLoading());
-    final result = await siteUsecase.getListSite();
-    result.fold(
-      (failure) => emit(LoadListSiteFailed(failure.message)),
-      (sites) {
-        final siteDetail = SiteResponseModel.defaultInstance;
-        emit(LoadListSiteSuccess(sites: sites, siteDetail: siteDetail));
-      }
-    );
   }
 
   Future<void> _onLoadSiteDetail(LoadSiteDetail event, Emitter<SiteState> emit) async {
@@ -40,7 +32,7 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
           emit((state as LoadListSiteSuccess).copyWith(siteDetail: site, isSiteDetailChanged: true));
         }
         else {
-          emit(LoadListSiteSuccess(sites: [], siteDetail: site, siteReview: SiteReviewResponseModel.defaultInstance, isSiteDetailChanged: true));
+          emit(LoadListSiteSuccess(sites: [], siteDetail: site, siteReview: [], isSiteDetailChanged: true));
         }
       }
     );
@@ -49,17 +41,17 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
   Future<void> _onAddSite(AddSite event, Emitter<SiteState> emit) async {
     final result = await siteUsecase.addNewSite(event.site);
     result.fold(
-      (failure) => emit(LoadListSiteFailed(failure.message)),
+      (failure) => emit((state as LoadListSiteSuccess).copyWith(message: failure.message)),
       (site) {
         if (state is LoadListSiteSuccess) {
-          emit((state as LoadListSiteSuccess).copyWith(siteDetail: site, isNewlyAddedSite: true));
+          emit((state as LoadListSiteSuccess).copyWith(message: site, isNewlyAddedSite: true));
         }
       }
     );
   }
 
   Future<void> _onUpdateSite(UpdateSite event, Emitter<SiteState> emit) async {
-    final result = await siteUsecase.updateSiteInfor(event.site);
+    final result = await siteUsecase.updateSiteInfo(event.site);
     result.fold(
       (failure) => emit(LoadListSiteFailed(failure.message)),
       (site) {
@@ -113,6 +105,34 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
       (sites) {
         final siteByLoc = sites;
         emit((state as LoadListSiteSuccess).copyWith(siteByLoc: siteByLoc, isSiteByLocChanged: true));
+      }
+    );
+  }
+
+  Future<void> _onGetAllGroupServices(GetAllGroupedService event, Emitter<SiteState> emit) async {
+    final result = await siteUsecase.getAllGroupedService(event.id);
+    result.fold(
+      (failure) => emit(LoadListSiteFailed(failure.message)),
+      (groupedServices) {
+        try {
+          emit((state as LoadListSiteSuccess).copyWith(groupedServices: groupedServices, isGotGroupedService: true));
+        } catch (e) {
+          emit(LoadListSiteSuccess(sites: [], groupedServices: groupedServices, isGotGroupedService: true));
+        }
+      }
+    );
+  }
+
+  Future<void> _onGetAllSiteType(GetAllSiteType event, Emitter<SiteState> emit) async {
+    final result = await siteUsecase.getAllSiteType();
+    result.fold(
+      (failure) => emit(LoadListSiteFailed(failure.message)),
+      (siteTypes) {
+        try {
+          emit((state as LoadListSiteSuccess).copyWith(siteTypes: siteTypes, isGotGroupedService: true));
+        } catch (e) {
+          emit(LoadListSiteSuccess(sites: [], siteTypes: siteTypes, isGotGroupedService: true));
+        }
       }
     );
   }
