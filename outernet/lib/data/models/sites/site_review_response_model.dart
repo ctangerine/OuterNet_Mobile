@@ -1,4 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:outernet/domain/entities/media_entity.dart';
+import 'package:outernet/domain/entities/review_entity.dart';
+import 'package:outernet/domain/entities/user_entity.dart';
 import 'package:outernet/env/log_service.dart';
 
 part 'site_review_response_model.g.dart';
@@ -39,12 +42,18 @@ class SiteReviewResponseModel {
     data: [],
     pagination: Pagination.defaultInstance,
   );
+
+  List<ReviewEntity> toEntities() {
+    final reviews = data?.map((e) => e.toEntity()).toList() ?? [];
+
+    return reviews;
+  }
 }
 
 @JsonSerializable(explicitToJson: true)
 class SiteReview {
   final int? id;
-  final int? generalRating;
+  final double? generalRating;
   final String? comment;
   final DateTime? date;
   final User? user;
@@ -77,7 +86,7 @@ class SiteReview {
 
   SiteReview copyWith({
     int? id,
-    int? generalRating,
+    double? generalRating,
     String? comment,
     DateTime? date,
     User? user,
@@ -110,9 +119,25 @@ class SiteReview {
     likeCount: 0,
     dislikeCount: 0,
   );
+
+  ReviewEntity toEntity() {
+    final review = ReviewEntity.defaultInstance.copyWith(
+      id: id,
+      generalRating: generalRating,
+      comment: comment,
+      date: date,
+      user: user?.toEntity(),
+      medias: medias?.map((e) => e.toEntity()).toList(),
+      isEdited: isEdited,
+      likeCount: likeCount,
+      dislikeCount: dislikeCount,
+    );
+
+    return review;
+  }
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class User {
   final int? id;
   final String? email;
@@ -154,9 +179,21 @@ class User {
     fullName: '',
     avatar: '',
   );
+
+  UserEntity toEntity() {
+    final user = UserEntity.defaultInstance.copyWith(
+      id: id,
+      email: email,
+      nickname: nickname,
+      fullName: fullName,
+      avatar: avatar,
+    );
+
+    return user;
+  }
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Media {
   final int? id;
   final String? url;
@@ -194,9 +231,20 @@ class Media {
     mediaType: '',
     createdAt: DateTime.now(),
   );
+
+  MediaEntity toEntity() {
+    final media = MediaEntity.defaultInstance.copyWith(
+      id: id,
+      url: url,
+      mediaType: mediaType,
+      createdAt: createdAt,
+    );
+
+    return media;
+  }
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Pagination {
   final int? currentPage;
   final int? totalPages;

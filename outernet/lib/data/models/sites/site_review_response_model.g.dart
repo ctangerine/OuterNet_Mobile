@@ -26,7 +26,7 @@ Map<String, dynamic> _$SiteReviewResponseModelToJson(
 
 SiteReview _$SiteReviewFromJson(Map<String, dynamic> json) => SiteReview(
       id: (json['id'] as num?)?.toInt(),
-      generalRating: (json['generalRating'] as num?)?.toInt(),
+      generalRating: (json['generalRating'] as num?)?.toDouble(),
       comment: json['comment'] as String?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),

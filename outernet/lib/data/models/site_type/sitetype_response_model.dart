@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:outernet/data/models/sites/common_site_model.dart';
+import 'package:outernet/data/models/sites/site_review_response_model.dart';
 import 'package:outernet/env/log_service.dart';
 
 part 'sitetype_response_model.g.dart';
@@ -7,7 +9,7 @@ final logger = LogService().logger;
 
 @JsonSerializable(explicitToJson: true)
 class SiteTypeGroupServicesResponseModel {
-  final SiteType? siteType;
+  final SiteType? siteType; 
   final List<GroupedService>? groupedSiteServices;
 
   SiteTypeGroupServicesResponseModel({
@@ -42,150 +44,56 @@ class SiteTypeGroupServicesResponseModel {
     siteType: SiteType.defaultInstance,
     groupedSiteServices: [],
   );
-}
 
-@JsonSerializable()
-class SiteType {
-  final int? id;
-  final String? name;
-  final bool? attraction;
-  final bool? amenity;
+  List<GroupedService> getGroupedServiceList() {
+    final List<GroupedService> groupedService = [];
 
-  SiteType({
-    this.id,
-    this.name,
-    this.attraction,
-    this.amenity,
-  });
+    for (GroupedService group in groupedSiteServices!) {
+      groupedService.add(GroupedService.defaultInstance.copyWith(
+        serviceGroup: group.serviceGroup,
+        services: group.services,
+      ));
+    }
 
-  factory SiteType.fromJson(Map<String, dynamic> json) => _$SiteTypeFromJson(json);
-  Map<String, dynamic> toJson() => _$SiteTypeToJson(this);
-
-  @override
-  String toString() {
-    return 'SiteType(id: $id, name: $name, attraction: $attraction, amenity: $amenity)';
+    return groupedService;
   }
-
-  SiteType copyWith({
-    int? id,
-    String? name,
-    bool? attraction,
-    bool? amenity,
-  }) {
-    return SiteType(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      attraction: attraction ?? this.attraction,
-      amenity: amenity ?? this.amenity,
-    );
-  }
-
-  static final SiteType defaultInstance = SiteType(
-    id: 0,
-    name: '',
-    attraction: false,
-    amenity: false,
-  );
 }
 
 @JsonSerializable(explicitToJson: true)
-class GroupedService {
-  final ServiceGroup? serviceGroup;
-  final List<Service>? services;
+class GetAllSiteTypeResponseModel {
+  List<SiteType>? data;
+  Pagination? pagination;
 
-  GroupedService({
-    this.serviceGroup,
-    this.services,
+  GetAllSiteTypeResponseModel({
+    this.data,
+    this.pagination,
   });
 
-  factory GroupedService.fromJson(Map<String, dynamic> json) => _$GroupedServiceFromJson(json);
-  Map<String, dynamic> toJson() => _$GroupedServiceToJson(this);
+  factory GetAllSiteTypeResponseModel.fromJson(Map<String, dynamic> json) => _$GetAllSiteTypeResponseModelFromJson(json);
+  Map<String, dynamic> toJson() => _$GetAllSiteTypeResponseModelToJson(this);
 
   @override
   String toString() {
-    return 'GroupedService(serviceGroup: $serviceGroup, services: $services)';
+    return 'GetAllSiteTypeResponseModel(data: $data, pagination: $pagination)';
   }
 
-  GroupedService copyWith({
-    ServiceGroup? serviceGroup,
-    List<Service>? services,
+  GetAllSiteTypeResponseModel copyWith({
+    List<SiteType>? data,
+    Pagination? pagination,
   }) {
-    return GroupedService(
-      serviceGroup: serviceGroup ?? this.serviceGroup,
-      services: services ?? this.services,
+    return GetAllSiteTypeResponseModel(
+      data: data ?? this.data,
+      pagination: pagination ?? this.pagination,
     );
   }
 
-  static final GroupedService defaultInstance = GroupedService(
-    serviceGroup: ServiceGroup.defaultInstance,
-    services: [],
+  static final GetAllSiteTypeResponseModel defaultInstance = GetAllSiteTypeResponseModel(
+    data: [],
+    pagination: Pagination.defaultInstance,
   );
-}
 
-@JsonSerializable()
-class ServiceGroup {
-  final int? id;
-  final String? serviceGroupName;
-
-  ServiceGroup({
-    this.id,
-    this.serviceGroupName,
-  });
-
-  factory ServiceGroup.fromJson(Map<String, dynamic> json) => _$ServiceGroupFromJson(json);
-  Map<String, dynamic> toJson() => _$ServiceGroupToJson(this);
-
-  @override
-  String toString() {
-    return 'ServiceGroup(id: $id, serviceGroupName: $serviceGroupName)';
+  List<SiteType> getSiteTypeList() {
+    return data ?? [];
   }
 
-  ServiceGroup copyWith({
-    int? id,
-    String? serviceGroupName,
-  }) {
-    return ServiceGroup(
-      id: id ?? this.id,
-      serviceGroupName: serviceGroupName ?? this.serviceGroupName,
-    );
-  }
-
-  static final ServiceGroup defaultInstance = ServiceGroup(
-    id: 0,
-    serviceGroupName: '',
-  );
-}
-
-@JsonSerializable()
-class Service {
-  final int? id;
-  final String? serviceName;
-
-  Service({
-    this.id,
-    this.serviceName,
-  });
-
-  factory Service.fromJson(Map<String, dynamic> json) => _$ServiceFromJson(json);
-  Map<String, dynamic> toJson() => _$ServiceToJson(this);
-
-  @override
-  String toString() {
-    return 'Service(id: $id, serviceName: $serviceName)';
-  }
-
-  Service copyWith({
-    int? id,
-    String? serviceName,
-  }) {
-    return Service(
-      id: id ?? this.id,
-      serviceName: serviceName ?? this.serviceName,
-    );
-  }
-
-  static final Service defaultInstance = Service(
-    id: 0,
-    serviceName: '',
-  );
 }

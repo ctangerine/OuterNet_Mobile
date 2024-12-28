@@ -1,23 +1,36 @@
+import 'package:outernet/data/models/sites/site_request_model.dart';
 import 'package:outernet/env/log_service.dart';
 
 final logger = LogService().logger;
 
-class Review {
+class ReviewSiteRequestModel {
   final int? siteId;
   final String? comment;
-  final int? generalRating;
+  final double? generalRating;
+  final DateTime? arrivalDate;
+  final List<Media>? medias;
 
-  Review({
+  ReviewSiteRequestModel({
     this.siteId,
     this.comment,
     this.generalRating,
-  });
+    this.arrivalDate,
+    this.medias,
+  }) {
+    logger.i('ReviewSiteRequestModel: using for review a site in server database');
+    logger.i(toJson());
+  }
 
-  factory Review.fromJson(Map<String, dynamic> json) {
-    return Review(
+  factory ReviewSiteRequestModel.fromJson(Map<String, dynamic> json) {
+    var mediasFromJson = json['medias'];
+    List<Media> mediasList = mediasFromJson != null ? List<Media>.from(mediasFromJson) : [];
+
+    return ReviewSiteRequestModel(
       siteId: json['siteId'],
       comment: json['comment'],
       generalRating: json['generalRating'],
+      arrivalDate: json['arrivalDate'],
+      medias: mediasList,
     );
   }
 
@@ -26,43 +39,52 @@ class Review {
       'siteId': siteId,
       'comment': comment,
       'generalRating': generalRating,
+      'arrivalDate': arrivalDate,
+      'medias': medias,
     };
   }
 }
+class UpdateReviewRequestModel {
+  final String? comment;
+  final double? generalRating;
+  final DateTime? arrivalDate;
+  final List<int>? mediaIds;
+  final List<Media>? newMedias;
 
-class SiteReviewRequestModel {
-  final Review? review;
-  final List<String>? images;
-  final List<String>? videos;
-
-  SiteReviewRequestModel({
-    this.review,
-    this.images,
-    this.videos,
+  UpdateReviewRequestModel({
+    this.comment,
+    this.generalRating,
+    this.arrivalDate,
+    this.mediaIds,
+    this.newMedias,
   }) {
-    logger.i('SiteReviewRequestModel: using for create new site review with images and videos in server database');
+    logger.i('UpdateReviewRequestModel: using for update a review in server database');
     logger.i(toJson());
   }
 
-  factory SiteReviewRequestModel.fromJson(Map<String, dynamic> json) {
-    var imagesFromJson = json['images'];
-    List<String> imagesList = imagesFromJson != null ? List<String>.from(imagesFromJson) : [];
+  factory UpdateReviewRequestModel.fromJson(Map<String, dynamic> json) {
+    var mediaIdsFromJson = json['mediaIds'];
+    List<int> mediaIdsList = mediaIdsFromJson != null ? List<int>.from(mediaIdsFromJson) : [];
 
-    var videosFromJson = json['videos'];
-    List<String> videosList = videosFromJson != null ? List<String>.from(videosFromJson) : [];
+    var newMediasFromJson = json['newMedias'];
+    List<Media> newMediasList = newMediasFromJson != null ? List<Media>.from(newMediasFromJson) : [];
 
-    return SiteReviewRequestModel(
-      review: json['review'] != null ? Review.fromJson(json['review']) : null,
-      images: imagesList,
-      videos: videosList,
+    return UpdateReviewRequestModel(
+      comment: json['comment'],
+      generalRating: json['generalRating'],
+      arrivalDate: json['arrivalDate'],
+      mediaIds: mediaIdsList,
+      newMedias: newMediasList,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'review': review?.toJson(),
-      'images': images,
-      'videos': videos,
+      'comment': comment,
+      'generalRating': generalRating,
+      'arrivalDate': arrivalDate,
+      'mediaIds': mediaIds,
+      'newMedias': newMedias,
     };
   }
 }

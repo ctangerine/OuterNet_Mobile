@@ -1,5 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:outernet/data/models/sites/common_site_model.dart';
+import 'package:outernet/data/models/sites/site_request_model.dart';
+import 'package:outernet/domain/entities/media_entity.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/env/log_service.dart';
+
 
 part 'site_response_model.g.dart';
 
@@ -18,11 +23,12 @@ class SiteResponseModel {
   final double? lng;
   final String? resolvedAddress;
   final String? website;
-  final String? createdAt;
+  final DateTime? createdAt;
   final SiteType? siteType;
   final List<String>? phoneNumbers;
   final List<GroupedService>? groupedServices;
   final List<OpeningTime>? openingTimes;
+  final List<Fee>? fees;
   final List<Media>? medias;
   final double? averageRating;
   final int? totalRating;
@@ -49,6 +55,7 @@ class SiteResponseModel {
     this.phoneNumbers,
     this.groupedServices,
     this.openingTimes,
+    this.fees,
     this.medias,
     this.averageRating,
     this.totalRating,
@@ -82,11 +89,12 @@ class SiteResponseModel {
     double? lng,
     String? resolvedAddress,
     String? website,
-    String? createdAt,
+    DateTime? createdAt,
     SiteType? siteType,
     List<String>? phoneNumbers,
     List<GroupedService>? groupedServices,
     List<OpeningTime>? openingTimes,
+    List<Fee>? fees,
     List<Media>? medias,
     double? averageRating,
     int? totalRating,
@@ -113,6 +121,7 @@ class SiteResponseModel {
       phoneNumbers: phoneNumbers ?? this.phoneNumbers,
       groupedServices: groupedServices ?? this.groupedServices,
       openingTimes: openingTimes ?? this.openingTimes,
+      fees: fees ?? this.fees,
       medias: medias ?? this.medias,
       averageRating: averageRating ?? this.averageRating,
       totalRating: totalRating ?? this.totalRating,
@@ -136,11 +145,12 @@ class SiteResponseModel {
     lng: 0.0,
     resolvedAddress: '',
     website: '',
-    createdAt: '',
+    createdAt: DateTime.now(),
     siteType: SiteType.defaultInstance,
     phoneNumbers: [],
     groupedServices: [],
     openingTimes: [],
+    fees: [],
     medias: [],
     averageRating: 0.0,
     totalRating: 0,
@@ -150,195 +160,50 @@ class SiteResponseModel {
     twoStarRating: 0,
     oneStarRating: 0,
   );
-}
 
-@JsonSerializable()
-class SiteType {
-  final int? id;
-  final String? name;
-  final bool? amenity;
-  final bool? attraction;
+  SiteEntity toEntity() {
+    final List<MediaEntity> listMediaEntity = (medias == null || medias!.isEmpty) ? [] : medias!.map((e) {
+      return MediaEntity.defaultInstance.copyWith(
+        id: e.id,
+        url: e.url,
+        mediaType: e.mediaType,
+        createdAt: e.createdAt != null ? DateTime.parse(e.createdAt!) : null,
+      );
+    }).toList();
 
-  SiteType({
-    this.id,
-    this.name,
-    this.amenity,
-    this.attraction,
-  });
-
-  factory SiteType.fromJson(Map<String, dynamic> json) => _$SiteTypeFromJson(json);
-  Map<String, dynamic> toJson() => _$SiteTypeToJson(this);
-
-  @override
-  String toString() {
-    return 'SiteType(id: $id, name: $name, amenity: $amenity, attraction: $attraction)';
-  }
-
-  SiteType copyWith({
-    int? id,
-    String? name,
-    bool? amenity,
-    bool? attraction,
-  }) {
-    return SiteType(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      amenity: amenity ?? this.amenity,
-      attraction: attraction ?? this.attraction,
+    final site = SiteEntity.defaultInstance.copyWith(
+      siteId: siteId,
+      siteVersionId: siteVersionId,
+      likeCount: likeCount,
+      dislikeCount: dislikeCount,
+      ownerId: ownerId,
+      ownerUsername: ownerUsername,
+      siteName: siteName,
+      lat: lat,
+      lng: lng,
+      resolvedAddress: resolvedAddress,
+      website: website,
+      createdAt: createdAt,
+      siteType: siteType,
+      phoneNumbers: phoneNumbers,
+      groupedServices: groupedServices,
+      openingTimes: openingTimes,
+      fees: fees,
+      medias: listMediaEntity,
+      averageRating: averageRating,
+      totalRating: totalRating,
+      fiveStarRating: fiveStarRating,
+      fourStarRating: fourStarRating,
+      threeStarRating: threeStarRating,
+      twoStarRating: twoStarRating,
+      oneStarRating: oneStarRating,
     );
-  }
 
-  static final SiteType defaultInstance = SiteType(
-    id: 0,
-    name: '',
-    amenity: false,
-    attraction: false,
-  );
+    return site;
+  }
 }
 
 @JsonSerializable(explicitToJson: true)
-class 
-GroupedService {
-  final ServiceGroup? serviceGroup;
-  final List<Service>? services;
-
-  GroupedService({
-    this.serviceGroup,
-    this.services,
-  });
-
-  factory GroupedService.fromJson(Map<String, dynamic> json) => _$GroupedServiceFromJson(json);
-  Map<String, dynamic> toJson() => _$GroupedServiceToJson(this);
-
-  @override
-  String toString() {
-    return 'GroupedService(serviceGroup: $serviceGroup, services: $services)';
-  }
-
-  GroupedService copyWith({
-    ServiceGroup? serviceGroup,
-    List<Service>? services,
-  }) {
-    return GroupedService(
-      serviceGroup: serviceGroup ?? this.serviceGroup,
-      services: services ?? this.services,
-    );
-  }
-
-  static final GroupedService defaultInstance = GroupedService(
-    serviceGroup: ServiceGroup.defaultInstance,
-    services: [],
-  );
-}
-
-@JsonSerializable()
-class ServiceGroup {
-  final int? id;
-  final String? serviceGroupName;
-
-  ServiceGroup({
-    this.id,
-    this.serviceGroupName,
-  });
-
-  factory ServiceGroup.fromJson(Map<String, dynamic> json) => _$ServiceGroupFromJson(json);
-  Map<String, dynamic> toJson() => _$ServiceGroupToJson(this);
-
-  @override
-  String toString() {
-    return 'ServiceGroup(id: $id, serviceGroupName: $serviceGroupName)';
-  }
-
-  ServiceGroup copyWith({
-    int? id,
-    String? serviceGroupName,
-  }) {
-    return ServiceGroup(
-      id: id ?? this.id,
-      serviceGroupName: serviceGroupName ?? this.serviceGroupName,
-    );
-  }
-
-  static final ServiceGroup defaultInstance = ServiceGroup(
-    id: 0,
-    serviceGroupName: '',
-  );
-}
-
-@JsonSerializable()
-class Service {
-  final int? id;
-  final String? serviceName;
-
-  Service({
-    this.id,
-    this.serviceName,
-  });
-
-  factory Service.fromJson(Map<String, dynamic> json) => _$ServiceFromJson(json);
-  Map<String, dynamic> toJson() => _$ServiceToJson(this);
-
-  @override
-  String toString() {
-    return 'Service(id: $id, serviceName: $serviceName)';
-  }
-
-  Service copyWith({
-    int? id,
-    String? serviceName,
-  }) {
-    return Service(
-      id: id ?? this.id,
-      serviceName: serviceName ?? this.serviceName,
-    );
-  }
-
-  static final Service defaultInstance = Service(
-    id: 0,
-    serviceName: '',
-  );
-}
-
-@JsonSerializable()
-class OpeningTime {
-  final String? dayOfWeek;
-  final String? openTime;
-  final String? closeTime;
-
-  OpeningTime({
-    this.dayOfWeek,
-    this.openTime,
-    this.closeTime,
-  });
-
-  factory OpeningTime.fromJson(Map<String, dynamic> json) => _$OpeningTimeFromJson(json);
-  Map<String, dynamic> toJson() => _$OpeningTimeToJson(this);
-
-  @override
-  String toString() {
-    return 'OpeningTime(dayOfWeek: $dayOfWeek, openTime: $openTime, closeTime: $closeTime)';
-  }
-
-  OpeningTime copyWith({
-    String? dayOfWeek,
-    String? openTime,
-    String? closeTime,
-  }) {
-    return OpeningTime(
-      dayOfWeek: dayOfWeek ?? this.dayOfWeek,
-      openTime: openTime ?? this.openTime,
-      closeTime: closeTime ?? this.closeTime,
-    );
-  }
-
-  static final OpeningTime defaultInstance = OpeningTime(
-    dayOfWeek: '',
-    openTime: '',
-    closeTime: '',
-  );
-}
-
-@JsonSerializable()
 class Media {
   final int? id;
   final String? url;
@@ -380,4 +245,15 @@ class Media {
     mediaType: '',
     createdAt: '',
   );
+
+  MediaEntity toEntity() {
+    final media = MediaEntity.defaultInstance.copyWith(
+      id: id,
+      url: url,
+      mediaType: mediaType,
+      createdAt: createdAt != null ? DateTime.parse(createdAt!) : null,
+    );
+
+    return media;
+  }
 }

@@ -1,31 +1,16 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
-import 'package:outernet/env/log_service.dart';
+import 'package:outernet/data/models/sites/common_site_model.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 
 part 'site_by_loc_response_model.g.dart';
 
-final logger = LogService().logger;
-
 @JsonSerializable(explicitToJson: true)
 class SiteByLocResponseModel {
-  final int? siteId;
-  final SiteType? siteType;
-  final String? name;
-  final double? lat;
-  final double? lng;
-  final List<Media>? medias;
+  final List<Site> sites;
 
   SiteByLocResponseModel({
-    this.siteId,
-    this.siteType,
-    this.name,
-    this.lat,
-    this.lng,
-    this.medias
-  }) {
-    logger.i('SiteByLocReponseModel using for get location from site lat and long');
-    logger.i(toJson());
-  }
+    required this.sites,
+  });
 
   factory SiteByLocResponseModel.fromJson(Map<String, dynamic> json) =>
       _$SiteByLocResponseModelFromJson(json);
@@ -34,28 +19,85 @@ class SiteByLocResponseModel {
 
   @override
   String toString() {
-    return 'SiteByLocResponseModel(siteId: $siteId, siteType: $siteType, name: $name, lat: $lat, lng: $lng)';
+    return 'SiteByLocResponseModel(sites: $sites)';
   }
 
+  static final SiteByLocResponseModel defaultInstance = SiteByLocResponseModel(
+    sites: [],
+  );
+
   SiteByLocResponseModel copyWith({
+    List<Site>? sites,
+  }) {
+    return SiteByLocResponseModel(
+      sites: sites ?? this.sites,
+    );
+  }
+
+  List<SiteEntity> toEntities() {
+    final sites = this.sites.map((e) {
+      final SiteEntity site = SiteEntity.defaultInstance.copyWith(
+        siteId: e.siteId,
+        siteType: SiteType.defaultInstance.copyWith(
+          id: e.siteType.id,
+          name: e.siteType.name,
+          amenity: e.siteType.amenity,
+          attraction: e.siteType.attraction,
+        ),
+        siteName: e.name,
+        lat: e.lat,
+        lng: e.lng,
+      );
+
+      return site;
+    }).toList();
+
+    return sites;
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class Site {
+  final int siteId;
+  final SiteType siteType;
+  final String name;
+  final double lat;
+  final double lng;
+
+  Site({
+    required this.siteId,
+    required this.siteType,
+    required this.name,
+    required this.lat,
+    required this.lng,
+  });
+
+  factory Site.fromJson(Map<String, dynamic> json) => _$SiteFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SiteToJson(this);
+
+  @override
+  String toString() {
+    return 'Site(siteId: $siteId, siteType: $siteType, name: $name, lat: $lat, lng: $lng)';
+  }
+
+  Site copyWith({
     int? siteId,
     SiteType? siteType,
     String? name,
     double? lat,
     double? lng,
-    List<Media>? medias,
   }) {
-    return SiteByLocResponseModel(
+    return Site(
       siteId: siteId ?? this.siteId,
       siteType: siteType ?? this.siteType,
       name: name ?? this.name,
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
-      medias: medias ?? this.medias,
     );
   }
 
-  static final SiteByLocResponseModel defaultInstance = SiteByLocResponseModel(
+  static final Site defaultInstance = Site(
     siteId: 0,
     siteType: SiteType.defaultInstance,
     name: '',
@@ -64,46 +106,3 @@ class SiteByLocResponseModel {
   );
 }
 
-@JsonSerializable()
-class SiteType {
-  final int? id;
-  final String? name;
-  final bool? amenity;
-  final bool? attraction;
-
-  SiteType({
-    this.id,
-    this.name,
-    this.amenity,
-    this.attraction,
-  });
-
-  factory SiteType.fromJson(Map<String, dynamic> json) => _$SiteTypeFromJson(json);
-  Map<String, dynamic> toJson() => _$SiteTypeToJson(this);
-
-  @override
-  String toString() {
-    return 'SiteType(id: $id, name: $name, amenity: $amenity, attraction: $attraction)';
-  }
-
-  SiteType copyWith({
-    int? id,
-    String? name,
-    bool? amenity,
-    bool? attraction,
-  }) {
-    return SiteType(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      amenity: amenity ?? this.amenity,
-      attraction: attraction ?? this.attraction,
-    );
-  }
-
-  static final SiteType defaultInstance = SiteType(
-    id: 0,
-    name: '',
-    amenity: false,
-    attraction: false,
-  );
-}
