@@ -6,14 +6,16 @@ class Config {
   final String apiBaseUrl;
   final String logLevel;
   final String siteDescription;
+  final String env;
 
-  Config({required this.apiBaseUrl,required this.logLevel,required this.siteDescription});
+  Config({required this.apiBaseUrl,required this.logLevel,required this.siteDescription,required this.env});
   
   factory Config.fromJson(Map<String, dynamic> json) {
     return Config( 
       apiBaseUrl: json['apiBaseUrl'], 
       logLevel: json['logLevel'], 
       siteDescription: json['siteDescription'],
+      env: json['env']
     ); 
   }
 }

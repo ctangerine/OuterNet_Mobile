@@ -13,6 +13,14 @@ const String mikazuki1 = 'assets/images/mikazuki_1.png';
 const String mikazuki2 = 'assets/images/mikazuki_2.png';
 const String mikazuki3 = 'assets/images/mikazuki_3.png';
 const String mapPlaceholder = 'assets/images/map_placeholder.png';
+const String homeScreenn = 'assets/images/home_screen.png';
+
+
+// Card background concept
+const String cardSpringConcept = 'assets/images/card_spring.png';
+const String cardSummerConcept = 'assets/images/card_summer.png';
+const String cardWinterConcept = 'assets/images/card_winter.png';
+const String cardMountainConcept = 'assets/images/card_mountain.png';
 
 
 //Custom icons
