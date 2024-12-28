@@ -13,8 +13,26 @@ class ImagesCarousel extends StatefulWidget {
   final double? viewportFraction;
   final bool? isMargin;
   final bool? isBorder;
+  final bool? isAutoPlay;
+  final bool? inSiteCard;
+  final bool? isPadding;
 
-  const ImagesCarousel({super.key, required this.images, required this.defaultImage, this.imagesDescription, this.isEnlarge, this.height, this.width, this.fit, this.viewportFraction, this.isMargin = true, this.isBorder = true});
+  const ImagesCarousel({
+    super.key,
+    required this.images,
+    required this.defaultImage,
+    this.imagesDescription,
+    this.isEnlarge,
+    this.height,
+    this.width,
+    this.fit,
+    this.viewportFraction,
+    this.isMargin = true,
+    this.isBorder = true,
+    this.isAutoPlay = true,
+    this.inSiteCard = false,
+    this.isPadding = true,
+  });
 
   @override
   ImagesCarouselState createState() => ImagesCarouselState();
@@ -30,17 +48,13 @@ class ImagesCarouselState extends State<ImagesCarousel> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+          padding: widget.isPadding == true ? const EdgeInsets.only(top: 15) : null,
           child: CarouselSlider(
             carouselController: _controller,
             options: CarouselOptions(
               aspectRatio: 2,
               viewportFraction: widget.viewportFraction ?? 0.8,
-              // height: 200,
-              // initialPage: 0,
-              // enableInfiniteScroll: true,
-              // reverse: false,
-              autoPlay: true,
+              autoPlay: widget.isAutoPlay ?? true,
               autoPlayInterval: const Duration(seconds: 3),
               autoPlayAnimationDuration: const Duration(milliseconds: 800),
               autoPlayCurve: Curves.fastOutSlowIn,

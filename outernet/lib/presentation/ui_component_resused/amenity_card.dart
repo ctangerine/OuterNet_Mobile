@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:outernet/data/models/sites/site_response_model.dart';
+import 'package:outernet/data/models/sites/common_site_model.dart';
 import 'package:outernet/presentation/themes.dart';
 
 class AmenityCard extends StatelessWidget {
