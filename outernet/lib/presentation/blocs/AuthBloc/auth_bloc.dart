@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:outernet/data/data_sources/local_datasouces/drift_database.dart';
+import 'package:outernet/data/data_sources/local_datasouces/drift_database_provider.dart';
 import 'package:outernet/domain/entities/failure.dart';
 import 'package:outernet/domain/usecases/authorization_usecase.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_events.dart';
@@ -6,6 +8,7 @@ import 'package:outernet/presentation/blocs/AuthBloc/auth_state.dart';
 
 class AuthorizationBloc extends Bloc<AuthEvents,AuthState> {
   final AuthorizationUsecase authorizationUsecase;
+  final AppDatabase _db = dbProvider.database;
 
   AuthorizationBloc(this.authorizationUsecase) : super(InitialAuthentication()) {
     on<LoginRequested>(_onLoginRequested);
@@ -20,7 +23,9 @@ class AuthorizationBloc extends Bloc<AuthEvents,AuthState> {
     final result = await authorizationUsecase.login(event.email, event.password, event.rememberMe);
     result.fold(
       (failure) => emit(AuthFailed(failure)),
-      (user) => emit(Authenticated(user: user))
+      (user) {
+        emit(Authenticated(user: user));
+      }
     );
   }
 
