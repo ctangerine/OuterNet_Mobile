@@ -92,3 +92,21 @@ Map<String, dynamic> _$MediaToJson(Media instance) => <String, dynamic>{
       'mediaType': instance.mediaType,
       'createdAt': instance.createdAt,
     };
+
+DiscoverResponseModel _$DiscoverResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    DiscoverResponseModel(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => SiteResponseModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      pagination: json['pagination'] == null
+          ? null
+          : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$DiscoverResponseModelToJson(
+        DiscoverResponseModel instance) =>
+    <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'pagination': instance.pagination?.toJson(),
+    };

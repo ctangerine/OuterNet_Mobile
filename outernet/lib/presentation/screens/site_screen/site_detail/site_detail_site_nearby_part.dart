@@ -70,6 +70,7 @@ class _SiteNearbyPartState extends State<SiteNearbyPart> {
       };
     }
 
+    logger.f('prepare feth site nearby');
     siteBloc.add(GetSiteByLocation(request));
 
     await for (final state in siteBloc.stream) {

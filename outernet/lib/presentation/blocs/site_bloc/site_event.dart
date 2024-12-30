@@ -52,5 +52,11 @@ class GetAllGroupedService extends SiteEvent {
   GetAllGroupedService(this.id);
 }
 
+class GetDiscoverySites extends SiteEvent {
+  final int id;
+
+  GetDiscoverySites(this.id);
+}
+
 class GetAllSiteType extends SiteEvent {}
 

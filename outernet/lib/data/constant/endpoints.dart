@@ -10,6 +10,7 @@ class ApiEndpoints {
   static const String site = '/api/sites';
   static const String siteType = '/api/site-types';
   static const String siteReview = '/api/site-reviews';
+  static const String discover = '/api/sites/discover';
   
   static const String changePassword = '/api/users/auth/change-password';
   static const String avatar = '/api/users/avatar';

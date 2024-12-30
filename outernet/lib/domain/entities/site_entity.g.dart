@@ -55,6 +55,8 @@ SiteEntity _$SiteEntityFromJson(Map<String, dynamic> json) => SiteEntity(
       endTime: json['endTime'] == null
           ? null
           : DateTime.parse(json['endTime'] as String),
+      name: json['name'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$SiteEntityToJson(SiteEntity instance) =>
@@ -86,6 +88,8 @@ Map<String, dynamic> _$SiteEntityToJson(SiteEntity instance) =>
       'twoStarRating': instance.twoStarRating,
       'oneStarRating': instance.oneStarRating,
       'reviews': instance.reviews?.map((e) => e.toJson()).toList(),
+      'name': instance.name,
+      'description': instance.description,
       'startTime': instance.startTime?.toIso8601String(),
       'endTime': instance.endTime?.toIso8601String(),
     };

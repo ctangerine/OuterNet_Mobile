@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:outernet/data/data_sources/dio_network/base_api_service.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/domain/usecases/site_usecase.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
@@ -17,6 +19,7 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
     on<GetSiteByLocation>(_onGetSiteByLocation);
     on<GetAllGroupedService>(_onGetAllGroupServices);
     on<GetAllSiteType>(_onGetAllSiteType);
+    on<GetDiscoverySites>(_onGetDiscoverySites);
   }
 
   Future<void> _onLoadListSite(LoadListSite event, Emitter<SiteState> emit) async {
@@ -46,6 +49,9 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
         if (state is LoadListSiteSuccess) {
           emit((state as LoadListSiteSuccess).copyWith(message: site, isNewlyAddedSite: true));
         }
+        else {
+          emit(LoadListSiteSuccess(sites: [], message: site, siteReview: [], isNewlyAddedSite: true));
+        }
       }
     );
   }
@@ -57,6 +63,9 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
       (site) {
         if (state is LoadListSiteSuccess) {
           emit((state as LoadListSiteSuccess).copyWith(siteDetail: site, isSiteRecentlyUpdate: true));
+        }
+        else {
+          emit(LoadListSiteSuccess(sites: [], siteDetail: site, siteReview: [], isSiteRecentlyUpdate: true));
         }
       }
     );
@@ -82,6 +91,9 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
         if (state is LoadListSiteSuccess) {
           emit((state as LoadListSiteSuccess).copyWith(siteDetail: site, isSiteDetailChanged: true));
         }
+        else {
+          emit(LoadListSiteSuccess(sites: [], siteDetail: site, siteReview: [], isSiteDetailChanged: true));
+        }
       }
     );
   }
@@ -94,6 +106,9 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
         if (state is LoadListSiteSuccess) {
           emit((state as LoadListSiteSuccess).copyWith(siteReview: siteReview, isSiteReviewChanged: true));
         }
+        else {
+          emit(LoadListSiteSuccess(sites: [], siteDetail: SiteEntity.defaultInstance, siteReview: siteReview, isSiteReviewChanged: true));
+        }
       }
     );
   }
@@ -104,7 +119,11 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
       (failure) => emit(LoadListSiteFailed(failure.message)),
       (sites) {
         final siteByLoc = sites;
-        emit((state as LoadListSiteSuccess).copyWith(siteByLoc: siteByLoc, isSiteByLocChanged: true));
+        if (state is LoadListSiteSuccess) {
+          emit((state as LoadListSiteSuccess).copyWith(siteByLoc: siteByLoc, isSiteByLocChanged: true));
+        } else {
+          emit(LoadListSiteSuccess(sites: sites, siteByLoc: siteByLoc, siteReview: [], isSiteByLocChanged: true));
+        }
       }
     );
   }
@@ -132,6 +151,21 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
           emit((state as LoadListSiteSuccess).copyWith(siteTypes: siteTypes, isGotGroupedService: true));
         } catch (e) {
           emit(LoadListSiteSuccess(sites: [], siteTypes: siteTypes, isGotGroupedService: true));
+        }
+      }
+    );
+  }
+
+  Future<void> _onGetDiscoverySites(GetDiscoverySites event, Emitter<SiteState> emit) async {
+    final result = await siteUsecase.getDiscoverySites(event.id);
+    result.fold(
+      (failure) => emit(LoadListSiteFailed(failure.message)),
+      (sites) {
+        logger.f('I called oke');
+        try {
+          emit((state as LoadListSiteSuccess).copyWith(sites: sites, isListRecentlyChanged: true, message: null));
+        } catch (e) {
+          emit(LoadListSiteSuccess(sites: sites, isListRecentlyChanged: true));
         }
       }
     );

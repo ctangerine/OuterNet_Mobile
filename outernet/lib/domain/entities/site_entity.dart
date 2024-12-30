@@ -34,6 +34,9 @@ class SiteEntity {
   final int? twoStarRating;
   final int? oneStarRating;
   final List<ReviewEntity>? reviews;
+  // only for plan useing
+  final String? name;
+  final String? description;
   final DateTime? startTime;
   final DateTime? endTime;
 
@@ -66,6 +69,8 @@ class SiteEntity {
     this.reviews,
     this.startTime,
     this.endTime,
+    this.name,
+    this.description,
   });
 
   factory SiteEntity.fromJson(Map<String, dynamic> json) => _$SiteEntityFromJson(json);
@@ -100,6 +105,8 @@ class SiteEntity {
     List<ReviewEntity>? reviews,
     DateTime? startTime,
     DateTime? endTime,
+    String? name,
+    String? description,
   }) {
     return SiteEntity(
       siteId: siteId ?? this.siteId,
@@ -130,6 +137,8 @@ class SiteEntity {
       reviews: reviews ?? this.reviews,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
+      name: name ?? this.name,
+      description: description ?? this.description,
     );
   }
 
@@ -162,6 +171,8 @@ class SiteEntity {
     reviews: [],
     startTime: null,
     endTime: null,
+    name: '',
+    description: '',
   );
 }
 

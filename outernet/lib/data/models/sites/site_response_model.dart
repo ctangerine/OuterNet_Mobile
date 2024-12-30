@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:outernet/data/models/sites/common_site_model.dart';
 import 'package:outernet/data/models/sites/site_request_model.dart';
+import 'package:outernet/data/models/user/user_response_model.dart';
 import 'package:outernet/domain/entities/media_entity.dart';
 import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/env/log_service.dart';
@@ -64,10 +65,7 @@ class SiteResponseModel {
     this.threeStarRating,
     this.twoStarRating,
     this.oneStarRating,
-  }) {
-    logger.i('SiteResponseModel: using for get a detailed site information, responses when get publicity or get owner site');
-    logger.i(toJson());
-  }
+  });
 
   factory SiteResponseModel.fromJson(Map<String, dynamic> json) => _$SiteResponseModelFromJson(json);
   Map<String, dynamic> toJson() => _$SiteResponseModelToJson(this);
@@ -255,5 +253,45 @@ class Media {
     );
 
     return media;
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class DiscoverResponseModel {
+  final List<SiteResponseModel>? data;
+  final Pagination? pagination;  
+
+  DiscoverResponseModel({
+    this.data,
+    this.pagination,
+  });
+
+  factory DiscoverResponseModel.fromJson(Map<String, dynamic> json) => _$DiscoverResponseModelFromJson(json);
+  Map<String, dynamic> toJson() => _$DiscoverResponseModelToJson(this);
+
+  @override
+  String toString() => 'DiscoverResponseModel(data: $data, pagination: $pagination)';
+
+  DiscoverResponseModel copyWith({
+    List<SiteResponseModel>? data,
+    Pagination? pagination,
+  }) {
+    return DiscoverResponseModel(
+      data: data ?? this.data,
+      pagination: pagination ?? this.pagination,
+    );
+  }
+
+  static final DiscoverResponseModel defaultInstance = DiscoverResponseModel(
+    data: [],
+    pagination: Pagination.defaultInstance,
+  );
+
+  List<SiteEntity> toEntities() {
+    final List<SiteEntity> listSiteEntity = (data == null || data!.isEmpty) ? [] : data!.map((e) {
+      return e.toEntity();
+    }).toList();
+
+    return listSiteEntity;
   }
 }

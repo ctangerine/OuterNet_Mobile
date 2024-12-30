@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:outernet/data/data_sources/dio_network/base_api_service.dart';
 import 'package:outernet/domain/entities/review_entity.dart';
 import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/env/log_service.dart';
@@ -16,7 +17,8 @@ import 'package:outernet/presentation/screens/site_screen/site_detail/site_detai
 import 'package:outernet/presentation/ui_component_resused/images_carousel.dart';
 
 class SiteDetailScreen extends StatelessWidget {
-  const SiteDetailScreen({super.key});
+  int siteId;
+  SiteDetailScreen({super.key, required this.siteId});
 
   @override 
   Widget build(BuildContext context) {
@@ -32,18 +34,19 @@ class SiteDetailScreen extends StatelessWidget {
           },
         )
       ],
-      child: const SiteDetailScreenContent(),
+      child: SiteDetailScreenContent(siteId: siteId),
     );
   }
 }
 
 
 class SiteDetailScreenContent extends StatelessWidget {
-  const SiteDetailScreenContent({super.key});
+  final int siteId;
+  const SiteDetailScreenContent({super.key, required this.siteId});
 
   Future<Map<String, dynamic>> _fetchSiteDetail(BuildContext context) async {
     final siteBloc = context.read<SiteBloc>();
-    siteBloc.add(LoadSiteDetail(4));
+    siteBloc.add(LoadSiteDetail(siteId));
 
     await for (final state in siteBloc.stream) {
       if (state is LoadListSiteSuccess && state.isSiteDetailChanged == true) {
@@ -54,7 +57,6 @@ class SiteDetailScreenContent extends StatelessWidget {
 
         await for (final reviewState in siteBloc.stream) {
           if (reviewState is LoadListSiteSuccess && reviewState.isSiteReviewChanged == true) {
-            reviewState.isSiteReviewChanged = false;
             return {
               'siteDetail': siteDetail,
               'siteReview': reviewState.siteReview,
@@ -77,7 +79,14 @@ class SiteDetailScreenContent extends StatelessWidget {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
-        leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: const Icon(Iconsax.arrow_left_2)),
+        leading: IconButton(
+          onPressed: () {
+            final bloc = BlocProvider.of<SiteBloc>(context);
+            // bloc.add(GetDiscoverySites(1));
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Iconsax.arrow_left_2)
+        ),
         actions: const [
           Icon(Iconsax.send_1),
           SizedBox(width: 10),
@@ -114,7 +123,7 @@ class SiteDetailScreenContent extends StatelessWidget {
   }
 
   Widget _buildSiteDetail(BuildContext context, SiteEntity siteDetail, List<ReviewEntity>? siteReview) {
-    final imageList = [mikazuki1, mikazuki2, mikazuki3];
+    final imageList = siteDetail.medias?.where((e) => e.mediaType == 'IMAGE' && e.url != null).map((e) => e.url!).toList() ?? [category1];
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(

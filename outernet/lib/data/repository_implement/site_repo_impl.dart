@@ -91,4 +91,14 @@ class SiteRepositoryImplement implements SiteRepository {
       return Left(FetchDataFailure('Fail to fetch data $e'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<SiteEntity>>> getDiscoverySites(int id) async {
+    try {
+      final response = await _api.getDiscoverySites(id);
+      return Right(response);
+    } catch (e) {
+      return Left(FetchDataFailure('Fail to fetch data $e'));
+    }
+  }
 }

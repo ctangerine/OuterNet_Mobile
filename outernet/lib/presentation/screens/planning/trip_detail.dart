@@ -26,10 +26,10 @@ class _TripDetailState extends State<TripDetail> with AutomaticKeepAliveClientMi
     if (state is LoadPlanListSuccess && state.specificPlan.sites!.isNotEmpty && state.isRecentlyGetPlanDetail == true) {
       final List<SiteEntity> siteList = state.specificPlan.sites!;
       final List<String> timeStarts = siteList.map((site) {
-        return '${site.startTime!.hour}:${site.startTime!.minute}';
+        return site.startTime != null ? '${site.startTime!.hour}:${site.startTime!.minute}' : '';
       }).toList();
       final List<String> timeEnds = siteList.map((site) {
-        return '${site.endTime!.hour}:${site.endTime!.minute}';
+        return site.endTime != null ? '${site.endTime!.hour}:${site.endTime!.minute}' : '';
       }).toList(); 
 
       return ListView.separated(

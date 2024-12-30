@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:outernet/data/models/plan/plan_request_model.dart';
 import 'package:outernet/presentation/blocs/plan_bloc/plan_bloc.dart';
 import 'package:outernet/presentation/blocs/plan_bloc/plan_events.dart';
+import 'package:outernet/presentation/themes.dart';
 
 class AddNewPlanPopup extends StatefulWidget {
   const AddNewPlanPopup({super.key});
@@ -34,6 +35,11 @@ class _AddNewPlanPopupState extends State<AddNewPlanPopup> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const Text(
+                'Thêm thông tin kế hoạch',
+                style: AppTextStyles.heading1Medium,
+              ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(labelText: 'Tên Kế Hoạch', icon: Icon(Iconsax.pen_add),),

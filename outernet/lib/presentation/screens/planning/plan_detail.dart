@@ -203,13 +203,19 @@ class PlanDetailContent extends StatelessWidget {
           Expanded(
             child: TabBarView(
               children: [
-                Scaffold(
-                  body: TripDetail(),
-                  floatingActionButton: _addNewSiteButton(context),
+                BlocProvider.value(
+                  value: BlocProvider.of<PlanBloc>(context),
+                  child: Scaffold(
+                    body: TripDetail(),
+                    floatingActionButton: _addNewSiteButton(context),
+                  ),
                 ),
-                Scaffold(
-                  body: PlanMembers(),
-                  floatingActionButton: _addNewMemberButton(context),
+                BlocProvider.value(
+                  value: BlocProvider.of<PlanBloc>(context),
+                  child: Scaffold(
+                    body: PlanMembers(),
+                    floatingActionButton: _addNewMemberButton(context),
+                  ),
                 ),
               ],
             ),

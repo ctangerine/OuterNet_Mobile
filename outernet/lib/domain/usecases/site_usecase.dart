@@ -42,4 +42,8 @@ class SiteUsecase {
   Future<Either<Failure, List<SiteType>>> getAllSiteType() {
     return repository.getAllSiteType();
   }
+
+  Future<Either<Failure, List<SiteEntity>>> getDiscoverySites(int typeId) {
+    return repository.getDiscoverySites(typeId);
+  }
 }

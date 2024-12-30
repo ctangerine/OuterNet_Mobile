@@ -16,7 +16,7 @@ class SiteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imagesUrl = site.medias?.where((e) => e.mediaType == 'IMAGE').map((e) => e.url).whereType<String>().toList() ?? [];
+    final imagesUrl = site.medias?.where((e) => e.mediaType == 'IMAGE').map((e) => e.url).whereType<String>().toList() ?? [category1];
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
@@ -38,7 +38,7 @@ class SiteCard extends StatelessWidget {
               defaultImage: category1,
               width: double.infinity,
               height: 180,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
               viewportFraction: 1.0,
               isMargin: false,
               isBorder: false,

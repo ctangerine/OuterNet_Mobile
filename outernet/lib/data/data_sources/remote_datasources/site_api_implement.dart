@@ -116,12 +116,14 @@ class SiteApiImplement {
     try {
       final response = await dio.get('${ApiEndpoints.site}/@?lat=${request.lat}&lng=${request.lng}&degRadius=${request.degRadius}');
       
-      final List<SiteEntity> sites = SiteByLocResponseModel.fromJson(response.data).toEntities();
+      final List<SiteEntity> sites = (response.data as List).map((e) {
+        return SiteByLocResponseModel.fromJson(e).toEntity();
+      }).toList();
 
-      for (SiteEntity site in sites) {
-        final SiteEntity detail = await getPublicSite(site.siteId!);
-        site.copyWith(medias: detail.medias);
-      }
+      // for (SiteEntity site in sites) {
+      //   final SiteEntity detail = await getPublicSite(site.siteId!);
+      //   site.copyWith(medias: detail.medias);
+      // }
 
       return sites;
 
@@ -154,6 +156,26 @@ class SiteApiImplement {
       final List<SiteType> siteTypes = site_type.GetAllSiteTypeResponseModel.fromJson(response.data).getSiteTypeList();
 
       return siteTypes;
+
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<List<SiteEntity>> getDiscoverySites(int page) async {
+    try {
+      final response = await dio.get(ApiEndpoints.discover, queryParameters: {'page': page});
+
+      if (response.statusCode == 200) {
+        final List<SiteEntity> sites = site_response.DiscoverResponseModel.fromJson(response.data).toEntities();
+
+        return sites;
+      }
+      else {
+        throw Exception('Không thể lấy danh sách địa điểm, mã lỗi: ${response.statusCode}');
+      }
 
     } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
