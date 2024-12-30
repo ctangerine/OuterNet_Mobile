@@ -147,22 +147,6 @@ class _AddNewSiteToPlanPopupState extends State<AddNewSiteToPlanPopup> {
 
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
-      final name = _nameController.text;
-      final startDate = _startDate!;
-      final endDate = _endDate!;
-
-      // final planBloc = BlocProvider.of<PlanBloc>(context);
-      // planBloc.add(AddPlanEvent(name, startDate, endDate));
-
-      // final local_db = AppDatabase();
-      // await local_db.into(local_db.plans).insert(PlansCompanion(
-      //   title: Value(name),
-      //   startDay: Value(startDate),
-      //   endDay: Value(endDate),
-      //   theme: Value(cardSpringConcept),
-      // ));
-
-
       Navigator.pop(context);
     }
   }

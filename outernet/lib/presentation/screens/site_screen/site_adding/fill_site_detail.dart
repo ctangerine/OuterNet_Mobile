@@ -60,7 +60,6 @@ class _FillLocationInfoState extends State<FillLocationInfo> with AutomaticKeepA
             const SizedBox(height: 16),
             _buildOpeningHours(),
             const SizedBox(height: 16),
-            _buildNextButton(),
           ],
         ),
       ),
@@ -239,25 +238,6 @@ class _FillLocationInfoState extends State<FillLocationInfo> with AutomaticKeepA
           },
         ),
       ],
-    );
-  }
-
-  Widget _buildNextButton() {
-    return Center(
-      child: FilledButton(
-        onPressed: () {
-          // Xử lý logic khi nhấn "Tiếp theo"
-          print("Tên địa điểm: ${nameController.text}");
-          print("Website: ${websiteController.text}");
-          print("Số điện thoại: ${phoneController.text}");
-          print("Địa chỉ: ${addressController.text}");
-          print("Giới thiệu: ${descriptionController.text}");
-        },
-        child: const Text(
-          'Tiếp theo',
-          style: TextStyle(fontSize: 16),
-        ),
-      ),
     );
   }
 }

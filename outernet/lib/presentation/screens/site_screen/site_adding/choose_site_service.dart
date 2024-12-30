@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outernet/data/models/sites/common_site_model.dart';
 import 'package:outernet/data/models/sites/site_request_model.dart';
-import 'package:outernet/env/log_service.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
@@ -42,6 +41,7 @@ class _ChooseSiteServiceGroupState extends State<ChooseSiteServiceGroup> with Au
         if (state is LoadListSiteSuccess) {
           if (state.isGotGroupedService == true) {
             sitypes = state.siteTypes ?? [];
+            locationTypes = [];
             for (SiteType service in sitypes) {
               locationTypes.add(service.name!);
             }
@@ -125,7 +125,6 @@ class _ChooseSiteServiceGroupState extends State<ChooseSiteServiceGroup> with Au
                       widget.updateRequestModel(
                         widget.requestModel
                       );
-                      LogService().logger.d(sitypes[serviceIndex!].id!);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12,),
@@ -153,18 +152,6 @@ class _ChooseSiteServiceGroupState extends State<ChooseSiteServiceGroup> with Au
               ),
           ),
           const SizedBox(height: 16),
-          Center(
-            child: FilledButton(
-              onPressed: selectedType != null ? () {
-                final int serviceGroupId = sitypes[serviceIndex!].id!;
-                LogService().logger.d('Service Group ID: $serviceGroupId');
-              } : null, // Nếu chưa chọn thì nút sẽ bị vô hiệu hóa
-              child: const Text(
-                'Tiếp theo',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
         ],
       ),
     ),

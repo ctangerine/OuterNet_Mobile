@@ -124,7 +124,6 @@ class _BusinessInfoScreenState extends State<BusinessInfoScreen> with AutomaticK
           const SizedBox(height: 16),
           _buildServiceGroups(),
           const SizedBox(height: 16),
-          _buildNextButton(),
         ],
       ),
     ),
@@ -260,25 +259,6 @@ class _BusinessInfoScreenState extends State<BusinessInfoScreen> with AutomaticK
           ],
         );
       }).toList(),
-    );
-  }
-
-  Widget _buildNextButton() {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          // // Xử lý logic khi nhấn "Tiếp theo"
-          // print("Selected services:");
-          // for (var group in groupServices) {
-          //   for (var service in group.services) {
-          //     if (service.isSelected) {
-          //       print("- ${service.serviceName}");
-          //     }
-          //   }
-          // }
-        },
-        child: const Text('Tiếp theo'),
-      ),
     );
   }
 }

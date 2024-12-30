@@ -122,9 +122,8 @@ class _TermAndConditionState extends State<TermAndCondition> with AutomaticKeepA
               '- Nền tảng có quyền thay đổi điều khoản bất kỳ lúc nào mà không cần báo trước.\n- Người đăng có trách nhiệm cập nhật các thay đổi và tuân thủ các điều khoản mới.\n- Bằng việc đăng địa điểm, người dùng đồng ý tuân thủ đầy đủ các điều khoản và quy định này.'),
           const SizedBox(height: 20),
           Center(
-            child: ElevatedButton(
+            child: FilledButton(
               onPressed: () {
-                logger.d('requestModel: ${widget.requestModel}');
                 BlocProvider.of<SiteBloc>(context).add(AddSite(widget.requestModel));
               },
               child: const Text('Đồng ý và tiếp tục'),

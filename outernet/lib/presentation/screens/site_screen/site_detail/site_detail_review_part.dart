@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outernet/domain/entities/review_entity.dart';
 import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
+import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/ui_component_resused/review_card.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
@@ -50,7 +51,13 @@ class ReviewPart extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.shade300),
         ),
-        child: _reviewBox(context, siteDetail, siteReview),
+        child: Column(
+          children: [
+            const Text('Nhận xét và đánh giá khác', style: AppTextStyles.heading1Semibold, textAlign: TextAlign.start,),
+            const SizedBox(height: 20),
+            _reviewBox(context, siteDetail, siteReview),
+          ],
+        ),
       ),
     );
   }

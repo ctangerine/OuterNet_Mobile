@@ -3,7 +3,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:outernet/data/models/sites/common_site_model.dart';
 import 'package:outernet/domain/entities/review_entity.dart';
 import 'package:outernet/domain/entities/site_entity.dart';
-import 'package:outernet/env/config.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
 import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/ui_component_resused/rating_bar.dart';
@@ -152,7 +151,7 @@ class IntroducePart extends StatelessWidget {
 
   ReadMoreText _descriptionDescriptionPart() {
     return ReadMoreText(
-      ConfigManager().config.siteDescription,
+      'Địa điểm này hiện chưa có mô tả chi tiết, vui lòng tham giảo các thông tin khác để biết thêm thông tin',
       trimLines: 3,
       colorClickableText: AppColors.primary,
       trimMode: TrimMode.Line,

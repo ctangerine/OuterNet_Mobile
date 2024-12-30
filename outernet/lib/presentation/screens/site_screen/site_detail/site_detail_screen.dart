@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:outernet/data/data_sources/dio_network/base_api_service.dart';
 import 'package:outernet/domain/entities/review_entity.dart';
 import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/env/log_service.dart';
+import 'package:outernet/presentation/blocs/plan_bloc/plan_bloc.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
 import 'package:outernet/presentation/module_provider/init_injections.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
+import 'package:outernet/presentation/screens/site_screen/site_detail/show_plan_list.dart';
 import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_review_part.dart';
 import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_site_nearby_part.dart';
 import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_introduce_part.dart';
@@ -32,7 +33,16 @@ class SiteDetailScreen extends StatelessWidget {
               return sl<SiteBloc>();
             }
           },
-        )
+        ),
+        BlocProvider<PlanBloc>(
+          create: (context) {
+            try {
+              return context.read<PlanBloc>();
+            } catch (e) {
+              return sl<PlanBloc>();
+            }
+          },
+        ),
       ],
       child: SiteDetailScreenContent(siteId: siteId),
     );
@@ -81,16 +91,30 @@ class SiteDetailScreenContent extends StatelessWidget {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            final bloc = BlocProvider.of<SiteBloc>(context);
-            // bloc.add(GetDiscoverySites(1));
             Navigator.of(context).pop();
           },
           icon: const Icon(Iconsax.arrow_left_2)
         ),
-        actions: const [
-          Icon(Iconsax.send_1),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Iconsax.send_1),
+          ),
           SizedBox(width: 10),
-          Icon(Iconsax.heart),
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext dialogContext) {
+                  return BlocProvider.value(
+                    value: BlocProvider.of<PlanBloc>(context),
+                    child: ShowPlanListPopup(siteId: siteId),
+                  );
+                },
+              );
+            },
+            icon: Icon(Iconsax.heart),
+          ),
           SizedBox(width: 10),
         ],
       ),
@@ -170,4 +194,5 @@ class SiteDetailScreenContent extends StatelessWidget {
       isBorder: false,
     );
   }
+
 }

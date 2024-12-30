@@ -71,14 +71,6 @@ class _AddSitePhotosState extends State<AddSitePhotos> with AutomaticKeepAliveCl
 
   // Gửi media tới API
   Future<void> _submitMedia() async {
-    final List<Map<String, String>> mediaData = List.generate(
-      _selectedMedia.length,
-      (index) => {
-        'path': _selectedMedia[index].path,
-        'type': _mediaTypes[index],
-      },
-    );
-
     final UploadFileRequestModel request = UploadFileRequestModel(
       files: _selectedMedia.map((e) => e.path).toList(),
     );
@@ -242,7 +234,7 @@ class _AddSitePhotosState extends State<AddSitePhotos> with AutomaticKeepAliveCl
             ),
             const SizedBox(height: 24),
             Center(
-              child: ElevatedButton(
+              child: FilledButton(
                 onPressed: _submitMedia,
                 child: const Text('Tải lên ảnh/video'),
               ),
