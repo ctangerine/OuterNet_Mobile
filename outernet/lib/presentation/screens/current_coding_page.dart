@@ -10,7 +10,6 @@ import 'package:outernet/presentation/screens/personal_screen/personal_informati
 import 'package:outernet/presentation/screens/account_screen/register_screen.dart';
 import 'package:outernet/presentation/screens/personal_screen/security_screen.dart';
 import 'package:outernet/presentation/screens/site_screen/site_adding/add_new_site_screen.dart';
-import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_screen.dart';
 import 'package:outernet/presentation/ui_component_resused/review_card.dart';
 
 class CurrentCodingPage extends StatelessWidget {
@@ -91,7 +90,7 @@ class CurrentCodingPage extends StatelessWidget {
               //SiteDetail screen
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SiteDetailScreen()));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => const SiteDetailScreen()));
                 },
                 child: const Text('Site Detail'),
               ),

@@ -153,6 +153,7 @@ class LoggerInterceptor extends Interceptor {
       logger.i("Response Headers: ${response.headers}");
     }
     if (responseBody) {
+      logger.i("Response data: ${response.data}");
     }
     handler.next(response);
   }

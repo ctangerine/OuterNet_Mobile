@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 class AppColors {
   static const Color maintheme = Color(0xFFFFFFFF);
   static const Color themeSecondary = Color.fromARGB(255, 243, 244, 246);
-  static const Color primary = Color.fromARGB(255, 255, 171, 62);
+  // static const Color primary = Color.fromARGB(255, 255, 171, 62);
+  static const Color primary = Colors.black87;
+  static const Color secondary = Colors.black54;
   static const Color textOnPrimary = Color.fromARGB(255, 255, 255, 255);
-  static const Color textPrimary = Color.fromARGB(255, 135, 81, 0);
+  // static const Color textPrimary = Color.fromARGB(255, 135, 81, 0);
+  static const Color textPrimary = Colors.black87;
   static const Color textSecondary = Color.fromARGB(255, 182, 180, 185);
   static const Color textOnMainTheme = Color.fromARGB(255, 0, 0, 0);
   static const Color error = Color.fromARGB(255, 220, 38, 38);
@@ -166,10 +169,26 @@ final ThemeData lightTheme = ThemeData(
   datePickerTheme: DatePickerThemeData(
     backgroundColor: AppColors.maintheme,
     headerHeadlineStyle: AppTextStyles.title1Semibold.copyWith(color: AppColors.primary),
+    todayBorder: BorderSide(
+      color: AppColors.primary,
+    ),
     inputDecorationTheme: InputDecorationTheme(
       hintStyle: AppTextStyles.body2Regular.copyWith(color: AppColors.textSecondary),
       errorStyle: AppTextStyles.body2Regular.copyWith(color: AppColors.error),
     ),
+  ),
+  timePickerTheme: TimePickerThemeData(
+    backgroundColor: AppColors.maintheme,
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: AppTextStyles.body2Regular.copyWith(color: AppColors.textSecondary),
+      errorStyle: AppTextStyles.body2Regular.copyWith(color: AppColors.error),
+    ),
+    hourMinuteColor: AppColors.primary,
+    hourMinuteTextColor: AppColors.textOnPrimary,
+    dialHandColor: AppColors.maintheme,
+    dayPeriodColor: AppColors.secondary,
+    dayPeriodTextColor: AppColors.primary,
+    dialBackgroundColor: AppColors.secondary,
   ),
   dropdownMenuTheme: DropdownMenuThemeData(
     textStyle: AppTextStyles.body2Medium.copyWith(color: AppColors.textPrimary),
@@ -225,6 +244,14 @@ final ThemeData lightTheme = ThemeData(
       height: 16.0/15.0,
       color: AppColors.textPrimary
     ),
+    labelStyle: const TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 15,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.5,
+      height: 16.0/15.0,
+      color: AppColors.textPrimary
+    ),
     errorStyle: AppTextStyles.body2Medium.copyWith(color: AppColors.error),
   ),
   appBarTheme: const AppBarTheme(
@@ -247,7 +274,10 @@ final ThemeData lightTheme = ThemeData(
     unselectedItemColor: AppColors.textSecondary,
   ),
   checkboxTheme: CheckboxThemeData(
-    fillColor: WidgetStateProperty.all(AppColors.primary),
-    checkColor: WidgetStateProperty.all(AppColors.textOnPrimary),
+    fillColor: WidgetStateProperty.all(AppColors.maintheme),
+    checkColor: WidgetStateProperty.all(AppColors.primary),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    foregroundColor: AppColors.textOnMainTheme,
   )
 );

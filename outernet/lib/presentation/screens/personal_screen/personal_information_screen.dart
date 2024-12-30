@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
 import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/helper_widgets/back_button.dart';
@@ -157,7 +158,7 @@ class PersonalInformationScreen extends StatelessWidget {
     return FloatingActionButton.extended(
       onPressed: () => {}, 
       label: const Text('Chỉnh sửa thông tin', style: AppTextStyles.body1Semibold,),
-      icon: const Icon(Icons.edit, size: 20,),
+      icon: const Icon(Iconsax.edit, size: 20, color: Colors.white,),
       backgroundColor: AppColors.primary,
       extendedPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
     );

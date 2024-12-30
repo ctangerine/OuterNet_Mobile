@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:outernet/data/data_sources/dio_network/base_api_service.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/presentation/blocs/UserBloc/user_bloc.dart';
+import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
+import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
+import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
 import 'package:outernet/presentation/helper_widgets/image_handler.dart';
 import 'package:outernet/presentation/module_provider/init_injections.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
+import 'package:outernet/presentation/screens/site_screen/site_adding/add_new_site_screen.dart';
+import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_screen.dart';
 import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/ui_component_resused/images_carousel.dart';
+import 'package:outernet/presentation/ui_component_resused/site_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -24,20 +32,36 @@ class HomeScreen extends StatelessWidget {
               return sl<UserBloc>();
             }
           },
-        )
+        ),
+        BlocProvider<SiteBloc>(
+          create: (context) {
+            try {
+              return BlocProvider.of<SiteBloc>(context);
+            } catch (e) {
+              return sl<SiteBloc>();
+            }
+          },
+        ),
       ],
-      child: Builder(
-        builder: (context) {
-          return const HomeScreenContent();
-        }
-      ),
+      child: const HomeScreenContent(),
     );
   }
 }
 
-
-class HomeScreenContent extends StatelessWidget {
+class HomeScreenContent extends StatefulWidget {
   const HomeScreenContent({super.key});
+
+  @override
+  _HomeScreenContentState createState() => _HomeScreenContentState();
+}
+
+class _HomeScreenContentState extends State<HomeScreenContent> {
+  @override
+  void initState() {
+    super.initState();
+    final bloc = BlocProvider.of<SiteBloc>(context);
+    bloc.add(GetDiscoverySites(1));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,112 +70,104 @@ class HomeScreenContent extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _buildHeroSection(context),
-            const SizedBox(height: 20),
-            _buildIntroductionSection(context),
-            const SizedBox(height: 20),
-            _buildSiteSuggestions(context),
-            const SizedBox(height: 20),
-            _buildAddSiteSection(context),
+          children: const [
+            HeroSection(),
+            SizedBox(height: 20),
+            IntroductionSection(),
+            SizedBox(height: 20),
+            SiteSuggestions(),
+            SizedBox(height: 20),
+            AddSiteSection(),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildHeroSection(BuildContext context) {
-    return Container(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          ImageHandler(
-            imageUrl: homeScreenn,
-            defaultImage: homeScreenn,
-            width: MediaQuery.of(context).size.width,
-            height: 250,
-            fit: BoxFit.cover,
-          ),
-          // Positioned.fill(
-          //   child: Container(
-          //     color: Colors.black.withOpacity(0.2),
-          //   ),
-          // ),
-          // SizedBox(
-          //   width: 300,
-          //   child: Text(
-          //   "\"chúng ta đi không phải để đến nơi, mà để đi, để thấy, để nghe, để trải nghiệm, để chia sẻ, để đồng cảm, để ghi lại những câu chuyện, những kỷ niệm, những cảm xúc trên hành trình đời mình.\"",
-          //   style: GoogleFonts.fuzzyBubbles(
-          //     textStyle: AppTextStyles.body1Regular,
-          //     fontSize: 15,
-          //     height: 1.5,
-          //     color: const Color.fromARGB(221, 255, 255, 255),
-          //     fontWeight: FontWeight.w900
-          //   ),
-          //   textAlign: TextAlign.center,
-          // ),
-          // ),
-        ],
-      ),
+class HeroSection extends StatelessWidget {
+  const HeroSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        ImageHandler(
+          imageUrl: homeScreenn,
+          defaultImage: homeScreenn,
+          width: MediaQuery.of(context).size.width,
+          height: 250,
+          fit: BoxFit.cover,
+        ),
+      ],
     );
   }
+}
 
-  Widget _buildIntroductionSection(BuildContext context) {
+class IntroductionSection extends StatelessWidget {
+  const IntroductionSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _quoteSection(),
+        children: const [
+          QuoteSection(),
         ],
       ),
     );
   }
+}
 
-  Container _quoteSection() {
-    return Container(
-      // decoration: BoxDecoration(
-      //     border: Border.all(
-      //   color: Colors.black87.withOpacity(0.8),
-      //   width: 1,
-      // )),
-      // padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Text(
-            "\"Chúng ta đi không phải để đến nơi, mà để đi, để thấy, để nghe, để trải nghiệm, để chia sẻ, để đồng cảm, để ghi lại những câu chuyện, những kỷ niệm, những cảm xúc trên hành trình cuộc đời mình.\"",
-            style: GoogleFonts.fuzzyBubbles(
-              textStyle: AppTextStyles.body1Regular,
-              fontSize: 15,
-              height: 1.4,
-              color: AppColors.textOnMainTheme,
-              fontWeight: FontWeight.w400,
-              letterSpacing: 1.1
-            ),
-            textAlign: TextAlign.center,
+class QuoteSection extends StatelessWidget {
+  const QuoteSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          "\"Chúng ta đi không phải để đến nơi, mà để đi, để thấy, để nghe, để trải nghiệm, để chia sẻ, để đồng cảm, để ghi lại những câu chuyện, những kỷ niệm, những cảm xúc trên hành trình cuộc đời mình.\"",
+          style: GoogleFonts.fuzzyBubbles(
+            textStyle: AppTextStyles.body1Regular,
+            fontSize: 15,
+            height: 1.4,
+            color: AppColors.textOnMainTheme,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 1.1,
           ),
-          //SizedBox(height: 10),
-          Text(
-            "- vô danh",
-            style: GoogleFonts.fuzzyBubbles(
-              textStyle: AppTextStyles.body1Regular,
-              fontSize: 15,
-              height: 1.4,
-              color: AppColors.textOnMainTheme,
-              fontWeight: FontWeight.w400,
-              fontStyle: FontStyle.italic,
-            ),
-            textAlign: TextAlign.center,
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          "- vô danh",
+          style: GoogleFonts.fuzzyBubbles(
+            textStyle: AppTextStyles.body1Regular,
+            fontSize: 15,
+            height: 1.4,
+            color: AppColors.textOnMainTheme,
+            fontWeight: FontWeight.w400,
+            fontStyle: FontStyle.italic,
           ),
-        ],
-      ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
+}
 
-  Widget _buildSiteSuggestions(BuildContext context) {
+class SiteSuggestions extends StatelessWidget {
+  const SiteSuggestions({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     final provinces = ['Huế', 'Đà Nẵng', 'Quảng Nam'];
     final provinceImages = [category1, category2, category3];
+    final bloc = BlocProvider.of<SiteBloc>(context);
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -193,7 +209,7 @@ class HomeScreenContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Điểm đến hàng được được đề xuất cho bạn',
+                  'Điểm đến hàng đầu được được đề xuất cho bạn',
                   style: AppTextStyles.heading1Medium.copyWith(
                     fontSize: 24,
                     height: 1.3,
@@ -212,21 +228,88 @@ class HomeScreenContent extends StatelessWidget {
               ],
             ),
           ),
-          ImagesCarousel(
-            images: provinceImages,
-            defaultImage: category1,
-            imagesDescription: provinces,
-            width: 230,
-            fit: BoxFit.cover,
-            viewportFraction: 0.55,
-            isEnlarge: false,
+          const SizedBox(height: 20),
+          BlocConsumer<SiteBloc, SiteState>(
+            listener: (context, state) {
+            },
+            builder: (context, state) {
+              if (state is LoadListSiteSuccess) {
+                if (state.isListRecentlyChanged == true) {
+                  state.isListRecentlyChanged = false;
+                  return _buildSiteList(context, state.sites);
+                } else {
+                  if (state.message != null && state.message!.isNotEmpty) {
+                    final bloc = BlocProvider.of<SiteBloc>(context);
+                    bloc.add(GetDiscoverySites(1));
+                  }
+                  return const Center(
+                    child: Text('Đang tải danh sách địa điểm, vui lòng chờ ...'),
+                  );
+                }
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
           ),
         ],
       ),
     );
   }
 
-  Widget _buildAddSiteSection(BuildContext context) {
+  Widget _buildSiteList(BuildContext context, List<SiteEntity> sites) {
+    return SizedBox(
+      height: 260 * 0.6 + 50, // Set a fixed height for the horizontal ListView
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: sites.length,
+        itemBuilder: (context, index) {
+          final site = sites[index];
+          return GestureDetector(
+            onTap: () {
+              final bloc = BlocProvider.of<SiteBloc>(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider.value(
+                    value: bloc,
+                    child: SiteDetailScreen(siteId: site.siteId!,),
+                  ),
+                ),
+              ).then((_) {
+                try {
+                  bloc.add(GetDiscoverySites(1)); // Trigger the event when coming back
+                } catch (e) {
+                  logger.e('I cant wake the bloc, error: $e');
+                }
+                
+              });
+            },
+            child: _buildSiteCardWithGesture(context, site),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(width: 20);
+        },
+      ),
+    );
+  }
+
+  SizedBox _buildSiteCardWithGesture(BuildContext context, SiteEntity site) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.6,
+      height: 260 * 0.6 + 50,
+      child: SiteCard(site: site),
+    );
+  }
+}
+
+class AddSiteSection extends StatelessWidget {
+  const AddSiteSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -243,9 +326,17 @@ class HomeScreenContent extends StatelessWidget {
             child: FilledButton.icon(
               icon: const Icon(Iconsax.location),
               onPressed: () {
-                // Navigator.pushNamed(context, Routes.addSite);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddNewSiteScreen(),
+                  ),
+                );
               },
-              label: const Text('Thêm địa điểm mới', style: AppTextStyles.body1Semibold,),
+              label: const Text(
+                'Thêm địa điểm mới',
+                style: AppTextStyles.body1Semibold,
+              ),
             ),
           ),
         ],

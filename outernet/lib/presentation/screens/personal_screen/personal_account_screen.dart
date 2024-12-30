@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/helper_widgets/back_button.dart';
 
@@ -96,7 +97,7 @@ class PersonalAccountScreen extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () {},
       backgroundColor: AppColors.primary,
-      child: const Icon(Icons.edit),
+      child: const Icon(Iconsax.edit, color: Colors.white,),
     );
   }
 }
