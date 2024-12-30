@@ -49,6 +49,8 @@ class PlanApiImplement extends BaseApiService {
       onSuccess: (response) {
         final plan = GetPlanResponseModel.fromJson(response.data).toEntity();
 
+        logger.f('plan from db: $plan');
+
         return plan;
       },
       defaultErrorHandler: (response) => ErrorResponseMapper.mapError(response?.statusCode, response),
@@ -79,7 +81,7 @@ class PlanApiImplement extends BaseApiService {
   Future<String> addMemberToPlan(AddOrRemovePlanMemberRequestModel request, int planId) async {
     return handleRequest(
       request: () => dio.put(
-        '${ApiEndpoints.plan}/$planId/${ApiEndpoints.addMemberSubDomain}',
+        '${ApiEndpoints.plan}/$planId${ApiEndpoints.addMemberSubDomain}',
         data: {
           'userId': request.userId
         },

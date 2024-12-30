@@ -240,7 +240,7 @@ class PlanDetailContent extends StatelessWidget {
           },
         );
       },
-      child: const Icon(Iconsax.add),
+      child: const Icon(Iconsax.add, color: Colors.white,),
     );
   }
 
@@ -259,7 +259,7 @@ class PlanDetailContent extends StatelessWidget {
           },
         );
       },
-      child: const Icon(Iconsax.add),
+      child: const Icon(Iconsax.add, color: Colors.white,),
     );
   }
 }

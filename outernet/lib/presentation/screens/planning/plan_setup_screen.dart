@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:outernet/data/data_sources/dio_network/base_api_service.dart';
 import 'package:outernet/presentation/blocs/plan_bloc/plan_bloc.dart';
 import 'package:outernet/presentation/blocs/plan_bloc/plan_events.dart';
 import 'package:outernet/presentation/blocs/plan_bloc/plan_state.dart';
@@ -75,7 +74,7 @@ class PlanSetupScreenContent extends StatelessWidget {
                 'Thêm hành trình mới',
                 style: AppTextStyles.heading2Semibold,
               ),
-              icon: Icon(Iconsax.add),
+              icon: Icon(Iconsax.add, color: Colors.white,),
             ),
           ),
         ],
@@ -101,16 +100,11 @@ class PlanSetupScreenContent extends StatelessWidget {
                   } else if (state is LoadPlanListFailed) {
                     return Center(child: Text(state.message));
                   } else {
-                    // return CustomPopup(
-                    //   title: 'Danh sách hành trình',
-                    //   content: 'Không thể lấy danh sách hành trình, vui lòng thử lại sau',
-                    //   confirmText: 'ok',
-                    //   onConfirm: () {},
-                    // );
                     return const Center(child: CircularProgressIndicator());
                   }
                 },
               ),
+              const SizedBox(height: 30,),
             ],
           ),
         ),

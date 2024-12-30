@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:outernet/data/models/sites/site_response_model.dart';
 import 'package:outernet/domain/entities/plan_entity.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/domain/entities/user_entity.dart';
 
 part 'plan_response_model.g.dart';
@@ -42,7 +43,7 @@ class GetPlanResponseModel {
   final DateTime? startTime;
   final DateTime? endTime;
   final String? coverUrl;
-  final List<SiteResponseModel> sites;
+  final List<SiteInPlan> sites;
   final List<Member> members;
 
   GetPlanResponseModel({
@@ -66,7 +67,7 @@ class GetPlanResponseModel {
     DateTime? startTime,
     DateTime? endTime,
     String? coverUrl,
-    List<SiteResponseModel>? sites,
+    List<SiteInPlan>? sites,
     List<Member>? members,
   }) {
     return GetPlanResponseModel(
@@ -135,5 +136,61 @@ class GetAllPlanRequestModel {
     final plans = this.plans?.map((plan) => plan.toEntity()).toList() ?? [];
 
     return plans;
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class SiteInPlan {
+  final String? name;
+  final String? description;
+  final DateTime? startTime;
+  final DateTime? endTime;
+  final SiteResponseModel? siteBasicInfoRspnDto;
+
+  SiteInPlan({
+    this.name,
+    this.description,
+    this.startTime,
+    this.endTime,
+    this.siteBasicInfoRspnDto,
+  });
+
+  factory SiteInPlan.fromJson(Map<String, dynamic> json) => _$SiteInPlanFromJson(json);
+  Map<String, dynamic> toJson() => _$SiteInPlanToJson(this);
+
+  SiteInPlan copyWith({
+    String? name,
+    String? description,
+    DateTime? startTime,
+    DateTime? endTime,
+    SiteResponseModel? siteBasicInfoRspnDto,
+  }) {
+    return SiteInPlan(
+      name: name ?? this.name,
+      description: description ?? this.description,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      siteBasicInfoRspnDto: siteBasicInfoRspnDto ?? this.siteBasicInfoRspnDto,
+    );
+  }
+
+  static SiteInPlan defaultInstance = SiteInPlan(
+    name: '',
+    description: '',
+    startTime: DateTime.now(),
+    endTime: DateTime.now(),
+    siteBasicInfoRspnDto: SiteResponseModel.defaultInstance,
+  );
+
+  SiteEntity toEntity() {
+    final SiteEntity preEntity = siteBasicInfoRspnDto?.toEntity() ?? SiteEntity.defaultInstance;
+    final trueEntity = preEntity.copyWith(
+      name: name,
+      description: description,
+      startTime: startTime,
+      endTime: endTime,
+    );
+
+    return trueEntity;
   }
 }

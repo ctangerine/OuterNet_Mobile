@@ -129,6 +129,7 @@ class PlanBloc extends Bloc<PlanEvents, PlanState> {
     },
     (plan) {
       if (state is LoadPlanListSuccess) {
+        logger.f('Plan detail: ${plan.toJson()}');
         emit((state as LoadPlanListSuccess).copyWith(
           specificPlan: plan.copyWith(id: event.planId, coverUrl: localPlan?.coverUrl),
           isRecentlyGetPlanDetail: true,
@@ -198,10 +199,8 @@ class PlanBloc extends Bloc<PlanEvents, PlanState> {
       },
       (message) async {
         if (state is LoadPlanListSuccess) {
-          logger.d('load success');
           emit((state as LoadPlanListSuccess).copyWith(message: message, isRecentlyAddMember: true));
         } else {
-          logger.d('load default');
           emit(LoadPlanListSuccess.defaultInstance.copyWith(
             plans: [],
             message: message,
@@ -248,7 +247,7 @@ class PlanBloc extends Bloc<PlanEvents, PlanState> {
           emit(LoadPlanListFailed(failure.message));
         }
       },
-      (message) async {
+      (message)  {
         if (state is LoadPlanListSuccess) {
           emit((state as LoadPlanListSuccess).copyWith(message: message, isRecentlyAddSite: true));
         } else {
@@ -258,10 +257,9 @@ class PlanBloc extends Bloc<PlanEvents, PlanState> {
             isRecentlyAddSite: true,
           ));
         }
-
-        await _updatePlansAndEmit(emit);
       },
     );
+    await _updatePlansAndEmit(emit);
   }
 
   Future<void> _onUpdateSiteInPlan(UpdateSiteInPlan event, Emitter<PlanState> emit) async {

@@ -145,7 +145,6 @@ class UserBloc extends Bloc<UserEvents, UserState> {
     final localUser = await _db.getCurrentUser();
     
     if (localUser != null) {
-      logger.d(localUser.toJson());
       emit(UserLogedIn(user: localUser));
     } 
     else {

@@ -34,8 +34,7 @@ GetPlanResponseModel _$GetPlanResponseModelFromJson(
           : DateTime.parse(json['endTime'] as String),
       coverUrl: json['coverUrl'] as String?,
       sites: (json['sites'] as List<dynamic>?)
-              ?.map(
-                  (e) => SiteResponseModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => SiteInPlan.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       members: (json['members'] as List<dynamic>?)
@@ -69,4 +68,28 @@ Map<String, dynamic> _$GetAllPlanRequestModelToJson(
         GetAllPlanRequestModel instance) =>
     <String, dynamic>{
       'plans': instance.plans?.map((e) => e.toJson()).toList(),
+    };
+
+SiteInPlan _$SiteInPlanFromJson(Map<String, dynamic> json) => SiteInPlan(
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      startTime: json['startTime'] == null
+          ? null
+          : DateTime.parse(json['startTime'] as String),
+      endTime: json['endTime'] == null
+          ? null
+          : DateTime.parse(json['endTime'] as String),
+      siteBasicInfoRspnDto: json['siteBasicInfoRspnDto'] == null
+          ? null
+          : SiteResponseModel.fromJson(
+              json['siteBasicInfoRspnDto'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$SiteInPlanToJson(SiteInPlan instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'description': instance.description,
+      'startTime': instance.startTime?.toIso8601String(),
+      'endTime': instance.endTime?.toIso8601String(),
+      'siteBasicInfoRspnDto': instance.siteBasicInfoRspnDto?.toJson(),
     };
