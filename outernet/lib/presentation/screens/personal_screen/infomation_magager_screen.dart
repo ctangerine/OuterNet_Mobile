@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:outernet/presentation/screens/personal_screen/notifications_screen.dart';
 import 'package:outernet/presentation/screens/personal_screen/security_screen.dart';
-import 'package:outernet/presentation/helper_widgets/button_custom.dart';
+import 'package:outernet/presentation/screens/site_screen/site_review/get_my_reviews.dart';
+import 'package:outernet/presentation/screens/site_screen/site_status/site_status.dart';
+import 'package:outernet/presentation/themes.dart';
 
 class InformationManagerScreen extends StatelessWidget {
   const InformationManagerScreen({super.key});
@@ -9,20 +12,16 @@ class InformationManagerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const BackButtonIcon(),
-        centerTitle: true,
-      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               const SizedBox(height: 20),
               _buildHeader(),
               const SizedBox(height: 20),
               _buildOptionMenu(context),
-              const SizedBox(height: 20),
+              const Spacer(),
               _buildLogoutButton(),
             ],
           ),
@@ -37,15 +36,11 @@ class InformationManagerScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'Thông tin',
+          'Thông tin cá nhân',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
-        ),
-        Icon(
-          Icons.face,
-          size: 30,
         ),
       ],
     );
@@ -54,38 +49,30 @@ class InformationManagerScreen extends StatelessWidget {
   Widget _buildOptionMenu(BuildContext context) {
     return Column(
       children: [
-        _buildOptionItem(context,'Thông tin tài khoản', Icons.person, null),
-        _buildOptionItem(context, 'Mật khẩu và bảo mật', Icons.shield, const SecurityScreen()),
+        _buildOptionItem(context, 'Thông tin tài khoản', Iconsax.profile_circle, null),
+        _buildOptionItem(context, 'Mật khẩu và bảo mật', Iconsax.shield_tick, const SecurityScreen()),
         const Divider(),
-        _buildOptionItem(context, 'Bài đánh giá', Icons.edit, null),
-        _buildOptionItem(context, 'Địa điểm đã đăng', Icons.map, null),
-        _buildOptionItem(context, 'Báo cáo đã gửi', Icons.report, null),
-        _buildOptionItem(context, 'Thông báo của tôi', Icons.notifications, const NotificationsScreen()),
+        _buildOptionItem(context, 'Bài đánh giá', Iconsax.edit, MyReviewPage()),
+        _buildOptionItem(context, 'Địa điểm đã đăng', Iconsax.map, PublishedSitesPage()),
+        _buildOptionItem(context, 'Báo cáo đã gửi', Iconsax.warning_2, null),
+        _buildOptionItem(context, 'Thông báo của tôi', Iconsax.notification, const NotificationsScreen()),
         const Divider(),
-        _buildOptionItem(context, 'Chuyển tài khoản', Icons.swap_horizontal_circle, null),
-        _buildOptionItem(context, 'Đăng xuất', Icons.logout, null),
+        _buildOptionItem(context, 'Chuyển tài khoản', Iconsax.user_tag, null),
+        _buildOptionItem(context, 'Đăng xuất', Iconsax.logout, null),
       ],
     );
   }
 
-  Widget _buildOptionItem(BuildContext context, title, IconData icon, Widget? screen) {
+  Widget _buildOptionItem(BuildContext context, String title, IconData icon, Widget? screen) {
     return ListTile(
       leading: Icon(icon, size: 26),
       title: Text(title),
-      // on tap, navigate to the notificiations screen
       onTap: () {
-        // navigate to the notifications screen
         if (screen != null) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => screen),
           );
-        }
-        else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const NotificationsScreen()),
-          ); // do nothing
         }
       },
     );
@@ -95,9 +82,12 @@ class InformationManagerScreen extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: OutlinedButtonCustom(
-            text: 'Đăng xuất',
-            onPressed: () => null,
+          child: SizedBox(
+            height: 50,
+            child: FilledButton(
+              onPressed: () {},
+              child: const Text('Đăng xuất', style: AppTextStyles.body1Semibold,),
+            ),
           ),
         ),
       ],

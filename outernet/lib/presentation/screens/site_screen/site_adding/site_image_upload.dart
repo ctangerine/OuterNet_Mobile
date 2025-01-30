@@ -205,13 +205,13 @@ class _AddSitePhotosState extends State<AddSitePhotos> with AutomaticKeepAliveCl
             const SizedBox(height: 16),
             Row(
               children: [
-                ElevatedButton.icon(
+                FilledButton.icon(
                   onPressed: _pickImages,
                   icon: const Icon(Icons.image),
                   label: const Text('Chọn ảnh'),
                 ),
                 const SizedBox(width: 16),
-                ElevatedButton.icon(
+                FilledButton.icon(
                   onPressed: _showVideoSourceSelector,
                   icon: const Icon(Icons.videocam),
                   label: const Text('Thêm video'),

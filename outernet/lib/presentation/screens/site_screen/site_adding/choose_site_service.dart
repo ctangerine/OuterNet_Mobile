@@ -6,6 +6,7 @@ import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
+import 'package:outernet/presentation/themes.dart';
 
 class ChooseSiteServiceGroup extends StatefulWidget {
   final int index;
@@ -129,10 +130,10 @@ class _ChooseSiteServiceGroupState extends State<ChooseSiteServiceGroup> with Au
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12,),
                       decoration: BoxDecoration(
-                        color: isSelected ? Colors.orange.withOpacity(0.2) : Colors.white,
+                        color: isSelected ? AppColors.primary.withOpacity(0.2) : Colors.white,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: isSelected ? Colors.orange : Colors.grey.shade300,
+                          color: isSelected ? AppColors.primary : Colors.grey.shade300,
                           width: 2,
                         ),
                       ),
@@ -142,7 +143,7 @@ class _ChooseSiteServiceGroupState extends State<ChooseSiteServiceGroup> with Au
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: isSelected ? Colors.orange : Colors.black87,
+                            color: isSelected ? AppColors.primary : Colors.black87,
                           ),
                         ),
                       ),

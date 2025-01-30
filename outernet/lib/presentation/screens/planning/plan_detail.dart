@@ -9,9 +9,9 @@ import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
 import 'package:outernet/presentation/helper_widgets/image_handler.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
 import 'package:outernet/presentation/screens/planning/add_new_member_to_plan.dart';
-import 'package:outernet/presentation/screens/planning/add_new_site_to_plan_popup.dart';
 import 'package:outernet/presentation/screens/planning/plan_members.dart';
 import 'package:outernet/presentation/screens/planning/trip_detail.dart';
+import 'package:outernet/presentation/screens/site_screen/search_site/search_site.dart';
 import 'package:outernet/presentation/themes.dart';
 
 class PlanDetail extends StatelessWidget {
@@ -235,7 +235,7 @@ class PlanDetailContent extends StatelessWidget {
           builder: (BuildContext dialogContext) {
             return BlocProvider.value(
               value: BlocProvider.of<PlanBloc>(context),
-              child: AddNewSiteToPlanPopup(),
+              child: SearchLocationPage(),
             );
           },
         );

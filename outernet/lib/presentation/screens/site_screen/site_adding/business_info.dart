@@ -7,6 +7,7 @@ import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
+import 'package:outernet/presentation/themes.dart';
 
 class BusinessInfoScreen extends StatefulWidget {
   final int index;
@@ -200,7 +201,7 @@ class _BusinessInfoScreenState extends State<BusinessInfoScreen> with AutomaticK
           separatorBuilder: (context, index) => const SizedBox(height: 16),
         ),
         const SizedBox(height: 8),
-        ElevatedButton(
+        FilledButton(
           onPressed: addCostRange,
           child: const Text('+ Thêm chi phí'),
         ),
@@ -224,7 +225,8 @@ class _BusinessInfoScreenState extends State<BusinessInfoScreen> with AutomaticK
               runSpacing: 8,
               children: groupService.services!.map((service) {
                 return FilterChip(
-                  label: Text(service.serviceName ?? 'Unknown Service'),
+                  color: WidgetStatePropertyAll(AppColors.primary),
+                  label: Text(service.serviceName ?? 'Unknown Service', style: const TextStyle(color: Colors.white)),
                   selected: selectedTypes[groupService.serviceGroup!.id!]![service.id!] ?? false,
                   onSelected: (value) {
                     setState(() {
