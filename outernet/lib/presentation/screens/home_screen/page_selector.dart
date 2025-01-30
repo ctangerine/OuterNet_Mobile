@@ -2,24 +2,48 @@
 
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:outernet/data/data_sources/local_datasouces/secure_storage.dart';
+import 'package:outernet/presentation/blocs/UserBloc/user_bloc.dart';
 import 'package:outernet/presentation/screens/home_screen/home_screen.dart';
+import 'package:outernet/presentation/screens/notifications/noti_service.dart';
+import 'package:outernet/presentation/screens/notifications/notification_page.dart';
 import 'package:outernet/presentation/screens/personal_screen/infomation_magager_screen.dart';
 import 'package:outernet/presentation/screens/planning/plan_setup_screen.dart';
+import 'package:outernet/presentation/screens/site_screen/search_site/search_site.dart';
 import 'package:outernet/presentation/themes.dart';
 
 class PageSelector extends StatefulWidget {
-  const PageSelector({super.key});
+  final int? userId;
+  final String? token;
+
+  const PageSelector({super.key, this.userId, this.token});
 
   @override
   State<PageSelector> createState() => _PageSelectorState();
 }
 
 class _PageSelectorState extends State<PageSelector> {
-  int selectedIndex = 4;
+  int selectedIndex = 0;
+  String token = '';
+  late WebSocketService webSocketService;
+
+  @override
+  void initState() {
+    super.initState();
+    _invokeNotificationService(1);
+    webSocketService = WebSocketService(jwtToken: widget.token!, userId: widget.userId!);
+  }
+
   @override
   Widget build(BuildContext context) {
+    // final webSocketManager = Provider.of<WebSocketManager>(context);
     TextStyle pageIndexStyle = AppTextStyles.body1Semibold.copyWith(color: Colors.black87, fontSize: 14);
+
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    // webSocketManager.initialize(widget.token!, (userBloc.state as UserLogedIn).user.id!);
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: FlashyTabBar(
@@ -89,14 +113,16 @@ class _PageSelectorState extends State<PageSelector> {
         ],
       ),
       body: <Widget>[
-        // sample homepage, sameple search page, sample plan page, sample notification page, InformationManagerScreen
-          //Container(color: Colors.red, child: const Center(child: Text('Khám phá', style: TextStyle(fontSize: 24)))),
           const HomeScreen(),
-          Container(color: Colors.green, child: const Center(child: Text('Tìm kiếm', style: TextStyle(fontSize: 24)))),
+          SearchLocationPage(),
           const PlanSetupScreen(),
-          Container(color: Colors.yellow, child: const Center(child: Text('Thông báo', style: TextStyle(fontSize: 24)))),
-          const InformationManagerScreen(),
+          NotificationPage(webSocketService: webSocketService),
+        const InformationManagerScreen(),
       ][selectedIndex],
     );
+  }
+
+  void _invokeNotificationService(int id) async {
+    token = await SecureStorage.getToken();
   }
 }

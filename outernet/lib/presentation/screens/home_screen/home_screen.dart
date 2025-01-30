@@ -279,7 +279,7 @@ class SiteSuggestions extends StatelessWidget {
                 ),
               ).then((_) {
                 try {
-                  bloc.add(GetDiscoverySites(1)); // Trigger the event when coming back
+                  // bloc.add(GetDiscoverySites(1)); // Trigger the event when coming back
                 } catch (e) {
                   logger.e('I cant wake the bloc, error: $e');
                 }
