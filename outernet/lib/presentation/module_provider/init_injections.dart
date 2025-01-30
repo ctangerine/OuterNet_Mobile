@@ -4,7 +4,9 @@ import 'package:outernet/presentation/module_provider/auth_module_injections.dar
 import 'package:outernet/presentation/module_provider/dependencies_injection.dart';
 import 'package:outernet/presentation/module_provider/media_injections.dart';
 import 'package:outernet/presentation/module_provider/plan_module_injections.dart';
+import 'package:outernet/presentation/module_provider/report_module_injections.dart';
 import 'package:outernet/presentation/module_provider/site_module_injections.dart';
+import 'package:outernet/presentation/module_provider/site_review_module_injections.dart';
 import 'package:outernet/presentation/module_provider/user_module_injections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +21,8 @@ Future<void> initInjections() async {
   await initSiteInjection();
   await initMediaInjections();
   await initPlanInjection();
+  await initSiteReviewInjection();
+  await initReportInjection();
 }
 
 

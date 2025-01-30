@@ -9,7 +9,8 @@ import 'package:outernet/presentation/screens/personal_screen/personal_account_s
 import 'package:outernet/presentation/screens/personal_screen/personal_information_screen.dart';
 import 'package:outernet/presentation/screens/account_screen/register_screen.dart';
 import 'package:outernet/presentation/screens/personal_screen/security_screen.dart';
-import 'package:outernet/presentation/screens/site_screen/site_adding/add_new_site_screen.dart';
+import 'package:outernet/presentation/screens/site_screen/site_detail/add_review.dart';
+import 'package:outernet/presentation/splash_art.dart';
 import 'package:outernet/presentation/ui_component_resused/review_card.dart';
 
 class CurrentCodingPage extends StatelessWidget {
@@ -109,9 +110,15 @@ class CurrentCodingPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewSiteScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage()));
                 },
                 child: const Text('add site'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddReviewPage()));
+                },
+                child: const Text('add review'),
               )
             ],
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:outernet/data/data_sources/dio_network/base_api_service.dart';
 import 'package:outernet/data/data_sources/local_datasouces/drift_database.dart';
 import 'package:outernet/data/data_sources/local_datasouces/drift_database_provider.dart';
 import 'package:outernet/domain/entities/user_entity.dart';
@@ -142,14 +141,14 @@ class UserBloc extends Bloc<UserEvents, UserState> {
   }
 
   Future<void> _onGetUserDetail(GetUserDetailEvent event, Emitter<UserState> emit) async {
-    final localUser = await _db.getCurrentUser();
+    // final localUser = await _db.getCurrentUser();
     
-    if (localUser != null) {
-      emit(UserLogedIn(user: localUser));
-    } 
-    else {
-      logger.e('Cannot get user from local database');
-    }
+    // if (localUser != null) {
+    //   emit(UserLogedIn(user: localUser));
+    // } 
+    // else {
+    //   logger.e('Cannot get user from local database');
+    // }
 
     final result = await userUsecase.getUserDetail();
 

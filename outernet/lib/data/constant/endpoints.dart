@@ -11,6 +11,7 @@ class ApiEndpoints {
   static const String siteType = '/api/site-types';
   static const String siteReview = '/api/site-reviews';
   static const String discover = '/api/sites/discover';
+  static const String search = '/api/sites/search';
   
   static const String changePassword = '/api/users/auth/change-password';
   static const String avatar = '/api/users/avatar';
@@ -27,4 +28,12 @@ class ApiEndpoints {
   static const String addSiteSubDomain = '/add-site';
   static const String updateSiteSubDomain = '/update-site';
   static const String removeSiteSubDomain = '/remove-site'; 
+
+  static const String siteReportCategories = '/api/report/site/categories';
+  static const String userReportCategories = '/api/report/user/categories';
+  static const String reviewReprotCategories = '/api/report/site-review/categories';
+  static const String siteReport = '/api/report/site';
+  static const String userReport = '/api/report/user';
+  static const String siteReviewReport = '/api/report/site-review';
+
 }

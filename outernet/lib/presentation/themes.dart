@@ -4,7 +4,7 @@ class AppColors {
   static const Color maintheme = Color(0xFFFFFFFF);
   static const Color themeSecondary = Color.fromARGB(255, 243, 244, 246);
   // static const Color primary = Color.fromARGB(255, 255, 171, 62);
-  static const Color primary = Colors.black87;
+  static const Color primary = Color.fromARGB(255, 0, 109, 95);
   static const Color secondary = Colors.black54;
   static const Color textOnPrimary = Color.fromARGB(255, 255, 255, 255);
   // static const Color textPrimary = Color.fromARGB(255, 135, 81, 0);
