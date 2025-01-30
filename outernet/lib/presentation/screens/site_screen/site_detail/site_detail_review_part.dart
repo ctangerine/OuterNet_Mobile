@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outernet/domain/entities/review_entity.dart';
 import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
+import 'package:outernet/presentation/screens/report/report_popup.dart';
 import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/ui_component_resused/review_card.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
@@ -104,7 +105,12 @@ class ReviewPart extends StatelessWidget {
           itemBuilder: (context, index) {
             return ReviewCard(
               review: siteReview[index],
-              isFavorite: true,
+              isFavorite: false,
+              onReportPressed: () => {
+                showDialog(context: context, builder: (context) {
+                  return ReportDialog(type: ReportType.siteReview, reviewId: siteReview[index].id,);
+                })
+              },
             );
           }, 
           separatorBuilder: (context, index) => const SizedBox(height: 20, child: Divider()), 

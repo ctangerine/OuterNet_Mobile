@@ -3,6 +3,7 @@ import 'package:outernet/data/data_sources/remote_datasources/site_review_api_im
 import 'package:outernet/data/models/site_review/site_review_request_model.dart';
 import 'package:outernet/domain/entities/failure.dart';
 import 'package:outernet/domain/entities/review_entity.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/domain/repositories/site_review_respository.dart';
 
 class SiteReviewRepositoryImplement implements SiteReviewRespository {
@@ -51,7 +52,7 @@ class SiteReviewRepositoryImplement implements SiteReviewRespository {
   }
 
   @override
-  Future<Either<Failure, List<ReviewEntity>>> getMyReview() async {
+  Future<Either<Failure, List<SiteEntity>>> getMyReview() async {
     try {
       final response = await _api.getMyReview();
       return Right(response);

@@ -11,10 +11,12 @@ import 'package:outernet/presentation/blocs/site_bloc/site_state.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
 import 'package:outernet/presentation/module_provider/init_injections.dart';
 import 'package:outernet/presentation/screens/asset_links.dart';
+import 'package:outernet/presentation/screens/site_screen/site_detail/add_review.dart';
 import 'package:outernet/presentation/screens/site_screen/site_detail/show_plan_list.dart';
 import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_review_part.dart';
 import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_site_nearby_part.dart';
 import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_introduce_part.dart';
+import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/ui_component_resused/images_carousel.dart';
 
 class SiteDetailScreen extends StatelessWidget {
@@ -118,6 +120,7 @@ class SiteDetailScreenContent extends StatelessWidget {
           SizedBox(width: 10),
         ],
       ),
+      floatingActionButton: _buidAddReviewButton(context),
       body: FutureBuilder<Map<String, dynamic>>(
         future: _fetchSiteDetail(context),
         builder: (context, snapshot) {
@@ -192,6 +195,24 @@ class SiteDetailScreenContent extends StatelessWidget {
       isEnlarge: true,
       isMargin: false,
       isBorder: false,
+    );
+  }
+
+  Widget _buidAddReviewButton(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: AppColors.primary,
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext dialogContext) {
+            return BlocProvider.value(
+              value: BlocProvider.of<SiteBloc>(context),
+              child: AddReviewPage(),
+            );
+          },
+        );
+      },
+      child: const Icon(Iconsax.add, color: Colors.white,),
     );
   }
 

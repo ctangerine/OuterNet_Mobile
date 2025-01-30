@@ -58,5 +58,13 @@ class GetDiscoverySites extends SiteEvent {
   GetDiscoverySites(this.id);
 }
 
+class SearchSites extends SiteEvent {
+  final SearchParams query;
+
+  SearchSites(this.query);
+}
+
+class GetSiteStatus extends SiteEvent {}
+
 class GetAllSiteType extends SiteEvent {}
 

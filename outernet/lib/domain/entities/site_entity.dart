@@ -39,6 +39,9 @@ class SiteEntity {
   final String? description;
   final DateTime? startTime;
   final DateTime? endTime;
+  // only for status
+  final String? status;
+  final String? typeOfModification;
 
   SiteEntity({
     this.siteId,
@@ -71,6 +74,8 @@ class SiteEntity {
     this.endTime,
     this.name,
     this.description,
+    this.status,
+    this.typeOfModification,
   });
 
   factory SiteEntity.fromJson(Map<String, dynamic> json) => _$SiteEntityFromJson(json);
@@ -107,6 +112,8 @@ class SiteEntity {
     DateTime? endTime,
     String? name,
     String? description,
+    String? status,
+    String? typeOfModification,
   }) {
     return SiteEntity(
       siteId: siteId ?? this.siteId,
@@ -139,6 +146,8 @@ class SiteEntity {
       endTime: endTime ?? this.endTime,
       name: name ?? this.name,
       description: description ?? this.description,
+      status: status ?? this.status,
+      typeOfModification: typeOfModification ?? this.typeOfModification,
     );
   }
 
@@ -173,6 +182,8 @@ class SiteEntity {
     endTime: null,
     name: '',
     description: '',
+    status: '',
+    typeOfModification: '',
   );
 }
 

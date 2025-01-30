@@ -41,11 +41,11 @@ class IntroducePart extends StatelessWidget {
         RatingBar(
           onRatingChanged: (rating) => {},
           initialRating: siteDetail.averageRating ?? 4.5,
-          size: 20,
+          size: 26,
           isInteractive: false,
         ),
         const SizedBox(width: 10),
-        Text(siteDetail.averageRating?.toString() ?? 'NaN', style: AppTextStyles.title1Regular.copyWith(fontSize: 16),),
+        Text(siteDetail.averageRating?.toStringAsFixed(1) ?? 'NaN', style: AppTextStyles.title1Regular.copyWith(fontSize: 16),),
         const SizedBox(width: 10),
         Container(
           height: 20,
@@ -172,7 +172,7 @@ class IntroducePart extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(siteDetail.averageRating?.toString() ?? 'NaN', style: AppTextStyles.heading1Semibold.copyWith(fontSize: 36),),
+                    Text(siteDetail.averageRating?.toStringAsFixed(1) ?? 'NaN', style: AppTextStyles.heading1Semibold.copyWith(fontSize: 36),),
                   const SizedBox(width: 10),
                   const Icon(Iconsax.star, size: 30, color: AppColors.primary,),
                 ],

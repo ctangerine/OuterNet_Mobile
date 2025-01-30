@@ -457,4 +457,11 @@ class SearchParams {
     q: '',
     page: 0,
   );
+
+  Map<String, dynamic> toMap() {
+    return {
+      'q': q,
+      'page': page,
+    };
+  }
 }

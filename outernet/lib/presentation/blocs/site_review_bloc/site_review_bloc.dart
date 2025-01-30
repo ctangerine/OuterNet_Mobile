@@ -45,6 +45,7 @@ class SiteReviewBloc extends Bloc<SiteReviewEvent, SiteReviewState> {
             reviews: [],
             message: message,
             isRecentlyAddReview: true,
+            error: e.toString(),
           ));
           logger.e("State not stable, recheck: $e");
         }
@@ -176,23 +177,16 @@ class SiteReviewBloc extends Bloc<SiteReviewEvent, SiteReviewState> {
       (reviews) {
         try {
           emit((state as SiteReviewFetchSuccess).copyWith(
-            reviews: reviews,
+            sites: reviews,
             isRecentlyGetMyReview: true
           ));
         } catch (e) {
           emit(SiteReviewFetchSuccess(
-            reviews: reviews,
+            reviews: [],
+            sites: reviews,
             isRecentlyGetMyReview: true,
           ));
           logger.e("State not stable, recheck, error: $e");
-        }
-
-        try {
-          for (ReviewEntity review in reviews) {
-            _db.upsertReview(review.id!, review);
-          }
-        } catch (e) {
-          logger.e("Can't save to local database, error: $e");
         }
       }
     );

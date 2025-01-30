@@ -4,10 +4,12 @@ import 'package:outernet/data/data_sources/local_datasouces/drift_database.dart'
 import 'package:outernet/data/data_sources/local_datasouces/drift_database_provider.dart';
 import 'package:outernet/data/models/site_type/sitetype_response_model.dart' as site_type;
 import 'package:outernet/data/models/sites/common_site_model.dart';
+import 'package:outernet/data/models/sites/search_site_response_model.dart';
 import 'package:outernet/data/models/sites/site_by_loc_response_model.dart';
 import 'package:outernet/data/models/sites/site_request_model.dart';
 import 'package:outernet/data/models/sites/site_response_model.dart' as site_response;
 import 'package:outernet/data/models/sites/site_review_response_model.dart';
+import 'package:outernet/data/models/sites/site_status_response_model.dart';
 import 'package:outernet/domain/entities/review_entity.dart';
 import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/env/log_service.dart';
@@ -166,7 +168,7 @@ class SiteApiImplement {
 
   Future<List<SiteEntity>> getDiscoverySites(int page) async {
     try {
-      final response = await dio.get(ApiEndpoints.discover, queryParameters: {'page': page});
+      final response = await dio.get('api/recommendations/for-you?page=1', );
 
       if (response.statusCode == 200) {
         final List<SiteEntity> sites = site_response.DiscoverResponseModel.fromJson(response.data).toEntities();
@@ -177,6 +179,45 @@ class SiteApiImplement {
         throw Exception('Không thể lấy danh sách địa điểm, mã lỗi: ${response.statusCode}');
       }
 
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<List<SiteEntity>> searchSites(SearchParams params) async {
+    try {
+      final response = await dio.get(ApiEndpoints.search, queryParameters: params.toMap());
+
+      if (response.statusCode == 200) {
+        final sites = SearchSiteResponseModel.fromJson(response.data);
+
+        return sites.toEntities();
+      }
+      else {
+        throw Exception('Không thể tìm kiếm địa điểm, mã lỗi: ${response.statusCode}');
+      }
+
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message']);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<List<SiteEntity>> GetSiteStatus() async {
+    try {
+      final response = await dio.get('/api/sites/my-sites');
+
+      if (response.statusCode == 200) {
+        final sites = GetSiteStatusResponseModel.fromJson(response.data).toEntities();
+
+        return sites;
+      }
+      else {
+        throw Exception('Không thể lấy danh sách địa điểm, mã lỗi: ${response.statusCode}');
+      }
     } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     } catch (e) {

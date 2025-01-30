@@ -46,4 +46,12 @@ class SiteUsecase {
   Future<Either<Failure, List<SiteEntity>>> getDiscoverySites(int typeId) {
     return repository.getDiscoverySites(typeId);
   }
+
+  Future<Either<Failure, List<SiteEntity>>> searchSites(SearchParams query) {
+    return repository.searchSites(query);
+  }
+
+  Future<Either<Failure, List<SiteEntity>>> getSiteStatus() {
+    return repository.getSiteStatus();
+  }
 }

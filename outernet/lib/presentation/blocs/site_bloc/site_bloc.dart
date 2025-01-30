@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:outernet/data/data_sources/dio_network/base_api_service.dart';
 import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/domain/usecases/site_usecase.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
@@ -20,6 +19,8 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
     on<GetAllGroupedService>(_onGetAllGroupServices);
     on<GetAllSiteType>(_onGetAllSiteType);
     on<GetDiscoverySites>(_onGetDiscoverySites);
+    on<SearchSites>(_onSearchSites);
+    on<GetSiteStatus>(_onGetSiteStatus);
   }
 
   Future<void> _onLoadListSite(LoadListSite event, Emitter<SiteState> emit) async {
@@ -161,9 +162,36 @@ class SiteBloc extends Bloc<SiteEvent, SiteState> {
     result.fold(
       (failure) => emit(LoadListSiteFailed(failure.message)),
       (sites) {
-        logger.f('I called oke');
         try {
           emit((state as LoadListSiteSuccess).copyWith(sites: sites, isListRecentlyChanged: true, message: null));
+        } catch (e) {
+          emit(LoadListSiteSuccess(sites: sites, isListRecentlyChanged: true));
+        }
+      }
+    );
+  }
+
+  Future<void> _onSearchSites(SearchSites event, Emitter<SiteState> emit) async {
+    final result = await siteUsecase.searchSites(event.query);
+    result.fold(
+      (failure) => emit(LoadListSiteFailed(failure.message)),
+      (sites) {
+        try {
+          emit((state as LoadListSiteSuccess).copyWith(siteByLoc: sites, isSearchedSites: true));
+        } catch (e) {
+          emit(LoadListSiteSuccess(sites: [],siteByLoc: sites, isSearchedSites: true));
+        }
+      }
+    );
+  }
+
+  Future<void> _onGetSiteStatus(GetSiteStatus event, Emitter<SiteState> emit) async {
+    final result = await siteUsecase.getSiteStatus();
+    result.fold(
+      (failure) => emit(LoadListSiteFailed(failure.message)),
+      (sites) {
+        try {
+          emit((state as LoadListSiteSuccess).copyWith(sites: sites, isListRecentlyChanged: true));
         } catch (e) {
           emit(LoadListSiteSuccess(sites: sites, isListRecentlyChanged: true));
         }

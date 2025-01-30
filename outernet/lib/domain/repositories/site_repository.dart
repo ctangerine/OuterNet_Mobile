@@ -16,4 +16,6 @@ abstract class SiteRepository {
   Future<Either<Failure,List<GroupedService>>> getAllGroupedService(int id);
   Future<Either<Failure, List<SiteType>>> getAllSiteType();
   Future<Either<Failure, List<SiteEntity>>> getDiscoverySites(int typeId);
+  Future<Either<Failure, List<SiteEntity>>> searchSites(SearchParams query);
+  Future<Either<Failure, List<SiteEntity>>> getSiteStatus();
 }

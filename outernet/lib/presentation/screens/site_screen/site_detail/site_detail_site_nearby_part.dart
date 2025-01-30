@@ -6,6 +6,7 @@ import 'package:outernet/data/models/sites/site_request_model.dart';
 import 'package:outernet/domain/entities/review_entity.dart';
 import 'package:outernet/domain/entities/site_entity.dart';
 import 'package:outernet/presentation/helper_widgets/custom_popup.dart';
+import 'package:outernet/presentation/screens/site_screen/site_detail/site_detail_screen.dart';
 import 'package:outernet/presentation/ui_component_resused/site_card.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_bloc.dart';
 import 'package:outernet/presentation/blocs/site_bloc/site_event.dart';
@@ -199,9 +200,20 @@ class _SiteNearbyPartState extends State<SiteNearbyPart> {
       ),
       itemCount: siteNearBy.length,
       itemBuilder: (context, index, realIndex) {
-        return Container(
-          margin: const EdgeInsets.only(right: 10),
-          child: SiteCard(site: siteNearBy[index]),
+        return GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SiteDetailScreen(siteId: siteNearBy[index].siteId!),
+              ),
+            );
+          },
+          child: Container(
+            margin: const EdgeInsets.only(right: 10),
+            child: SiteCard(site: siteNearBy[index]),
+          ),
         );
       },
     );

@@ -26,6 +26,7 @@ class LoadListSiteSuccess extends SiteState {
   bool? isSiteReviewChanged;
   bool? isSiteByLocChanged;
   bool? isGotGroupedService;
+  bool? isSearchedSites;
 
   final String? message;
 
@@ -44,6 +45,7 @@ class LoadListSiteSuccess extends SiteState {
     this.isSiteReviewChanged = false,
     this.isSiteByLocChanged = false,
     this.isGotGroupedService = false,
+    this.isSearchedSites = false,
     this.message,
   });
 
@@ -62,6 +64,7 @@ class LoadListSiteSuccess extends SiteState {
     bool? isSiteReviewChanged,
     bool? isSiteByLocChanged,
     bool? isGotGroupedService,
+    bool? isSearchedSites,
     String? message,
   }) {
     return LoadListSiteSuccess._(
@@ -79,6 +82,7 @@ class LoadListSiteSuccess extends SiteState {
       isSiteReviewChanged: isSiteReviewChanged,
       isSiteByLocChanged: isSiteByLocChanged,
       isGotGroupedService: isGotGroupedService,
+      isSearchedSites: isSearchedSites,
       message: message,
     );
   }
@@ -99,6 +103,7 @@ class LoadListSiteSuccess extends SiteState {
     bool? isSiteReviewChanged,
     bool? isSiteByLocChanged,
     bool? isGotGroupedService,
+    bool? isSearchedSites,
     String? message,
   }) {
     return LoadListSiteSuccess(
@@ -116,6 +121,7 @@ class LoadListSiteSuccess extends SiteState {
       isSiteReviewChanged: isSiteReviewChanged ?? this.isSiteReviewChanged,
       isSiteByLocChanged: isSiteByLocChanged ?? this.isSiteByLocChanged,
       isGotGroupedService: isGotGroupedService ?? this.isGotGroupedService,
+      isSearchedSites: isSearchedSites ?? this.isSearchedSites,
       message: message ?? this.message,
     );
   }

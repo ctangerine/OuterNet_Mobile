@@ -37,9 +37,9 @@ class ReviewSiteRequestModel {
   Map<String, dynamic> toJson() {
     return {
       'siteId': siteId,
-      'comment': comment,
+      'comment': comment?.isEmpty ?? true ? 'OK' : comment,
       'generalRating': generalRating,
-      'arrivalDate': arrivalDate,
+      'arrivalDate': arrivalDate != null ? "${arrivalDate!.year}-${arrivalDate!.month.toString().padLeft(2, '0')}-${arrivalDate!.day.toString().padLeft(2, '0')}" : null,
       'medias': medias,
     };
   }

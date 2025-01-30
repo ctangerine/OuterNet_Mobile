@@ -6,6 +6,8 @@ import 'package:outernet/data/models/site_review/site_review_request_model.dart'
 import 'package:outernet/data/models/site_review/site_review_response_model.dart';
 import 'package:outernet/data/models/sites/site_review_response_model.dart';
 import 'package:outernet/domain/entities/review_entity.dart';
+import 'package:outernet/domain/entities/site_entity.dart';
+import 'package:outernet/env/log_service.dart';
 
 class SiteReviewApiImplement {
   final Dio dio;
@@ -15,6 +17,7 @@ class SiteReviewApiImplement {
 
   Future<String> addSiteReview(ReviewSiteRequestModel request) async {
     try {
+      LogService().logger.f('calling post review');
       final response = await dio.post(
         ApiEndpoints.siteReview,
         data: request.toJson(),
@@ -26,8 +29,10 @@ class SiteReviewApiImplement {
         throw Exception('Không thể tạo đánh giá, mã lỗi: ${response.statusCode}');
       }
     } on DioException catch (e) {
+      LogService().logger.f('error when post review, dio exception: $e');
       throw Exception(e.response?.data['message']);
     } catch (e) {
+      LogService().logger.f('error when post review: $e');
       throw Exception(e.toString());
     }
   }
@@ -84,12 +89,12 @@ class SiteReviewApiImplement {
     }
   }
 
-  Future<List<ReviewEntity>> getMyReview() async {
+  Future<List<SiteEntity>> getMyReview() async {
     try {
       final response = await dio.get('${ApiEndpoints.siteReview}/my-reviews');
 
       if (response.statusCode == 200) {
-        final reviewResponse = SiteReviewResponseModel.fromJson(response.data).toEntities();
+        final reviewResponse = MyReviewsResponseModel.fromJson(response.data).toEntities();
         return reviewResponse;
       } else {
         throw Exception('Không thể lấy thông tin đánh giá, mã lỗi: ${response.statusCode}');
