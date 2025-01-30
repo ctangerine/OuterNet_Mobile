@@ -43,12 +43,14 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   carousel_slider: ^5.0.0
   readmore: ^3.0.0
-  google_maps_flutter: ^2.3.0
   intl: ^0.19.0
   video_player: ^2.9.2
   flick_video_player: ^0.9.0
   google_fonts: ^6.2.1
   image_picker: ^1.1.2
+  mapbox_maps_flutter: ^2.0.0
+  stomp_dart_client: ^2.1.1
+  flutter_local_notifications: ^18.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -57,6 +59,9 @@ dependencies:
   dartz: ^0.10.1
   provider: ^6.1.2
   json_annotation: ^4.9.0
+  # flutter_map:
+  latlong2:
+  # mapbox_gl: ^0.16.0
   
 
 dev_dependencies:

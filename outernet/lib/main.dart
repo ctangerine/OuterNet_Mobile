@@ -4,9 +4,11 @@ import 'package:outernet/env/config.dart';
 import 'package:outernet/presentation/blocs/AuthBloc/auth_bloc.dart';
 import 'package:outernet/presentation/blocs/UserBloc/user_bloc.dart';
 import 'package:outernet/presentation/module_provider/init_injections.dart';
-import 'package:outernet/presentation/screens/current_coding_page.dart';
+import 'package:outernet/presentation/screens/notifications/noti_manager.dart';
+import 'package:outernet/presentation/splash_art.dart';
 import 'package:outernet/presentation/themes.dart';
 import 'package:outernet/presentation/helper_widgets/back_button.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,11 +26,12 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => sl<AuthorizationBloc>()),
         BlocProvider(create: (_) => sl<UserBloc>()),
+        ChangeNotifierProvider(create: (_) => WebSocketManager()),
       ],
       child: MaterialApp(
         routes: {
@@ -52,7 +55,7 @@ class MyHomePage extends StatelessWidget {
     return  const Scaffold(
       // Thiết lập màu nền trắng cho màn hình chính
       backgroundColor: Colors.white,
-      body: CurrentCodingPage(),
+      body: WelcomePage(),
     );
   }
 }
