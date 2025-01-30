@@ -86,9 +86,13 @@ class ReviewCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  review.user?.fullName ?? '',
-                  style: AppTextStyles.title1Semibold,
+                SizedBox(
+                  width: 150,
+                  child: Text(
+                    review.user?.fullName ?? '',
+                    style: AppTextStyles.title1Semibold,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 Text(
                   _formatDate(review.date?.toString()),
@@ -109,7 +113,7 @@ class ReviewCard extends StatelessWidget {
               ),
               onPressed: onLikePressed,
             ),
-            const SizedBox(width: 5),
+            // const SizedBox(width: 5),
             IconButton(
               padding: const EdgeInsets.all(0),
               onPressed: onReportPressed,
@@ -136,8 +140,8 @@ class ReviewCard extends StatelessWidget {
       children: [
         for (final image in images)
           _buildImage(context, image.url ?? ''),
-        // for (final video in videos)
-        //   _buildVideo(video.url ?? ''),
+        for (final video in videos)
+          _buildVideo(video.url ?? ''),
       ],
     );
   }

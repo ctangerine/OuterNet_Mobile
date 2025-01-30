@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:outernet/presentation/themes.dart';
 
 class RatingBar extends StatefulWidget {
   final int maxRating;
@@ -16,7 +14,7 @@ class RatingBar extends StatefulWidget {
     this.maxRating = 5,
     this.initialRating = 0.0,
     required this.onRatingChanged,
-    this.filledColor = AppColors.primary,
+    this.filledColor = Colors.yellow,
     this.unfilledColor = Colors.grey,
     this.size = 24.0,
     this.isInteractive = true,
@@ -37,7 +35,7 @@ class _RatingBarState extends State<RatingBar> {
 
   void _updateRating(double rating) {
     setState(() {
-      _currentRating = rating;
+      _currentRating = double.parse(rating.toStringAsFixed(1));
     });
     widget.onRatingChanged(_currentRating);
   }
@@ -47,13 +45,13 @@ class _RatingBarState extends State<RatingBar> {
     Color color;
 
     if (index >= _currentRating) {
-      icon = Iconsax.star;
+      icon = Icons.star_rate_rounded;
       color = widget.unfilledColor;
     } else if (index > _currentRating - 1 && index < _currentRating) {
-      icon = Iconsax.star;
-      color = widget.unfilledColor;
+      icon = Icons.star_half_rounded;
+      color = widget.filledColor;
     } else {
-      icon = Iconsax.star;
+      icon = Icons.star_rounded;
       color = widget.filledColor;
     }
 

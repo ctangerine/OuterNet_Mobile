@@ -43,8 +43,8 @@ class _CheckboxCustomState extends State<CheckboxCustom> {
           width: 48,
           height: 48,
           child: Checkbox(
-            fillColor: WidgetStateProperty.all(AppColors.primary),
-            checkColor: AppColors.maintheme,
+            fillColor: WidgetStateProperty.all(AppColors.maintheme),
+            checkColor: AppColors.primary,
             side: const BorderSide(
               color: AppColors.primary,
               width: 2,
