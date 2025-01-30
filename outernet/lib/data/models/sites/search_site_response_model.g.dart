@@ -9,7 +9,7 @@ part of 'search_site_response_model.dart';
 SearchSiteResponseModel _$SearchSiteResponseModelFromJson(
         Map<String, dynamic> json) =>
     SearchSiteResponseModel(
-      sites: (json['sites'] as List<dynamic>?)
+      data: (json['data'] as List<dynamic>?)
           ?.map((e) => SiteResponseModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       pagination: json['pagination'] == null
@@ -20,6 +20,6 @@ SearchSiteResponseModel _$SearchSiteResponseModelFromJson(
 Map<String, dynamic> _$SearchSiteResponseModelToJson(
         SearchSiteResponseModel instance) =>
     <String, dynamic>{
-      'sites': instance.sites?.map((e) => e.toJson()).toList(),
+      'data': instance.data?.map((e) => e.toJson()).toList(),
       'pagination': instance.pagination?.toJson(),
     };

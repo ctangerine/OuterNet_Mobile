@@ -7,10 +7,10 @@ part 'search_site_response_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class SearchSiteResponseModel {
-  final List<SiteResponseModel>? sites;
+  final List<SiteResponseModel>? data;
   final Pagination? pagination;
 
-  SearchSiteResponseModel({this.sites, this.pagination});
+  SearchSiteResponseModel({this.data, this.pagination});
 
   factory SearchSiteResponseModel.fromJson(Map<String, dynamic> json) =>
       _$SearchSiteResponseModelFromJson(json);
@@ -18,22 +18,22 @@ class SearchSiteResponseModel {
   Map<String, dynamic> toJson() => _$SearchSiteResponseModelToJson(this);
 
   static final SearchSiteResponseModel defaultInstance = SearchSiteResponseModel(
-    sites: [],
+    data: [],
     pagination: Pagination.defaultInstance,
   );
 
   SearchSiteResponseModel copyWith({
-    List<SiteResponseModel>? sites,
+    List<SiteResponseModel>? data,
     Pagination? pagination,
   }) {
     return SearchSiteResponseModel(
-      sites: sites ?? this.sites,
+      data: data ?? data,
       pagination: pagination ?? this.pagination,
     );
   }
 
   List<SiteEntity> toEntities() {
-    final sites = this.sites?.map((e) => e.toEntity()).toList() ?? [];
+    final sites = data?.map((e) => e.toEntity()).toList() ?? [];
 
     return sites;
   }
