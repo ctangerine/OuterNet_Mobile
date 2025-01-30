@@ -41,19 +41,72 @@ class Reviews extends Table {
   TextColumn get json => text()();
 }
 
+class LoginInfor extends Table {
+  IntColumn get localId => integer().autoIncrement()();
+  IntColumn get id => integer().nullable()();
+  TextColumn get email => text()();
+  TextColumn get password => text()();
+}
+
 @DriftDatabase(
-  tables: [Plans, Sites, Users, Medias, Reviews],
+  tables: [Plans, Sites, Users, Medias, Reviews, LoginInfor],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (Migrator m) async {
+      await m.createAll();
+    },
+    onUpgrade: (Migrator m, int from, int to) async {
+      if (from == 3) {
+        await m.createTable(loginInfor);
+      }
+    },
+  );
+
+  @override
+  int get schemaVersion => 4;
 
   static QueryExecutor _openConnection() {
     // driftDatabase from package:drift_flutter stores the database in
     // getApplicationDocumentsDirectory().
     return driftDatabase(name: 'my_database');
+  }
+
+  Future<bool> upserLogin(int? id, String email, String password) async {
+    final existingLogin = await (select(loginInfor)..limit(1)).getSingleOrNull();
+    if (existingLogin != null) {
+      await (update(loginInfor)..where((tbl) => tbl.localId.equals(existingLogin.localId))).write(
+        LoginInforCompanion(
+          email: Value(email),
+          password: Value(password),
+        ),
+      );
+      return true;
+    }
+    await into(loginInfor).insert(LoginInforCompanion(
+      email: Value(email),
+      password: Value(password),
+    ));
+    return true;
+  }
+
+  Future<bool> removeLogin(int id) async {
+    await (delete(loginInfor)..where((tbl) => tbl.id.equals(id))).go();
+    return true;
+  }
+
+  Future<bool> removeAllLogin() async {
+    await delete(loginInfor).go();
+    return true;
+  }
+
+  Future<List<String>?> getLogin() async {
+    final row = await (select(loginInfor)..limit(1)).getSingleOrNull();
+    if (row == null) return null;
+    return [row.email, row.password];
   }
 
   // Insert or Update data

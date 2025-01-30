@@ -48,4 +48,8 @@ class SecureStorage {
   Future<void> clear() async {
     await _storage.deleteAll();
   }
+
+  static Future<String> getToken() async {
+    return await SecureStorage.instance.read('token') ?? '';
+  }
 }

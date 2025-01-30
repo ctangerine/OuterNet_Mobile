@@ -1083,6 +1083,265 @@ class ReviewsCompanion extends UpdateCompanion<Review> {
   }
 }
 
+class $LoginInforTable extends LoginInfor
+    with TableInfo<$LoginInforTable, LoginInforData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LoginInforTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _localIdMeta =
+      const VerificationMeta('localId');
+  @override
+  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
+      'local_id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _passwordMeta =
+      const VerificationMeta('password');
+  @override
+  late final GeneratedColumn<String> password = GeneratedColumn<String>(
+      'password', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [localId, id, email, password];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'login_infor';
+  @override
+  VerificationContext validateIntegrity(Insertable<LoginInforData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('local_id')) {
+      context.handle(_localIdMeta,
+          localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta));
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('password')) {
+      context.handle(_passwordMeta,
+          password.isAcceptableOrUnknown(data['password']!, _passwordMeta));
+    } else if (isInserting) {
+      context.missing(_passwordMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {localId};
+  @override
+  LoginInforData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LoginInforData(
+      localId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}local_id'])!,
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id']),
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
+      password: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}password'])!,
+    );
+  }
+
+  @override
+  $LoginInforTable createAlias(String alias) {
+    return $LoginInforTable(attachedDatabase, alias);
+  }
+}
+
+class LoginInforData extends DataClass implements Insertable<LoginInforData> {
+  final int localId;
+  final int? id;
+  final String email;
+  final String password;
+  const LoginInforData(
+      {required this.localId,
+      this.id,
+      required this.email,
+      required this.password});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['local_id'] = Variable<int>(localId);
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    map['email'] = Variable<String>(email);
+    map['password'] = Variable<String>(password);
+    return map;
+  }
+
+  LoginInforCompanion toCompanion(bool nullToAbsent) {
+    return LoginInforCompanion(
+      localId: Value(localId),
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      email: Value(email),
+      password: Value(password),
+    );
+  }
+
+  factory LoginInforData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LoginInforData(
+      localId: serializer.fromJson<int>(json['localId']),
+      id: serializer.fromJson<int?>(json['id']),
+      email: serializer.fromJson<String>(json['email']),
+      password: serializer.fromJson<String>(json['password']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'localId': serializer.toJson<int>(localId),
+      'id': serializer.toJson<int?>(id),
+      'email': serializer.toJson<String>(email),
+      'password': serializer.toJson<String>(password),
+    };
+  }
+
+  LoginInforData copyWith(
+          {int? localId,
+          Value<int?> id = const Value.absent(),
+          String? email,
+          String? password}) =>
+      LoginInforData(
+        localId: localId ?? this.localId,
+        id: id.present ? id.value : this.id,
+        email: email ?? this.email,
+        password: password ?? this.password,
+      );
+  LoginInforData copyWithCompanion(LoginInforCompanion data) {
+    return LoginInforData(
+      localId: data.localId.present ? data.localId.value : this.localId,
+      id: data.id.present ? data.id.value : this.id,
+      email: data.email.present ? data.email.value : this.email,
+      password: data.password.present ? data.password.value : this.password,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LoginInforData(')
+          ..write('localId: $localId, ')
+          ..write('id: $id, ')
+          ..write('email: $email, ')
+          ..write('password: $password')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(localId, id, email, password);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LoginInforData &&
+          other.localId == this.localId &&
+          other.id == this.id &&
+          other.email == this.email &&
+          other.password == this.password);
+}
+
+class LoginInforCompanion extends UpdateCompanion<LoginInforData> {
+  final Value<int> localId;
+  final Value<int?> id;
+  final Value<String> email;
+  final Value<String> password;
+  const LoginInforCompanion({
+    this.localId = const Value.absent(),
+    this.id = const Value.absent(),
+    this.email = const Value.absent(),
+    this.password = const Value.absent(),
+  });
+  LoginInforCompanion.insert({
+    this.localId = const Value.absent(),
+    this.id = const Value.absent(),
+    required String email,
+    required String password,
+  })  : email = Value(email),
+        password = Value(password);
+  static Insertable<LoginInforData> custom({
+    Expression<int>? localId,
+    Expression<int>? id,
+    Expression<String>? email,
+    Expression<String>? password,
+  }) {
+    return RawValuesInsertable({
+      if (localId != null) 'local_id': localId,
+      if (id != null) 'id': id,
+      if (email != null) 'email': email,
+      if (password != null) 'password': password,
+    });
+  }
+
+  LoginInforCompanion copyWith(
+      {Value<int>? localId,
+      Value<int?>? id,
+      Value<String>? email,
+      Value<String>? password}) {
+    return LoginInforCompanion(
+      localId: localId ?? this.localId,
+      id: id ?? this.id,
+      email: email ?? this.email,
+      password: password ?? this.password,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (localId.present) {
+      map['local_id'] = Variable<int>(localId.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (password.present) {
+      map['password'] = Variable<String>(password.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LoginInforCompanion(')
+          ..write('localId: $localId, ')
+          ..write('id: $id, ')
+          ..write('email: $email, ')
+          ..write('password: $password')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1091,12 +1350,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $UsersTable users = $UsersTable(this);
   late final $MediasTable medias = $MediasTable(this);
   late final $ReviewsTable reviews = $ReviewsTable(this);
+  late final $LoginInforTable loginInfor = $LoginInforTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [plans, sites, users, medias, reviews];
+      [plans, sites, users, medias, reviews, loginInfor];
 }
 
 typedef $$PlansTableCreateCompanionBuilder = PlansCompanion Function({
@@ -1741,6 +2001,156 @@ typedef $$ReviewsTableProcessedTableManager = ProcessedTableManager<
     (Review, BaseReferences<_$AppDatabase, $ReviewsTable, Review>),
     Review,
     PrefetchHooks Function()>;
+typedef $$LoginInforTableCreateCompanionBuilder = LoginInforCompanion Function({
+  Value<int> localId,
+  Value<int?> id,
+  required String email,
+  required String password,
+});
+typedef $$LoginInforTableUpdateCompanionBuilder = LoginInforCompanion Function({
+  Value<int> localId,
+  Value<int?> id,
+  Value<String> email,
+  Value<String> password,
+});
+
+class $$LoginInforTableFilterComposer
+    extends Composer<_$AppDatabase, $LoginInforTable> {
+  $$LoginInforTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get localId => $composableBuilder(
+      column: $table.localId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get password => $composableBuilder(
+      column: $table.password, builder: (column) => ColumnFilters(column));
+}
+
+class $$LoginInforTableOrderingComposer
+    extends Composer<_$AppDatabase, $LoginInforTable> {
+  $$LoginInforTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get localId => $composableBuilder(
+      column: $table.localId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get password => $composableBuilder(
+      column: $table.password, builder: (column) => ColumnOrderings(column));
+}
+
+class $$LoginInforTableAnnotationComposer
+    extends Composer<_$AppDatabase, $LoginInforTable> {
+  $$LoginInforTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get localId =>
+      $composableBuilder(column: $table.localId, builder: (column) => column);
+
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get password =>
+      $composableBuilder(column: $table.password, builder: (column) => column);
+}
+
+class $$LoginInforTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $LoginInforTable,
+    LoginInforData,
+    $$LoginInforTableFilterComposer,
+    $$LoginInforTableOrderingComposer,
+    $$LoginInforTableAnnotationComposer,
+    $$LoginInforTableCreateCompanionBuilder,
+    $$LoginInforTableUpdateCompanionBuilder,
+    (
+      LoginInforData,
+      BaseReferences<_$AppDatabase, $LoginInforTable, LoginInforData>
+    ),
+    LoginInforData,
+    PrefetchHooks Function()> {
+  $$LoginInforTableTableManager(_$AppDatabase db, $LoginInforTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LoginInforTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LoginInforTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LoginInforTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> localId = const Value.absent(),
+            Value<int?> id = const Value.absent(),
+            Value<String> email = const Value.absent(),
+            Value<String> password = const Value.absent(),
+          }) =>
+              LoginInforCompanion(
+            localId: localId,
+            id: id,
+            email: email,
+            password: password,
+          ),
+          createCompanionCallback: ({
+            Value<int> localId = const Value.absent(),
+            Value<int?> id = const Value.absent(),
+            required String email,
+            required String password,
+          }) =>
+              LoginInforCompanion.insert(
+            localId: localId,
+            id: id,
+            email: email,
+            password: password,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$LoginInforTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $LoginInforTable,
+    LoginInforData,
+    $$LoginInforTableFilterComposer,
+    $$LoginInforTableOrderingComposer,
+    $$LoginInforTableAnnotationComposer,
+    $$LoginInforTableCreateCompanionBuilder,
+    $$LoginInforTableUpdateCompanionBuilder,
+    (
+      LoginInforData,
+      BaseReferences<_$AppDatabase, $LoginInforTable, LoginInforData>
+    ),
+    LoginInforData,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -1755,4 +2165,6 @@ class $AppDatabaseManager {
       $$MediasTableTableManager(_db, _db.medias);
   $$ReviewsTableTableManager get reviews =>
       $$ReviewsTableTableManager(_db, _db.reviews);
+  $$LoginInforTableTableManager get loginInfor =>
+      $$LoginInforTableTableManager(_db, _db.loginInfor);
 }
