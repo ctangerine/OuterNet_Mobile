@@ -6,6 +6,7 @@ import 'package:outernet/data/data_sources/local_datasouces/drift_database.dart'
 import 'package:outernet/data/data_sources/local_datasouces/drift_database_provider.dart';
 import 'package:outernet/data/models/auth/auth_request_model.dart';
 import 'package:outernet/data/models/auth/auth_response_model.dart';
+import 'package:outernet/data/models/sites/site_request_model.dart';
 import 'package:outernet/data/models/user/user_response_model.dart';
 
 class AuthApiImplement {
@@ -24,6 +25,15 @@ class AuthApiImplement {
           'password': password,
         },
       );
+
+      if (response.statusCode == 200) {
+        try {
+          await _db.upserLogin(1, email, password);
+        }
+        catch (e) {
+          logger.f('Cannot save login info to local database: $e');
+        }
+      }
 
       return AuthResponseModel.fromJson(response.data);
     } on DioException catch (e) {
